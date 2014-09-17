@@ -7,7 +7,9 @@ struct Settings
 {
 	unsigned int windowWidth;
 	unsigned int windowHeight;
-	const std::string windowName;
+    static const std::string windowName;
+
+    static const float playerSpeed;
 };
 
 #endif
