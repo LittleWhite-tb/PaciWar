@@ -29,3 +29,8 @@ void Player::draw(sf::RenderWindow& window)
     window.draw(lines,4,sf::LinesStrip,t);
     window.draw(tri2,4,sf::LinesStrip,t);
 }
+
+void Player::move(const sf::Vector2f& movement)
+{
+    m_position += movement;
+}

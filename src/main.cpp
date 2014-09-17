@@ -17,14 +17,37 @@ int main()
 	
 	while (window.isOpen())
     {
-        // on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+                break;
+            }
                 
             window.clear(sf::Color::Black);
+
+            // First try with input.
+            // TODO : better input, should take time between two iteration
+            // TODO : having a progressive system (aka acceleration) on key press
+            // TODO : having a global speed
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left) )
+            {
+                p.move(sf::Vector2f(-1.0,0.0));
+            }
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right) )
+            {
+                p.move(sf::Vector2f(1.0,0.0));
+            }
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
+            {
+                p.move(sf::Vector2f(0.0,-1.0));
+            }
+            if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
+            {
+                p.move(sf::Vector2f(0.0,1.0));
+            }
 
             b.draw(window);
             // e.draw(window);
