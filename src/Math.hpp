@@ -6,8 +6,6 @@ namespace Math
     template <class InterpolationAlgorithm, typename T>
     class Interpolation : public InterpolationAlgorithm
     {
-        // using InterpolationAlgorithm::update;
-
     private:
         T m_begin;
         T m_end;
