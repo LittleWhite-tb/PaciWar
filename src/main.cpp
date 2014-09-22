@@ -37,6 +37,13 @@ int main()
                 window.close();
                 break;
             }
+
+            if (event.type == sf::Event::KeyPressed ||
+                event.type == sf::Event::KeyReleased )
+            {
+                window.close();
+                break;
+            }
         }
                 
         window.clear(sf::Color::Black);
