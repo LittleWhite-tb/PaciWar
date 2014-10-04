@@ -31,11 +31,25 @@ namespace Math
         }
     };
 
+    template <typename T>
+    class EaseInEaseOutInterpolation
+    {
+    protected:
+        T get(const T& begin, const T& end, float interp)const
+        {
+            // http://math.stackexchange.com/questions/121720/ease-in-out-function
+            float interp2 = interp*interp;
+            return (interp2 / (interp2 + (1 - interp)*(1 - interp))) * (end-begin)+begin;
+        }
+    };
+
 
     // Since C++11
     template <typename T>
     using Lerp = Interpolation<LinearInterpolation<T>,T>;
 
+    template <typename T>
+    using EaseInEaseOut = Interpolation<EaseInEaseOutInterpolation<T>,T>;
 }
 
 #endif
