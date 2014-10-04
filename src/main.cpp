@@ -58,7 +58,7 @@ int main()
         // TODO : better input, should take time between two iteration
         // TODO : having a progressive system (aka acceleration) on key press
         // float updateSpeed = elapsedTime.asSeconds() * 1000;
-        float updateSpeed = 100;
+        float updateSpeed = 10;
         keyboard.update();
         p.move(keyboard.getMovement() * updateSpeed);
 

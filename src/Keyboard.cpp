@@ -3,6 +3,7 @@
 #include <SFML/Window.hpp>
 
 #include <vector>
+#include <iostream>
 
 #include "Math.hpp"
 
@@ -25,8 +26,12 @@ void Keyboard::update()
     {
         if ( sf::Keyboard::isKeyPressed(itPair.first))
         {
+            if ( m_pressInfo[itPair.second] == false ) // If not yet pressed
+            {
+                // Set time
+                m_pressTimes[itPair.second] = m_clock.getElapsedTime().asMilliseconds();
+            }
             m_pressInfo[itPair.second] = true;
-            m_pressTimes[itPair.second] = m_clock.getElapsedTime().asMilliseconds();
         }
         else
         {
@@ -49,9 +54,10 @@ float Keyboard::getMovementByKey(int key)const
         }
         else
         {
-            keyMovement = m_pressureInterpolator.get(delta/PRESSURE_TIME);
+            keyMovement = m_pressureInterpolator.get(delta/(float)PRESSURE_TIME);
         }
     }
+
     return keyMovement;
 }
 
@@ -59,10 +65,10 @@ sf::Vector2f Keyboard::getMovement()const
 {
     sf::Vector2f movement;
 
-    movement.x = getMovementByKey(Keyboard::LEFT);
-    movement.x = getMovementByKey(Keyboard::RIGHT);
-    movement.y = getMovementByKey(Keyboard::UP);
-    movement.y = getMovementByKey(Keyboard::DOWN);
+    movement.x = -getMovementByKey(Keyboard::LEFT);
+    movement.x += getMovementByKey(Keyboard::RIGHT);
+    movement.y = -getMovementByKey(Keyboard::UP);
+    movement.y += getMovementByKey(Keyboard::DOWN);
 
     return movement;
 }
