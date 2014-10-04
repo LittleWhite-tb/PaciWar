@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Settings.hpp"
+#include "Keyboard.hpp"
 
 #include "Barrier.hpp"
 #include "Enemy.hpp"
@@ -18,6 +19,8 @@ int main()
 	Barrier b(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
     Player p(sf::Vector2f(100,100));
     Enemy e(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
+
+    Keyboard keyboard;
 	
     sf::Clock gameClock;
     sf::Time elapsedTime = sf::Time::Zero;
@@ -41,8 +44,11 @@ int main()
             if (event.type == sf::Event::KeyPressed ||
                 event.type == sf::Event::KeyReleased )
             {
-                window.close();
-                break;
+                if ( event.key.code == sf::Keyboard::Escape )
+                {
+                    window.close();
+                    break;
+                }
             }
         }
                 
@@ -52,23 +58,9 @@ int main()
         // TODO : better input, should take time between two iteration
         // TODO : having a progressive system (aka acceleration) on key press
         // float updateSpeed = elapsedTime.asSeconds() * 1000;
-        float updateSpeed = 1;
-        if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Left) )
-        {
-            p.move(sf::Vector2f(-1.0,0.0) * updateSpeed * Settings::playerSpeed);
-        }
-        if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right) )
-        {
-            p.move(sf::Vector2f(1.0,0.0) * updateSpeed * Settings::playerSpeed);
-        }
-        if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
-        {
-            p.move(sf::Vector2f(0.0,-1.0) * updateSpeed * Settings::playerSpeed);
-        }
-        if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
-        {
-            p.move(sf::Vector2f(0.0,1.0) * updateSpeed * Settings::playerSpeed);
-        }
+        float updateSpeed = 100;
+        keyboard.update();
+        p.move(keyboard.getMovement() * updateSpeed);
 
         b.draw(window);
         // e.draw(window);
