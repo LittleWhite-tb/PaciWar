@@ -19,13 +19,17 @@ namespace Math
         {
             return InterpolationAlgorithm::get(m_begin, m_end, interp);
         }
+        static T get(const T& begin, const T& end, float interp)
+        {
+            return InterpolationAlgorithm::get(begin, end, interp);
+        }
     };
 
     template <typename T>
     class LinearInterpolation
     {
     protected:
-        T get(const T& begin, const T& end, float interp)const
+        static T get(const T& begin, const T& end, float interp)
         {
             return (end - begin) * interp + begin;
         }
@@ -35,7 +39,7 @@ namespace Math
     class EaseInEaseOutInterpolation
     {
     protected:
-        T get(const T& begin, const T& end, float interp)const
+        static T get(const T& begin, const T& end, float interp)
         {
             // http://math.stackexchange.com/questions/121720/ease-in-out-function
             float interp2 = interp*interp;
