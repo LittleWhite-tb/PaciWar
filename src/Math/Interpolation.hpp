@@ -1,5 +1,7 @@
-#ifndef __MATH_HPP__
-#define __MATH_HPP__
+#ifndef __INTERPOLATION_HPP__
+#define __INTERPOLATION_HPP__
+
+#include "Angle.hpp"
 
 namespace Math
 {
@@ -28,7 +30,7 @@ namespace Math
     template <typename T>
     class LinearInterpolation
     {
-    protected:
+    public:
         static T get(const T& begin, const T& end, float interp)
         {
             return (end - begin) * interp + begin;
@@ -38,12 +40,36 @@ namespace Math
     template <typename T>
     class EaseInEaseOutInterpolation
     {
-    protected:
+    public:
         static T get(const T& begin, const T& end, float interp)
         {
             // http://math.stackexchange.com/questions/121720/ease-in-out-function
             float interp2 = interp*interp;
             return (interp2 / (interp2 + (1 - interp)*(1 - interp))) * (end-begin)+begin;
+        }
+    };
+
+    template <typename T>
+    class EaseInEaseOutInterpolation<Angle<T> >
+    {
+    public:
+        static Angle<T> get(const Angle<T>& begin, const Angle<T>& end, float interp)
+        {
+            // http://stackoverflow.com/questions/2708476/rotation-interpolation
+            T diff = end.value-begin.value;
+            T fixedBegin = begin.value;
+            T fixedEnd = end.value;
+            if ( diff > 180 ) // Here, normal interpolation will take the longest path
+            {
+                fixedBegin += 360;
+            }
+            else if ( diff < -180 )
+            {
+                fixedEnd += 360;
+            }
+            Angle<T> result = EaseInEaseOutInterpolation<float>::get(fixedBegin,fixedEnd,interp);
+            result.wrap();
+            return result;
         }
     };
 

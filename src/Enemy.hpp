@@ -3,13 +3,15 @@
 
 #include <SFML/Graphics.hpp>
 
-class Enemy
+#include "Entity.hpp"
+
+class Enemy : public Entity
 {
 private:
-	sf::Vector2f m_position;
 
 public:
-	Enemy(const sf::Vector2f& position);
+    Enemy(const sf::Vector2f& position)
+        :Entity(position) {}
 	
 	void draw(sf::RenderWindow& window);
 };

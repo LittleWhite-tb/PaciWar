@@ -3,10 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
-class Player
+#include "Entity.hpp"
+
+class Player : public Entity
 {
 private:
-	sf::Vector2f m_position;
+    static const float SPEED;
 	
 public:
 	Player(const sf::Vector2f& position);

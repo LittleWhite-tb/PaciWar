@@ -5,7 +5,7 @@
 #include <vector>
 #include <iostream>
 
-#include "Math.hpp"
+#include "Math/Interpolation.hpp"
 
 const int Keyboard::LEFT = 0;
 const int Keyboard::RIGHT = 1;

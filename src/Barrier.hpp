@@ -3,13 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
-class Barrier
-{
-private:
-	sf::Vector2f m_position;
+#include "Entity.hpp"
 
+class Barrier : public Entity
+{
 public:
-	Barrier(const sf::Vector2f& position);
+    Barrier(const sf::Vector2f& position);
 	
 	void draw(sf::RenderWindow& window);
 };

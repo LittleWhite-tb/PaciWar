@@ -1,11 +1,5 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(const sf::Vector2f& position)
-	:m_position(position)
-{
-	
-}
-
 void Enemy::draw(sf::RenderWindow& window)
 {
 

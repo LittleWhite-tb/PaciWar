@@ -1,7 +1,7 @@
 #include "Barrier.hpp"
 
 Barrier::Barrier(const sf::Vector2f& position)
-	:m_position(position)
+    :Entity(position)
 {
 }
 	

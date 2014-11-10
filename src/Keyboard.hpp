@@ -3,7 +3,7 @@
 
 #include <SFML/System.hpp>
 
-#include "Math.hpp"
+#include "Math/Interpolation.hpp"
 
 class Keyboard
 {
