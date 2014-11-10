@@ -15,6 +15,10 @@ public:
         :m_position(position),m_rotation(0) {}
 
     virtual ~Entity() {}
+
+
+    virtual void draw(sf::RenderWindow& window)=0;
+    virtual void debugDraw(sf::RenderWindow& window) {}
 };
 
 #endif

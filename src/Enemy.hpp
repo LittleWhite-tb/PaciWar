@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Collisions/Sphere.hpp"
 #include "Entity.hpp"
 
 class Enemy : public Entity
@@ -14,6 +15,8 @@ public:
         :Entity(position) {}
 	
 	void draw(sf::RenderWindow& window);
+
+    Sphere getBoundingSphere()const;
 };
 
 #endif

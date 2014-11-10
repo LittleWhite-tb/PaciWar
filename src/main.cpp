@@ -6,6 +6,8 @@
 #include "Settings.hpp"
 #include "Keyboard.hpp"
 
+#include "Collisions/Collider.hpp"
+
 #include "Barrier.hpp"
 #include "Enemy.hpp"
 #include "Player.hpp"
@@ -19,6 +21,10 @@ int main()
 	Barrier b(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
     Player p(sf::Vector2f(100,100));
     Enemy e(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
+    std::vector<Entity*> gameEntities;
+    gameEntities.push_back(&b);
+    gameEntities.push_back(&p);
+    gameEntities.push_back(&e);
 
     Keyboard keyboard;
 	
@@ -64,6 +70,20 @@ int main()
         b.draw(window);
         // e.draw(window);
         p.draw(window);
+
+        for(Entity* pGameEntity : gameEntities)
+        {
+            pGameEntity->debugDraw(window);
+        }
+
+        if ( Collider::collides(p,b) == CollisionResult::PLAYER)
+        {
+            std::cout << "PLayer kill" << std::endl;
+        }
+        if ( Collider::collides(p,b) == CollisionResult::BARRIER)
+        {
+            std::cout << "Barrier kill" << std::endl;
+        }
 
         window.display();
 

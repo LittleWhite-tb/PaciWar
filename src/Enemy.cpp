@@ -44,3 +44,8 @@ void Enemy::draw(sf::RenderWindow& window)
 	window.draw(line);
 */
 }
+
+Sphere Enemy::getBoundingSphere()const
+{
+    return Sphere(m_position, 2);
+}

@@ -9,7 +9,7 @@ namespace Math
         T value;
 
         Angle(const T& value):value(value) {}
-        operator float()const { return this->value; }
+        operator T()const { return this->value; }
 
         void wrap()
         {

@@ -34,7 +34,8 @@ find_package(SFML 2.1 REQUIRED system window graphics audio)
 target_link_libraries(PaciWar ${SFML_LIBRARIES})
 
 include_directories(${SFML_INCLUDE_DIR}
-					./include/)
+					./include/
+					./src/)
 
 Message(${SFML_LIBRARIES})
 
