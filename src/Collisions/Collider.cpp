@@ -1,5 +1,7 @@
 #include "Collider.hpp"
 
+#include "SFML/Vector2Utils.hpp"
+
 #include "Player.hpp"
 #include "Barrier.hpp"
 #include "Enemy.hpp"
@@ -10,9 +12,7 @@
 bool Collider::collides(const Sphere& s1, const Sphere& s2)
 {
     // Pythagorian distance
-    sf::Vector2f delta = s1.center - s2.center;
-    float distance = delta.x*delta.x+delta.y*delta.y;
-
+    float distance = SFMLUtils::distance(s1.center,s2.center);
     if ( distance <= (s1.radius*s1.radius + s2.radius*s2.radius) )
     {
         return true;
