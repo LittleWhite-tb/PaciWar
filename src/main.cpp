@@ -68,7 +68,7 @@ int main()
         p.move(keyboard.getMovement());
 
         b.draw(window);
-        // e.draw(window);
+        e.draw(window);
         p.draw(window);
 
         for(Entity* pGameEntity : gameEntities)
@@ -84,6 +84,8 @@ int main()
         {
             std::cout << "Barrier kill" << std::endl;
         }
+
+        e.move(p);
 
         window.display();
 

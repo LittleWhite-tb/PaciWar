@@ -9,12 +9,14 @@
 class Enemy : public Entity
 {
 private:
+    static const float SPEED;
 
 public:
     Enemy(const sf::Vector2f& position)
         :Entity(position) {}
 	
 	void draw(sf::RenderWindow& window);
+    void move(const Entity& target);
 
     Sphere getBoundingSphere()const;
 };

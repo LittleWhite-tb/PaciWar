@@ -1,5 +1,9 @@
 #include "Enemy.hpp"
 
+#include "SFML/Vector2Utils.hpp"
+
+const float Enemy::SPEED = 1;
+
 void Enemy::draw(sf::RenderWindow& window)
 {
 
@@ -48,4 +52,12 @@ void Enemy::draw(sf::RenderWindow& window)
 Sphere Enemy::getBoundingSphere()const
 {
     return Sphere(m_position, 2);
+}
+
+void Enemy::move(const Entity &target)
+{
+    sf::Vector2f dir = target.getPosition() - m_position;
+    SFMLUtils::normalise(dir);
+
+    m_position = m_position + dir * SPEED;
 }

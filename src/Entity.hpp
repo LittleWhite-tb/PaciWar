@@ -19,6 +19,8 @@ public:
 
     virtual void draw(sf::RenderWindow& window)=0;
     virtual void debugDraw(sf::RenderWindow& window) {}
+
+    const sf::Vector2f& getPosition()const { return m_position; }
 };
 
 #endif
