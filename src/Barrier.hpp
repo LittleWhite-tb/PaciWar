@@ -24,6 +24,8 @@ public:
 
     std::vector<Sphere> getBoundingSpheres()const;
     Line getLine()const;
+
+    void update(unsigned int time);
 };
 
 #endif

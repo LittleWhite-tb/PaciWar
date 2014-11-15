@@ -86,6 +86,7 @@ int main()
         }
 
         e.move(p);
+        b.update(elapsedTime.asMilliseconds());
 
         window.display();
 
