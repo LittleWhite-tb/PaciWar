@@ -6,19 +6,12 @@ const float Barrier::heightSize = barrierSize/16.f;
 const float Barrier::midSize = barrierSize/2.f;
 const float Barrier::edgeSize = barrierSize/8.f;
 
-const sf::Vector2f Barrier::leftEdgePosition = sf::Vector2f(-midSize+Barrier::edgeSize/2.0f,0);
-const sf::Vector2f Barrier::rightEdgePosition = sf::Vector2f(midSize+Barrier::edgeSize/2.0f,0);
+const sf::Vector2f Barrier::oj_leftEdgePosition = sf::Vector2f(-midSize+Barrier::edgeSize/2.0f,0);
+const sf::Vector2f Barrier::oj_rightEdgePosition = sf::Vector2f(midSize+Barrier::edgeSize/2.0f,0);
 
 Barrier::Barrier(const sf::Vector2f& position)
     :Entity(position)
 {
-}
-
-void Barrier::getTransformedPoint(sf::Vector2f& transformedLeftEdgePosition,
-                         sf::Vector2f& transformedRightEdgePosition)const
-{
-    transformedLeftEdgePosition = rotationTransform.transformPoint(Barrier::leftEdgePosition);
-    transformedRightEdgePosition = rotationTransform.transformPoint(Barrier::rightEdgePosition);
 }
 	
 void Barrier::draw(sf::RenderWindow& window)
@@ -49,15 +42,11 @@ void Barrier::debugDraw(sf::RenderWindow& window)
     debugCircle.setOutlineThickness(1);
     debugCircle.setOutlineColor(sf::Color(0,255,0));
 
-    sf::Vector2f rotatedLeftEdgePosition;
-    sf::Vector2f rotatedRightEdgePosition;
-    getTransformedPoint(rotatedLeftEdgePosition,rotatedRightEdgePosition);
-
-    debugCircle.setPosition(m_position + rotatedLeftEdgePosition + sf::Vector2f(-Barrier::radius,-Barrier::radius));
+    debugCircle.setPosition(leftEdgePosition + sf::Vector2f(-Barrier::radius,-Barrier::radius));
 
     window.draw(debugCircle);
 
-    debugCircle.setPosition(m_position + rotatedRightEdgePosition + sf::Vector2f(-Barrier::radius,-Barrier::radius));
+    debugCircle.setPosition(rightEdgePosition + sf::Vector2f(-Barrier::radius,-Barrier::radius));
 
     window.draw(debugCircle);
 }
@@ -66,30 +55,25 @@ std::vector<Sphere> Barrier::getBoundingSpheres()const
 {
     std::vector<Sphere> spheres;
 
-    sf::Vector2f rotatedLeftEdgePosition;
-    sf::Vector2f rotatedRightEdgePosition;
-    getTransformedPoint(rotatedLeftEdgePosition,rotatedRightEdgePosition);
-
-    spheres.push_back(Sphere(sf::Vector2f(m_position + rotatedLeftEdgePosition), Barrier::radius));
-    spheres.push_back(Sphere(sf::Vector2f(m_position + rotatedRightEdgePosition), Barrier::radius));
+    spheres.push_back(Sphere(leftEdgePosition, Barrier::radius));
+    spheres.push_back(Sphere(rightEdgePosition, Barrier::radius));
 
     return spheres;
 }
 
 Line Barrier::getLine()const
 {
-    sf::Vector2f rotatedLeftEdgePosition;
-    sf::Vector2f rotatedRightEdgePosition;
-    getTransformedPoint(rotatedLeftEdgePosition,rotatedRightEdgePosition);
-
-    return Line(sf::Vector2f(m_position + rotatedLeftEdgePosition),
-                sf::Vector2f(m_position + rotatedRightEdgePosition));
+    return Line(leftEdgePosition,rightEdgePosition);
 }
 
 void Barrier::update(unsigned int time)
 {
     m_rotation+=1;
 
-    rotationTransform = sf::Transform::Identity;
-    rotationTransform.rotate(m_rotation);
+    // Update internal members
+    sf::Transform rotationMatrix;
+    rotationMatrix.rotate(m_rotation);
+
+    leftEdgePosition = rotationMatrix.transformPoint(oj_leftEdgePosition) + m_position;
+    rightEdgePosition = rotationMatrix.transformPoint(oj_rightEdgePosition) + m_position;
 }

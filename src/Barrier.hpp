@@ -16,13 +16,12 @@ private:
     static const float edgeSize;
     static const float radius;
 
-    static const sf::Vector2f leftEdgePosition;
-    static const sf::Vector2f rightEdgePosition;
+    // Object space position
+    static const sf::Vector2f oj_leftEdgePosition;
+    static const sf::Vector2f oj_rightEdgePosition;
 
-    void getTransformedPoint(sf::Vector2f& transformedLeftEdgePosition,
-                             sf::Vector2f& transformedRightEdgePosition) const;
-
-    sf::Transform rotationTransform;
+    sf::Vector2f leftEdgePosition;
+    sf::Vector2f rightEdgePosition;
 
 public:
     Barrier(const sf::Vector2f& position);
