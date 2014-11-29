@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Collisions/Sphere.hpp"
 #include "Collisions/Line.hpp"
 #include "Entity.hpp"
 
@@ -29,7 +28,7 @@ public:
 	void draw(sf::RenderWindow& window);
     void debugDraw(sf::RenderWindow& window);
 
-    std::vector<Sphere> getBoundingSpheres()const;
+    void getBoundingSpheres(BoundingSpheres &boundingSpheres)const;
     Line getLine()const;
 
     void update(unsigned int time);

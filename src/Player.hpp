@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Collisions/Sphere.hpp"
 #include "Entity.hpp"
 
 class Player : public Entity
@@ -20,7 +19,7 @@ public:
 
     void move(const sf::Vector2f& movement);
 
-    Sphere getBoundingSphere()const;
+    void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 };
 
 #endif

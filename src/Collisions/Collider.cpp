@@ -20,6 +20,21 @@ bool Collider::collides(const Sphere& s1, const Sphere& s2)
     return false;
 }
 
+bool Collider::collides(const BoundingSpheres& bs1, const BoundingSpheres& bs2)
+{
+    for (const Sphere& s1 : bs1 )
+    {
+        for (const Sphere& s2 : bs2)
+        {
+            if (Collider::collides(s1,s2))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 float dot(const sf::Vector2f& v1, const sf::Vector2f& v2)
 {
     return v1.x * v2.x + v1.y * v2.y;
@@ -82,24 +97,35 @@ bool Collider::collides(const Sphere& s, const Line& l)
 
 CollisionResult Collider::collides(const Player& player, const Barrier& barrier)
 {
-    if ( Collider::collides(player.getBoundingSphere(), barrier.getLine()) )
+    BoundingSpheres playerBoundingSpheres;
+    player.getBoundingSpheres(playerBoundingSpheres);
+
+    BoundingSpheres barrierBoundingSpheres;
+    barrier.getBoundingSpheres(barrierBoundingSpheres);
+    if ( Collider::collides(playerBoundingSpheres,barrierBoundingSpheres)) // The barrier kills the player, first
     {
-        return CollisionResult::BARRIER;
+        return CollisionResult::PLAYER;
     }
 
-    auto barrierSpheres = barrier.getBoundingSpheres();
-    for (Sphere barrierSphere : barrierSpheres )
+
+    if ( Collider::collides(playerBoundingSpheres[0], barrier.getLine()))
     {
-        if ( Collider::collides(player.getBoundingSphere(),barrierSphere))
-        {
-            return CollisionResult::PLAYER;
-        }
+        return CollisionResult::BARRIER;
     }
 
     return CollisionResult::NONE;
 }
 
-bool Collider::collides(const Player& player, const Enemy& enemy)
+CollisionResult Collider::collides(const Player& player, const Enemy& enemy)
 {
-    return collides(player.getBoundingSphere(), enemy.getBoundingSphere());
+    BoundingSpheres playerBoundingSpheres;
+    player.getBoundingSpheres(playerBoundingSpheres);
+
+    BoundingSpheres enemyBoundingSpheres;
+    enemy.getBoundingSpheres(enemyBoundingSpheres);
+    if ( collides(playerBoundingSpheres, enemyBoundingSpheres) )
+    {
+        CollisionResult::PLAYER;
+    }
+    return CollisionResult::NONE;
 }

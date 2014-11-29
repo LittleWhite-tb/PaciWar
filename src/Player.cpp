@@ -76,7 +76,7 @@ void Player::move(const sf::Vector2f& movement)
     }
 }
 
-Sphere Player::getBoundingSphere()const
+void Player::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 {
-    return Sphere(m_position, Player::radius);
+    boundingSpheres.push_back(Sphere(m_position, Player::radius));
 }

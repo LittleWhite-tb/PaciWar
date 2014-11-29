@@ -49,9 +49,9 @@ void Enemy::draw(sf::RenderWindow& window)
 */
 }
 
-Sphere Enemy::getBoundingSphere()const
+void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 {
-    return Sphere(m_position, 2);
+    boundingSpheres.push_back(Sphere(m_position, 2));
 }
 
 void Enemy::move(const Entity &target)

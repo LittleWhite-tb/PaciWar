@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Collisions/Sphere.hpp"
 #include "Entity.hpp"
 
 class Enemy : public Entity
@@ -18,7 +17,7 @@ public:
 	void draw(sf::RenderWindow& window);
     void move(const Entity& target);
 
-    Sphere getBoundingSphere()const;
+    void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 };
 
 #endif

@@ -51,14 +51,10 @@ void Barrier::debugDraw(sf::RenderWindow& window)
     window.draw(debugCircle);
 }
 
-std::vector<Sphere> Barrier::getBoundingSpheres()const
+void Barrier::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 {
-    std::vector<Sphere> spheres;
-
-    spheres.push_back(Sphere(leftEdgePosition, Barrier::radius));
-    spheres.push_back(Sphere(rightEdgePosition, Barrier::radius));
-
-    return spheres;
+    boundingSpheres.push_back(Sphere(leftEdgePosition, Barrier::radius));
+    boundingSpheres.push_back(Sphere(rightEdgePosition, Barrier::radius));
 }
 
 Line Barrier::getLine()const

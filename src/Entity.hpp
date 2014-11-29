@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Collisions/Sphere.hpp"
+
 class Entity{
 private:
 
@@ -21,6 +23,8 @@ public:
     virtual void debugDraw(sf::RenderWindow& window) {}
 
     const sf::Vector2f& getPosition()const { return m_position; }
+
+    virtual void getBoundingSpheres(BoundingSpheres& boundingSpheres)const=0;
 };
 
 #endif
