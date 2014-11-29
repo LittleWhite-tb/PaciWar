@@ -3,6 +3,7 @@
 #include "SFML/Vector2Utils.hpp"
 
 const float Enemy::SPEED = 1;
+const float Enemy::SIZE = 2;
 
 void Enemy::draw(sf::RenderWindow& window)
 {
@@ -51,7 +52,7 @@ void Enemy::draw(sf::RenderWindow& window)
 
 void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 {
-    boundingSpheres.push_back(Sphere(m_position, 2));
+    boundingSpheres.push_back(Sphere(m_position, Enemy::SIZE));
 }
 
 void Enemy::move(const Entity &target)

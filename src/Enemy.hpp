@@ -18,6 +18,8 @@ public:
     void move(const Entity& target);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
+
+    static const float SIZE;
 };
 
 #endif

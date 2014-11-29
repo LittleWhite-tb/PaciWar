@@ -11,6 +11,9 @@
 #include "Barrier.hpp"
 #include "Enemy.hpp"
 #include "Player.hpp"
+
+#include "SpawnGrid.hpp"
+
 #include "globals.hpp"
 
 int main()
@@ -20,21 +23,25 @@ int main()
 	
 	Barrier b(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
     Player p(sf::Vector2f(100,100));
-    Enemy e(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
+    std::vector<Enemy> enemies;
+    enemies.reserve(100); // Stupid hack :(
+    enemies.push_back(Enemy(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2)));
     std::vector<Entity*> gameEntities;
     gameEntities.push_back(&b);
     gameEntities.push_back(&p);
-    gameEntities.push_back(&e);
+    gameEntities.push_back(&enemies[enemies.size()-1]);
+    SpawnGrid grid(sf::Vector2f(WIN_WIDTH,WIN_HEIGHT),3);
 
     Keyboard keyboard;
 	
     sf::Clock gameClock;
     sf::Time elapsedTime = sf::Time::Zero;
     sf::Time previousStartTime  = gameClock.getElapsedTime();
+    sf::Time previonsSpawnTime;
 
 	while (window.isOpen())
     {
-        elapsedTime = gameClock.restart() - previousStartTime;
+        elapsedTime = gameClock.getElapsedTime() - previousStartTime;
 
         // TODO : Find better to catch window closure, or
         // filter most event to not take too much time here (mouse events)
@@ -67,9 +74,11 @@ int main()
         keyboard.update();
         p.move(keyboard.getMovement());
 
-        b.draw(window);
-        e.draw(window);
-        p.draw(window);
+
+        for(Entity* pGameEntity : gameEntities)
+        {
+            pGameEntity->draw(window);
+        }
 
         for(Entity* pGameEntity : gameEntities)
         {
@@ -85,12 +94,30 @@ int main()
             std::cout << "Barrier kill" << std::endl;
         }
 
-        e.move(p);
+        for (Enemy& e : enemies)
+        {
+            e.move(p);
+        }
         b.update(elapsedTime.asMilliseconds());
 
         window.display();
 
         previousStartTime = gameClock.getElapsedTime();
+        if ((gameClock.getElapsedTime() - previonsSpawnTime).asMilliseconds() > 1000 )
+        {
+            std::cout << "Spawn" << std::endl;
+            std::vector<Enemy> newEnemies;
+            grid.spawnEnemies(p.getPosition(),newEnemies,2);
+            std::cout << "Got enemies" << std::endl;
+            for ( unsigned int i = 0 ; i < newEnemies.size() ; i++)
+            {
+                enemies.push_back(newEnemies[i]);
+                gameEntities.push_back(&enemies[enemies.size()-1]);
+            }
+            std::cout << "Spawn finished (now : " << enemies.size() << ")" << std::endl;
+
+            previonsSpawnTime = gameClock.getElapsedTime();
+        }
         // std::cout << "Elapsed time (s): " << elapsedTime.asSeconds() << std::endl;
     }
 	
