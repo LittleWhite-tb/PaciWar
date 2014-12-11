@@ -18,7 +18,7 @@ SpawnGrid::SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridS
     }
 }
 
-void SpawnGrid::spawnEnemies(const sf::Vector2f& playerPosition, std::vector<Enemy> &enemies, unsigned int number)
+void SpawnGrid::spawnEnemies(const sf::Vector2f& playerPosition, std::vector<std::shared_ptr<Enemy> > &enemies, unsigned int number)
 {
     // Select a point
     unsigned int selectedPoint=0;
@@ -32,8 +32,8 @@ void SpawnGrid::spawnEnemies(const sf::Vector2f& playerPosition, std::vector<Ene
     for (unsigned int i = 0 ; i < number ; i++)
     {
         // TODO, this *5 is a bit weird. I have to look why I need it
-        enemies.push_back(Enemy(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE*5) * (i%3),
-                                             enemyPosition.y + (Enemy::SIZE*Enemy::SIZE*5) * (i/3))));
+        enemies.push_back(std::make_shared<Enemy>(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE*5) * (i%3),
+                                                               enemyPosition.y + (Enemy::SIZE*Enemy::SIZE*5) * (i/3))));
     }
 
     m_lastPointUsed=selectedPoint;
