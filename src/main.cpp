@@ -30,7 +30,7 @@ int main()
     gameEntities.push_back(&b);
     gameEntities.push_back(&p);
     gameEntities.push_back(&enemies[enemies.size()-1]);
-    SpawnGrid grid(sf::Vector2f(WIN_WIDTH,WIN_HEIGHT),3);
+    SpawnGrid grid(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20),3);
 
     Keyboard keyboard;
 	

@@ -10,7 +10,6 @@
 class SpawnGrid
 {
 private:
-    sf::Vector2f m_gridSize;
     std::vector<sf::Vector2f> m_spawnPoints;
     unsigned int m_lastPointUsed;
 
@@ -18,7 +17,7 @@ private:
 
 
 public:
-    SpawnGrid(const sf::Vector2f& gridSize, unsigned int subDivision);
+    SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision);
 
     void spawnEnemies(const sf::Vector2f& playerPosition, std::vector<Enemy>& enemies, unsigned int number);
 };

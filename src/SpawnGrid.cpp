@@ -2,14 +2,20 @@
 
 #include "RandomGenerator.hpp"
 
-SpawnGrid::SpawnGrid(const sf::Vector2f& gridSize, unsigned int subDivision)
-    :m_gridSize(gridSize),m_randomDistribution(0,subDivision*subDivision),m_lastPointUsed(-1)
+#include <iostream>
+
+SpawnGrid::SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision)
+    :m_randomDistribution(0,subDivision*subDivision),m_lastPointUsed(-1)
 {
+    float width = gridSize.x;
+    float height = gridSize.y;
+
     for (unsigned int x = 0 ; x < subDivision ; x++ )
     {
         for (unsigned int y = 0 ; y < subDivision ; y++)
         {
-            m_spawnPoints.push_back(sf::Vector2f(gridSize.x/subDivision * x, gridSize.y/subDivision * y));
+            m_spawnPoints.push_back(sf::Vector2f(gridPosition.x + (width/subDivision) * x,
+                                                 gridPosition.y + (height/subDivision) * y));
         }
     }
 }
@@ -28,6 +34,8 @@ void SpawnGrid::spawnEnemies(const sf::Vector2f &playerPosition, std::vector<Ene
     {
         enemies.push_back(Enemy(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE) * (i%3),
                                              enemyPosition.y + (Enemy::SIZE*Enemy::SIZE) * (i/3))));
+        std::cout << "New ennemy X : " << enemyPosition.x + (Enemy::SIZE*Enemy::SIZE) * (i%3) << " ; Y : " <<
+                                          enemyPosition.y + (Enemy::SIZE*Enemy::SIZE) * (i/3) << std::endl;
     }
 
     m_lastPointUsed=selectedPoint;
