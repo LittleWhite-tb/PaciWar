@@ -2,8 +2,6 @@
 
 #include "RandomGenerator.hpp"
 
-#include <iostream>
-
 SpawnGrid::SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision)
     :m_randomDistribution(0,subDivision*subDivision-1),m_lastPointUsed(-1)
 {
@@ -33,10 +31,9 @@ void SpawnGrid::spawnEnemies(const sf::Vector2f& playerPosition, std::vector<Ene
 
     for (unsigned int i = 0 ; i < number ; i++)
     {
-        enemies.push_back(Enemy(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE) * (i%3),
-                                             enemyPosition.y + (Enemy::SIZE*Enemy::SIZE) * (i/3))));
-        std::cout << "New ennemy X : " << enemyPosition.x + (Enemy::SIZE*Enemy::SIZE) * (i%3) << " ; Y : " <<
-                                          enemyPosition.y + (Enemy::SIZE*Enemy::SIZE) * (i/3) << std::endl;
+        // TODO, this *5 is a bit weird. I have to look why I need it
+        enemies.push_back(Enemy(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE*5) * (i%3),
+                                             enemyPosition.y + (Enemy::SIZE*Enemy::SIZE*5) * (i/3))));
     }
 
     m_lastPointUsed=selectedPoint;
