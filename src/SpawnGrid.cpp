@@ -5,7 +5,7 @@
 #include <iostream>
 
 SpawnGrid::SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision)
-    :m_randomDistribution(0,subDivision*subDivision),m_lastPointUsed(-1)
+    :m_randomDistribution(0,subDivision*subDivision-1),m_lastPointUsed(-1)
 {
     float width = gridSize.x;
     float height = gridSize.y;
@@ -20,7 +20,7 @@ SpawnGrid::SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridS
     }
 }
 
-void SpawnGrid::spawnEnemies(const sf::Vector2f &playerPosition, std::vector<Enemy> &enemies, unsigned int number)
+void SpawnGrid::spawnEnemies(const sf::Vector2f& playerPosition, std::vector<Enemy> &enemies, unsigned int number)
 {
     // Select a point
     unsigned int selectedPoint=0;
@@ -30,6 +30,7 @@ void SpawnGrid::spawnEnemies(const sf::Vector2f &playerPosition, std::vector<Ene
     }while (m_lastPointUsed == selectedPoint);
 
     sf::Vector2f enemyPosition = m_spawnPoints[selectedPoint];
+
     for (unsigned int i = 0 ; i < number ; i++)
     {
         enemies.push_back(Enemy(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE) * (i%3),
