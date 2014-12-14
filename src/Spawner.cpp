@@ -15,6 +15,7 @@ Spawner::Spawner(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize)
 
 void Spawner::spawnBarriers(const sf::Vector2f& playerPosition, std::vector<std::shared_ptr<Barrier> > &barriers)
 {
+    // TODO Avoid spawning to close to the player
     for (unsigned int i = 0 ; i < m_numberBarrierBySpawn ; i++)
     {
         sf::Vector2f pos;
