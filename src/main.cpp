@@ -25,7 +25,7 @@ int main()
     std::shared_ptr<Barrier> b = std::make_shared<Barrier>(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
     std::shared_ptr<Player> p = std::make_shared<Player>(sf::Vector2f(100,100));
     std::vector<std::shared_ptr<Enemy> > enemies;
-    // enemies.reserve(100); // Stupid hack :(
+
     enemies.push_back(std::make_shared<Enemy>(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2)));
     std::vector<std::shared_ptr<Entity> > gameEntities;
     gameEntities.push_back(b);
@@ -97,7 +97,7 @@ int main()
 
         for (auto e : enemies)
         {
-            e->move(*p);
+            e->move(enemies, *p);
         }
         b->update(elapsedTime.asMilliseconds());
 

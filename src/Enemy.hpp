@@ -1,6 +1,8 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
 
+#include <memory>
+
 #include <SFML/Graphics.hpp>
 
 #include "Entity.hpp"
@@ -15,7 +17,7 @@ public:
         :Entity(position) {}
 	
 	void draw(sf::RenderWindow& window);
-    void move(const Entity& target);
+    void move(const std::vector<std::shared_ptr<Enemy> >& enemies, const Entity& target);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 

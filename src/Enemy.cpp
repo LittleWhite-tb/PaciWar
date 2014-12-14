@@ -1,5 +1,6 @@
 #include "Enemy.hpp"
 
+#include <Collisions/Collider.hpp>
 #include "SFML/Vector2Utils.hpp"
 
 const float Enemy::SPEED = 1;
@@ -55,10 +56,30 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
     boundingSpheres.push_back(Sphere(m_position, Enemy::SIZE));
 }
 
-void Enemy::move(const Entity &target)
+void Enemy::move(const std::vector<std::shared_ptr<Enemy> > &enemies, const Entity &target)
 {
     sf::Vector2f dir = target.getPosition() - m_position;
     SFMLUtils::normalise(dir);
 
+    sf::Vector2f oldPosition = m_position;
     m_position = m_position + dir * SPEED;
+
+    // Enemies avoidance
+    BoundingSpheres self;
+    self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
+
+    for (auto e : enemies)
+    {
+        if (e.get() != this) // Avoid colliding with myself
+        {
+            BoundingSpheres other;
+            e->getBoundingSpheres(other);
+
+            if ( Collider::collides(other,self))
+            {
+                m_position = oldPosition;
+                break;
+            }
+        }
+    }
 }
