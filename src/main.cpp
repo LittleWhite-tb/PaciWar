@@ -13,7 +13,7 @@
 #include "Enemy.hpp"
 #include "Player.hpp"
 
-#include "SpawnGrid.hpp"
+#include "Spawner.hpp"
 
 #include "globals.hpp"
 
@@ -22,23 +22,26 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WIN_WIDTH,WIN_HEIGHT), Settings::windowName);
 	window.setVerticalSyncEnabled(true);
 	
-    std::shared_ptr<Barrier> b = std::make_shared<Barrier>(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2));
     std::shared_ptr<Player> p = std::make_shared<Player>(sf::Vector2f(100,100));
-    std::vector<std::shared_ptr<Enemy> > enemies;
 
+    std::vector<std::shared_ptr<Barrier> > barriers;
+    barriers.push_back(std::make_shared<Barrier>(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2)));
+
+    std::vector<std::shared_ptr<Enemy> > enemies;
     enemies.push_back(std::make_shared<Enemy>(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2)));
     std::vector<std::shared_ptr<Entity> > gameEntities;
-    gameEntities.push_back(b);
+    gameEntities.push_back(barriers[barriers.size()-1]);
     gameEntities.push_back(p);
     gameEntities.push_back(enemies[enemies.size()-1]);
-    SpawnGrid grid(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20),3);
+    Spawner spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20));
 
     Keyboard keyboard;
 	
     sf::Clock gameClock;
     sf::Time elapsedTime = sf::Time::Zero;
     sf::Time previousStartTime  = gameClock.getElapsedTime();
-    sf::Time previonsSpawnTime;
+    sf::Time previonsEnemySpawnTime;
+    sf::Time previonsBarrierSpawnTime;
 
 	while (window.isOpen())
     {
@@ -86,35 +89,53 @@ int main()
             pGameEntity->debugDraw(window);
         }
 
-        if ( Collider::collides(*p,*b) == CollisionResult::PLAYER)
+        for (auto b : barriers)
         {
-            std::cout << "PLayer kill" << std::endl;
-        }
-        if ( Collider::collides(*p,*b) == CollisionResult::BARRIER)
-        {
-            std::cout << "Barrier kill" << std::endl;
+            if ( Collider::collides(*p,*b) == CollisionResult::PLAYER)
+            {
+                std::cout << "PLayer kill" << std::endl;
+            }
+            if ( Collider::collides(*p,*b) == CollisionResult::BARRIER)
+            {
+                std::cout << "Barrier kill" << std::endl;
+            }
+
+            b->update(elapsedTime.asMilliseconds());
         }
 
         for (auto e : enemies)
         {
             e->move(enemies, *p);
         }
-        b->update(elapsedTime.asMilliseconds());
+
 
         window.display();
 
         previousStartTime = gameClock.getElapsedTime();
-        if ((gameClock.getElapsedTime() - previonsSpawnTime).asMilliseconds() > 1000 )
+        if ((gameClock.getElapsedTime() - previonsEnemySpawnTime).asMilliseconds() > 1000 )
         {
             std::vector<std::shared_ptr<Enemy> > newEnemies;
-            grid.spawnEnemies(p->getPosition(),newEnemies,2);
+            spawner.spawnEnemies(p->getPosition(),newEnemies);
             for ( unsigned int i = 0 ; i < newEnemies.size() ; i++)
             {
                 enemies.push_back(newEnemies[i]);
                 gameEntities.push_back(newEnemies[i]);
             }
 
-            previonsSpawnTime = gameClock.getElapsedTime();
+            previonsEnemySpawnTime = gameClock.getElapsedTime();
+        }
+
+        if ((gameClock.getElapsedTime() - previonsBarrierSpawnTime).asMilliseconds() > 5000 )
+        {
+            std::vector<std::shared_ptr<Barrier> > newBarriers;
+            spawner.spawnBarriers(p->getPosition(),newBarriers);
+            for ( unsigned int i = 0 ; i < newBarriers.size() ; i++)
+            {
+                barriers.push_back(newBarriers[i]);
+                gameEntities.push_back(newBarriers[i]);
+            }
+
+            previonsBarrierSpawnTime = gameClock.getElapsedTime();
         }
         // std::cout << "Elapsed time (s): " << elapsedTime.asSeconds() << std::endl;
     }
