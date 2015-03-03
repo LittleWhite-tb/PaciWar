@@ -32,6 +32,11 @@ void Game::render()
     }
 #endif
 
+    for(auto particleSystem : m_particleSystem)
+    {
+        particleSystem->draw(m_targetWindow);
+    }
+
     m_targetWindow.display();
 }
 
@@ -83,6 +88,21 @@ void Game::update()
             m_entities.push_back(newBarriers[i]);
         }
     }
+
+    for(auto particleSystem : m_particleSystem)
+    {
+        particleSystem->update(m_gameTime.getElapsedTime());
+    }
+
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        spawnParticles();
+    }
+}
+
+void Game::spawnParticles()
+{
+    m_particleSystem.push_back(std::make_shared<ParticleSystem>(ParticleSystem(sf::Vector2f(sf::Mouse::getPosition(m_targetWindow)))));
 }
 
 void Game::checkClosure()

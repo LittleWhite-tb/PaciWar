@@ -9,6 +9,7 @@
 #include "Player.hpp"
 #include "Barrier.hpp"
 #include "Enemy.hpp"
+#include "ParticleSystem.hpp"
 
 #include "Spawner.hpp"
 #include "GameTime.hpp"
@@ -25,6 +26,7 @@ private:
     std::vector<std::shared_ptr<Enemy> > m_enemies;
 
     std::vector<std::shared_ptr<Entity> > m_entities;
+    std::vector<std::shared_ptr<ParticleSystem> > m_particleSystem;
 
     Spawner m_spawner;
 
@@ -34,6 +36,7 @@ private:
     void render();
     void update();
 
+    void spawnParticles();
     void checkClosure();
 
 public:
