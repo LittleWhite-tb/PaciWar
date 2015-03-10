@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <SFML/Graphics.hpp>
+#include "ObjectPool.hpp"
 
 class ParticleSystem
 {
@@ -16,6 +17,28 @@ class ParticleSystem
         float speed;
 
         sf::Vector3f color;
+
+
+        void draw(sf::RenderWindow& window);
+        void update(unsigned int time);
+        bool isValid()const;
+
+    };
+
+    struct ParticleDrawer
+    {
+        bool operator()(sf::RenderWindow& window, const Particle& p)
+        {
+            sf::Vertex pV[] =
+            {
+                sf::Vertex(p.position),
+                sf::Vertex(p.position-p.direction*Particle::SIZE),
+            };
+
+            window.draw(pV,2,sf::Lines);
+
+            return false;
+        }
     };
 
     static constexpr size_t MAX_PARTICULES = 100;
@@ -23,25 +46,20 @@ class ParticleSystem
 private:
     sf::Vector2f m_spawnPoint;
 
-    std::vector<Particle> m_particles;
-    size_t m_particlesAlive;
+    Pool<Particle> m_particles;
 
     std::uniform_real_distribution<float> m_randomFloatDistribution;
     std::uniform_real_distribution<float> m_randomSpeedDistribution;
 
-    void genParticle(size_t index);
-    void killParticle(size_t index);
-
+    void genParticle();
 
 public:
     ParticleSystem(const sf::Vector2f& position);
 
-
-
     void draw(sf::RenderWindow& window);
     void update(unsigned int time);
 
-    size_t numberParticlesAlive()const { return m_particlesAlive; }
+    std::size_t numberParticlesAlive()const { return m_particles.nbAlive(); }
 };
 
 #endif

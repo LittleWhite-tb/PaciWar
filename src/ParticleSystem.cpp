@@ -2,17 +2,49 @@
 
 #include "RandomGenerator.hpp"
 
+#include <functional>
+
+void ParticleSystem::Particle::draw(sf::RenderWindow &window)
+{
+    sf::Vertex pV[] =
+    {
+        sf::Vertex(position),
+        sf::Vertex(position-direction*Particle::SIZE),
+    };
+
+    window.draw(pV,2,sf::Lines);
+}
+
+void ParticleSystem::Particle::update(unsigned int time)
+{
+    sf::Vector2f dir(direction.x * speed * time,
+                     direction.y * speed * time);
+    position = position + dir;
+    speed -= 0.01 * time;
+
+}
+
+bool ParticleSystem::Particle::isValid()const
+{
+    if ( speed < 0 )
+    {
+        return true;
+    }
+
+    return false;
+}
+
 ParticleSystem::ParticleSystem(const sf::Vector2f& position)
-    :m_spawnPoint(position),m_particles(ParticleSystem::MAX_PARTICULES),m_particlesAlive(ParticleSystem::MAX_PARTICULES),
+    :m_spawnPoint(position),m_particles(ParticleSystem::MAX_PARTICULES),
      m_randomFloatDistribution(-1.0f,1.0f),m_randomSpeedDistribution(0.0f,2.f)
 {
     for (size_t i = 0 ; i < ParticleSystem::MAX_PARTICULES ; ++i )
     {
-        genParticle(i);
+        genParticle();
     }
 }
 
-void ParticleSystem::genParticle(size_t index)
+void ParticleSystem::genParticle()
 {
     Particle p;
 
@@ -25,44 +57,21 @@ void ParticleSystem::genParticle(size_t index)
     p.color.y = m_randomFloatDistribution(RandomGenerator::get());
     p.color.z = m_randomFloatDistribution(RandomGenerator::get());
 
-    m_particles[index] = std::move(p);
-}
-
-void ParticleSystem::killParticle(size_t index)
-{
-    if ( m_particlesAlive > 0 )
-    {
-        std::swap(m_particles[index],m_particles[m_particlesAlive-1]);
-
-        m_particlesAlive--;
-    }
+    m_particles.add(p);
 }
 
 void ParticleSystem::draw(sf::RenderWindow& window)
 {
-    for (size_t i = 0 ; i < m_particlesAlive ; ++i)
-    {
-        sf::Vertex pV[] =
-        {
-            sf::Vertex(m_particles[i].position),
-            sf::Vertex(m_particles[i].position-m_particles[i].direction*Particle::SIZE),
-        };
-
-        window.draw(pV,2,sf::Lines);
-    }
+    m_particles.apply(std::bind(&ParticleSystem::Particle::draw,
+                                std::placeholders::_1,
+                                std::ref(window)));
 }
 
 void ParticleSystem::update(unsigned int time)
 {
-    for (size_t i = 0 ; i < m_particlesAlive ; ++i)
-    {
-        sf::Vector2f dir(m_particles[i].direction.x * m_particles[i].speed * time,
-                         m_particles[i].direction.y * m_particles[i].speed * time);
-        m_particles[i].position = m_particles[i].position + dir;
-        m_particles[i].speed -= 0.01 * time;
-        if ( m_particles[i].speed < 0 )
-        {
-            killParticle(i);
-        }
-    }
+    m_particles.update(std::bind(&ParticleSystem::Particle::update,
+                                 std::placeholders::_1,
+                                 time));
+    m_particles.purge(std::bind(&ParticleSystem::Particle::isValid,
+                               std::placeholders::_1));
 }
