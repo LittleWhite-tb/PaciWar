@@ -63,9 +63,9 @@ void ParticleSystem::genParticle()
 void ParticleSystem::draw(sf::RenderWindow& window)
 {
 
-    m_particles.apply(std::bind(&ParticleSystem::Particle::draw,
-                                std::placeholders::_1,
-                                std::ref(window)));
+    m_particles.update(std::bind(&ParticleSystem::Particle::draw,
+                                 std::placeholders::_1,
+                                 std::ref(window)));
 }
 
 void ParticleSystem::update(unsigned int time)

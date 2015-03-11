@@ -36,11 +36,6 @@ public:
         }
     }
 
-    void apply(std::function<void(T&)> fct)
-    {
-        std::for_each(m_pool.begin(),m_pool.end(), fct);
-    }
-
     void update(std::function<void(T&)> fct)
     {
         std::for_each(m_pool.begin(),m_pool.end(), fct);
