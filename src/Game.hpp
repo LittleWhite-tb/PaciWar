@@ -6,6 +6,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "ObjectPool.hpp"
+
 #include "Player.hpp"
 #include "Barrier.hpp"
 #include "Enemy.hpp"
@@ -26,7 +28,7 @@ private:
     std::vector<std::shared_ptr<Enemy> > m_enemies;
 
     std::vector<std::shared_ptr<Entity> > m_entities;
-    std::vector<std::shared_ptr<ParticleSystem> > m_particleSystem;
+    Pool<ParticleSystem> m_particleSystemPool;
 
     Spawner m_spawner;
 
@@ -41,6 +43,7 @@ private:
 
 public:
     Game(sf::RenderWindow& targetWindow);
+    ~Game();
 
     bool run();
 };

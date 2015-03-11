@@ -25,22 +25,6 @@ class ParticleSystem
 
     };
 
-    struct ParticleDrawer
-    {
-        bool operator()(sf::RenderWindow& window, const Particle& p)
-        {
-            sf::Vertex pV[] =
-            {
-                sf::Vertex(p.position),
-                sf::Vertex(p.position-p.direction*Particle::SIZE),
-            };
-
-            window.draw(pV,2,sf::Lines);
-
-            return false;
-        }
-    };
-
     static constexpr size_t MAX_PARTICULES = 100;
 
 private:
@@ -60,6 +44,7 @@ public:
     void update(unsigned int time);
 
     std::size_t numberParticlesAlive()const { return m_particles.nbAlive(); }
+    bool isDead()const { return m_particles.nbAlive() == 0; }
 };
 
 #endif

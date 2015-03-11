@@ -11,9 +11,15 @@
 Game::Game(sf::RenderWindow& targetWindow)
     :m_targetWindow(targetWindow),
      m_player(std::make_shared<Player>(sf::Vector2f(200,100))),
-     m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20))
+     m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20)),
+     m_particleSystemPool(10000)
 {
     m_entities.push_back(m_player);
+}
+
+Game::~Game()
+{
+    std::cout << "Nb final PS : " << m_particleSystemPool.nbAlive() << std::endl;
 }
 
 void Game::render()
@@ -32,10 +38,9 @@ void Game::render()
     }
 #endif
 
-    for(auto particleSystem : m_particleSystem)
-    {
-        particleSystem->draw(m_targetWindow);
-    }
+    m_particleSystemPool.update(std::bind(&ParticleSystem::draw,
+                                          std::placeholders::_1,
+                                          std::ref(m_targetWindow)));
 
     m_targetWindow.display();
 }
@@ -89,10 +94,12 @@ void Game::update()
         }
     }
 
-    for(auto particleSystem : m_particleSystem)
-    {
-        particleSystem->update(m_gameTime.getElapsedTime());
-    }
+
+    m_particleSystemPool.update(std::bind(&ParticleSystem::update,
+                                          std::placeholders::_1,
+                                          m_gameTime.getElapsedTime()));
+    m_particleSystemPool.purge(std::bind(&ParticleSystem::isDead,
+                                          std::placeholders::_1));
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -102,7 +109,8 @@ void Game::update()
 
 void Game::spawnParticles()
 {
-    m_particleSystem.push_back(std::make_shared<ParticleSystem>(ParticleSystem(sf::Vector2f(sf::Mouse::getPosition(m_targetWindow)))));
+    ParticleSystem p(sf::Vector2f(sf::Mouse::getPosition(m_targetWindow)));
+    m_particleSystemPool.add(p);
 }
 
 void Game::checkClosure()
