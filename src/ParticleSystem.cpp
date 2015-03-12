@@ -35,8 +35,7 @@ bool ParticleSystem::Particle::isValid()const
 }
 
 ParticleSystem::ParticleSystem(const sf::Vector2f& position)
-    :m_spawnPoint(position),m_particles(ParticleSystem::MAX_PARTICULES),
-     m_randomFloatDistribution(-1.0f,1.0f),m_randomSpeedDistribution(0.0f,2.f)
+    :m_spawnPoint(position),m_particles(ParticleSystem::MAX_PARTICULES)
 {
     for (size_t i = 0 ; i < ParticleSystem::MAX_PARTICULES ; ++i )
     {
@@ -49,13 +48,13 @@ void ParticleSystem::genParticle()
     Particle p;
 
     p.position = m_spawnPoint;
-    p.direction.x = m_randomFloatDistribution(RandomGenerator::get());
-    p.direction.y = m_randomFloatDistribution(RandomGenerator::get());
-    p.speed = m_randomSpeedDistribution(RandomGenerator::get());
+    p.direction.x = RandomGenerator::getFloat(-1.0,1.0);
+    p.direction.y = RandomGenerator::getFloat(-1.0,1.0);
+    p.speed = RandomGenerator::getFloat(0.0,2.0);
 
-    p.color.x = m_randomFloatDistribution(RandomGenerator::get());
-    p.color.y = m_randomFloatDistribution(RandomGenerator::get());
-    p.color.z = m_randomFloatDistribution(RandomGenerator::get());
+    p.color.x = RandomGenerator::getFloat(-1.0,1.0);
+    p.color.y = RandomGenerator::getFloat(-1.0,1.0);
+    p.color.z = RandomGenerator::getFloat(0.0,2.0);
 
     m_particles.add(p);
 }

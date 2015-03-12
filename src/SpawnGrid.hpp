@@ -14,8 +14,6 @@ private:
     std::vector<sf::Vector2f> m_spawnPoints;
     unsigned int m_lastPointUsed;
 
-    std::uniform_int_distribution<unsigned int> m_randomDistribution;
-
 
 public:
     SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision);

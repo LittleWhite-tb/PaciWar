@@ -17,11 +17,6 @@ Game::Game(sf::RenderWindow& targetWindow)
     m_entities.push_back(m_player);
 }
 
-Game::~Game()
-{
-    std::cout << "Nb final PS : " << m_particleSystemPool.nbAlive() << std::endl;
-}
-
 void Game::render()
 {
     m_targetWindow.clear(sf::Color::Black);

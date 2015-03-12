@@ -15,9 +15,6 @@ private:
     unsigned int m_numberBarrierBySpawn;
     unsigned int m_numberEnemiesBySpawn;
 
-    std::uniform_int_distribution<unsigned int> m_randomWidthDistribution;
-    std::uniform_int_distribution<unsigned int> m_randomHeightDistribution;
-
 public:
     Spawner(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize);
 

@@ -4,7 +4,9 @@
 #include <vector>
 
 #include <SFML/Graphics.hpp>
+
 #include "ObjectPool.hpp"
+#include "RandomGenerator.hpp"
 
 class ParticleSystem
 {
@@ -31,9 +33,6 @@ private:
     sf::Vector2f m_spawnPoint;
 
     Pool<Particle> m_particles;
-
-    std::uniform_real_distribution<float> m_randomFloatDistribution;
-    std::uniform_real_distribution<float> m_randomSpeedDistribution;
 
     void genParticle();
 

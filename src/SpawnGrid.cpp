@@ -3,7 +3,7 @@
 #include "RandomGenerator.hpp"
 
 SpawnGrid::SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision)
-    :m_randomDistribution(0,subDivision*subDivision-1),m_lastPointUsed(-1)
+    :m_lastPointUsed(-1)
 {
     float width = gridSize.x;
     float height = gridSize.y;
@@ -24,7 +24,7 @@ void SpawnGrid::spawnEnemies(const sf::Vector2f& playerPosition, std::vector<std
     unsigned int selectedPoint=0;
     do
     {
-        selectedPoint = m_randomDistribution(RandomGenerator::get());
+        selectedPoint = RandomGenerator::getInt(0,m_spawnPoints.size()-1);
     }while (m_lastPointUsed == selectedPoint);
 
     sf::Vector2f enemyPosition = m_spawnPoints[selectedPoint];

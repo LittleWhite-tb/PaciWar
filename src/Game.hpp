@@ -43,7 +43,6 @@ private:
 
 public:
     Game(sf::RenderWindow& targetWindow);
-    ~Game();
 
     bool run();
 };
