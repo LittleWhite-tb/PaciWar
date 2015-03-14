@@ -10,28 +10,16 @@
 
 Game::Game(sf::RenderWindow& targetWindow)
     :m_targetWindow(targetWindow),
-     m_player(std::make_shared<Player>(sf::Vector2f(200,100))),
      m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20)),
      m_particleSystemPool(10000)
 {
-    m_entities.push_back(m_player);
 }
 
 void Game::render()
 {
     m_targetWindow.clear(sf::Color::Black);
 
-    for(auto pGameEntity : m_entities)
-    {
-        pGameEntity->draw(m_targetWindow);
-    }
-
-#ifdef NDEBUG
-    for(auto pGameEntity : m_entities)
-    {
-        pGameEntity->debugDraw(m_targetWindow);
-    }
-#endif
+	m_objects.draw(m_targetWindow);
 
     m_particleSystemPool.update(std::bind(&ParticleSystem::draw,
                                           std::placeholders::_1,
@@ -45,8 +33,9 @@ void Game::update()
     m_gameTime.update();
     m_keyboard.update();
 
-    m_player->move(m_keyboard.getMovement());
-
+    m_objects.getPlayer().move(m_keyboard.getMovement());
+	m_objects.update(m_gameTime.getElapsedTime());
+/*
     for (auto b : m_barriers)
     {
         if ( Collider::collides(*m_player,*b) == CollisionResult::PLAYER)
@@ -57,35 +46,26 @@ void Game::update()
         {
             std::cout << "Barrier kill" << std::endl;
         }
-
-        b->update(m_gameTime.getElapsedTime());
     }
-
-    for (auto e : m_enemies)
-    {
-        e->move(m_enemies, *m_player);
-    }
-
+*/
 
     if ( m_gameTime.shouldSpawnEnemy())
     {
         std::vector<std::shared_ptr<Enemy> > newEnemies;
-        m_spawner.spawnEnemies(m_player->getPosition(),newEnemies);
+        m_spawner.spawnEnemies(m_objects.getPlayer().getPosition(),newEnemies);
         for ( unsigned int i = 0 ; i < newEnemies.size() ; i++)
         {
-            m_enemies.push_back(newEnemies[i]);
-            m_entities.push_back(newEnemies[i]);
+            // m_enemies.push_back(newEnemies[i]);
         }
     }
 
     if ( m_gameTime.shouldSpawnBarrier())
     {
         std::vector<std::shared_ptr<Barrier> > newBarriers;
-        m_spawner.spawnBarriers(m_player->getPosition(),newBarriers);
+        m_spawner.spawnBarriers(m_objects.getPlayer().getPosition(),newBarriers);
         for ( unsigned int i = 0 ; i < newBarriers.size() ; i++)
         {
-            m_barriers.push_back(newBarriers[i]);
-            m_entities.push_back(newBarriers[i]);
+            // m_barriers.push_back(newBarriers[i]);
         }
     }
 

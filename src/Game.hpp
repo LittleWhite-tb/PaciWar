@@ -8,9 +8,7 @@
 
 #include "ObjectPool.hpp"
 
-#include "Player.hpp"
-#include "Barrier.hpp"
-#include "Enemy.hpp"
+#include "ObjectBank.hpp"
 #include "ParticleSystem.hpp"
 
 #include "Spawner.hpp"
@@ -23,11 +21,7 @@ class Game
 private:
     sf::RenderWindow& m_targetWindow;
 
-    std::shared_ptr<Player> m_player;
-    std::vector<std::shared_ptr<Barrier> > m_barriers;
-    std::vector<std::shared_ptr<Enemy> > m_enemies;
-
-    std::vector<std::shared_ptr<Entity> > m_entities;
+    ObjectBank m_objects;
     Pool<ParticleSystem> m_particleSystemPool;
 
     Spawner m_spawner;

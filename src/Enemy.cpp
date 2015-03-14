@@ -62,7 +62,7 @@ void Enemy::move(const std::vector<std::shared_ptr<Enemy> > &enemies, const Enti
     SFMLUtils::normalise(dir);
 
     sf::Vector2f oldPosition = m_position;
-    m_position = m_position + dir * SPEED;
+    m_position = m_position + dir * SPEED; // TODO : this is not game delta time dependant
 
     // Enemies avoidance
     BoundingSpheres self;
