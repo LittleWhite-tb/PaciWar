@@ -2,7 +2,8 @@
 #define SPAWNER_HPP
 
 #include "SpawnGrid.hpp"
-#include "Barrier.hpp"
+
+class ObjectBank;
 
 class Spawner
 {
@@ -18,8 +19,8 @@ private:
 public:
     Spawner(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize);
 
-    void spawnBarriers(const sf::Vector2f& playerPosition, std::vector<std::shared_ptr<Barrier> > &barriers);
-    void spawnEnemies(const sf::Vector2f& playerPosition, std::vector<std::shared_ptr<Enemy> > &enemies);
+    void spawnBarriers(ObjectBank& objects);
+    void spawnEnemies(ObjectBank& objects);
 };
 
 #endif

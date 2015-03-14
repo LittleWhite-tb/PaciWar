@@ -51,22 +51,12 @@ void Game::update()
 
     if ( m_gameTime.shouldSpawnEnemy())
     {
-        std::vector<std::shared_ptr<Enemy> > newEnemies;
-        m_spawner.spawnEnemies(m_objects.getPlayer().getPosition(),newEnemies);
-        for ( unsigned int i = 0 ; i < newEnemies.size() ; i++)
-        {
-            // m_enemies.push_back(newEnemies[i]);
-        }
+        m_spawner.spawnEnemies(m_objects);
     }
 
     if ( m_gameTime.shouldSpawnBarrier())
     {
-        std::vector<std::shared_ptr<Barrier> > newBarriers;
-        m_spawner.spawnBarriers(m_objects.getPlayer().getPosition(),newBarriers);
-        for ( unsigned int i = 0 ; i < newBarriers.size() ; i++)
-        {
-            // m_barriers.push_back(newBarriers[i]);
-        }
+		m_spawner.spawnBarriers(m_objects);
     }
 
 

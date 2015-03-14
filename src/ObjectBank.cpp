@@ -8,6 +8,16 @@ ObjectBank::ObjectBank()
 	
 }
 
+void ObjectBank::createBarrier(Barrier& b)
+{
+	m_barriersPool.add(b);
+}
+
+void ObjectBank::createEnemy(Enemy& e)
+{
+	m_enemiesPool.add(e);
+}
+
 void ObjectBank::draw(sf::RenderWindow& targetWindow)
 {
 	m_barriersPool.update(std::bind(&Entity::draw,

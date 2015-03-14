@@ -1,12 +1,11 @@
 #ifndef SPAWNGRID_HPP
 #define SPAWNGRID_HPP
 
-#include <memory>
-#include <random>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
-#include "Enemy.hpp"
+class ObjectBank;
 
 class SpawnGrid
 {
@@ -18,7 +17,7 @@ private:
 public:
     SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision);
 
-    void spawnEnemies(const sf::Vector2f& playerPosition, std::vector<std::shared_ptr<Enemy> > &enemies, unsigned int number);
+    void spawnEnemies(ObjectBank& objects, unsigned int number);
 };
 
 #endif

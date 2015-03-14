@@ -16,6 +16,9 @@ private:
 	
 public:
 	ObjectBank();
+	
+	void createBarrier(Barrier& b);
+	void createEnemy(Enemy& e);
 
 	void draw(sf::RenderWindow& targetWindow);
 	void update(unsigned int deltaTime);
