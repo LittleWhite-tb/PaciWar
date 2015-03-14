@@ -3,7 +3,7 @@
 #include <Collisions/Collider.hpp>
 #include "SFML/Vector2Utils.hpp"
 
-const float Enemy::SPEED = 1;
+const float Enemy::SPEED = 0.04;
 const float Enemy::SIZE = 2;
 
 void Enemy::draw(sf::RenderWindow& window)
