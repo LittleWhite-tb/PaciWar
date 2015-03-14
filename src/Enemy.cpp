@@ -56,14 +56,14 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
     boundingSpheres.push_back(Sphere(m_position, Enemy::SIZE));
 }
 
-void Enemy::move(const std::vector<std::shared_ptr<Enemy> > &enemies, const Entity &target)
+void Enemy::move(unsigned int deltaTime, const Entity &target)
 {
     sf::Vector2f dir = target.getPosition() - m_position;
     SFMLUtils::normalise(dir);
 
     sf::Vector2f oldPosition = m_position;
-    m_position = m_position + dir * SPEED; // TODO : this is not game delta time dependant
-
+    m_position = m_position + dir * (SPEED * deltaTime);
+/*
     // Enemies avoidance
     BoundingSpheres self;
     self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
@@ -82,4 +82,5 @@ void Enemy::move(const std::vector<std::shared_ptr<Enemy> > &enemies, const Enti
             }
         }
     }
+*/
 }

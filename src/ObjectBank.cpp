@@ -28,14 +28,13 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 	m_player.draw(targetWindow);
 }
 
-void ObjectBank::update(unsigned int time)
+void ObjectBank::update(unsigned int deltaTime)
 {
 	m_barriersPool.update(std::bind(&Barrier::update,
 									  std::placeholders::_1,
-									  time));
-	/*
+									  deltaTime));
 	m_enemiesPool.update(std::bind(&Enemy::move,
 									  std::placeholders::_1,
+									  deltaTime,
 									  std::ref(m_player)));
-	*/
 }

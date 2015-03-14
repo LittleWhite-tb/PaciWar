@@ -17,7 +17,7 @@ public:
         :Entity(position) {}
 	
 	void draw(sf::RenderWindow& window);
-    void move(const std::vector<std::shared_ptr<Enemy> >& enemies, const Entity& target);
+    void move(unsigned int deltaTime, const Entity& target);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 

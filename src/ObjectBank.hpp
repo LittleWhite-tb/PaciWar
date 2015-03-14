@@ -18,7 +18,7 @@ public:
 	ObjectBank();
 
 	void draw(sf::RenderWindow& targetWindow);
-	void update(unsigned int time);
+	void update(unsigned int deltaTime);
 	
 	Player& getPlayer() { return m_player; }
 	const Player& getPlayer()const { return m_player; }
