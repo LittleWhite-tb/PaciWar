@@ -9,6 +9,9 @@
 #include "Sphere.hpp"
 #include "Line.hpp"
 
+static const CollisionResult NoCollision = CollisionResult();
+static const BarrierCollisionResult NoBarrierCollision = BarrierCollisionResult();
+
 bool Collider::collides(const Sphere& s1, const Sphere& s2)
 {
     // Pythagorian distance
@@ -113,7 +116,7 @@ BarrierCollisionResult Collider::collides(const Player& player, const Barrier& b
         return BarrierCollisionResult(&player, &barrier, BarrierCollisionResult::BARRIER);
     }
 
-    return BarrierCollisionResult(nullptr,nullptr,BarrierCollisionResult::PLAYER);
+    return NoBarrierCollision;
 }
 
 CollisionResult Collider::collides(const Player& player, const Enemy& enemy)
@@ -125,7 +128,7 @@ CollisionResult Collider::collides(const Player& player, const Enemy& enemy)
     enemy.getBoundingSpheres(enemyBoundingSpheres);
     if ( collides(playerBoundingSpheres, enemyBoundingSpheres) )
     {
-        CollisionResult(&player, &enemy);
+        return CollisionResult(&player, &enemy);
     }
-    return CollisionResult();
+    return NoCollision;
 }

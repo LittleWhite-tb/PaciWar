@@ -28,13 +28,16 @@ public:
     enum Loser
     {
         PLAYER,
-        BARRIER
+        BARRIER,
+        NONE // Should not be on if collided == false
     };
 
 private:
     Loser loser;
 
 public:
+    BarrierCollisionResult():
+        CollisionResult(),loser(NONE) {}
     BarrierCollisionResult(const Entity* const elem1, const Entity* const elem2,
                            Loser loser)
         :CollisionResult(elem1,elem2),loser(loser) {}

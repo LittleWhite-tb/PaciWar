@@ -55,10 +55,10 @@ void ObjectBank::update(unsigned int deltaTime)
 
 bool ObjectBank::detectCollision()
 {
-    Pool<Barrier>::const_iterator it = m_barriersPool.begin();
-    for ( ; it != m_barriersPool.end() ; ++it)
+    Pool<Barrier>::const_iterator itBarrier = m_barriersPool.begin();
+    for ( ; itBarrier != m_barriersPool.end() ; ++itBarrier)
     {
-        BarrierCollisionResult bcr = Collider::collides(m_player,*it);
+        BarrierCollisionResult bcr = Collider::collides(m_player,*itBarrier);
         if ( bcr.collided )
         {
             switch (bcr.getLoser())
@@ -72,6 +72,16 @@ bool ObjectBank::detectCollision()
             }
 
             break;
+        }
+    }
+
+    Pool<Enemy>::const_iterator itEnemies = m_enemiesPool.begin();
+    for ( ; itEnemies != m_enemiesPool.end() ; ++itEnemies )
+    {
+        CollisionResult cr = Collider::collides(m_player,*itEnemies);
+        if ( cr.collided )
+        {
+            std::cout << "Player kill by enemy" << std::endl;
         }
     }
 }
