@@ -35,19 +35,8 @@ void Game::update()
 
     m_objects.getPlayer().move(m_keyboard.getMovement());
 	m_objects.update(m_gameTime.getElapsedTime());
-/*
-    for (auto b : m_barriers)
-    {
-        if ( Collider::collides(*m_player,*b) == CollisionResult::PLAYER)
-        {
-            std::cout << "PLayer kill" << std::endl;
-        }
-        if ( Collider::collides(*m_player,*b) == CollisionResult::BARRIER)
-        {
-            std::cout << "Barrier kill" << std::endl;
-        }
-    }
-*/
+
+    m_objects.detectCollision();
 
     if ( m_gameTime.shouldSpawnEnemy())
     {

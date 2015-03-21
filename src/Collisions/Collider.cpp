@@ -95,7 +95,7 @@ bool Collider::collides(const Sphere& s, const Line& l)
     }
 }
 
-CollisionResult Collider::collides(const Player& player, const Barrier& barrier)
+BarrierCollisionResult Collider::collides(const Player& player, const Barrier& barrier)
 {
     BoundingSpheres playerBoundingSpheres;
     player.getBoundingSpheres(playerBoundingSpheres);
@@ -104,16 +104,16 @@ CollisionResult Collider::collides(const Player& player, const Barrier& barrier)
     barrier.getBoundingSpheres(barrierBoundingSpheres);
     if ( Collider::collides(playerBoundingSpheres,barrierBoundingSpheres)) // The barrier kills the player, first
     {
-        return CollisionResult::PLAYER;
+        return BarrierCollisionResult(&player,&barrier, BarrierCollisionResult::PLAYER);
     }
 
 
     if ( Collider::collides(playerBoundingSpheres[0], barrier.getLine()))
     {
-        return CollisionResult::BARRIER;
+        return BarrierCollisionResult(&player, &barrier, BarrierCollisionResult::BARRIER);
     }
 
-    return CollisionResult::NONE;
+    return BarrierCollisionResult(nullptr,nullptr,BarrierCollisionResult::PLAYER);
 }
 
 CollisionResult Collider::collides(const Player& player, const Enemy& enemy)
@@ -125,7 +125,7 @@ CollisionResult Collider::collides(const Player& player, const Enemy& enemy)
     enemy.getBoundingSpheres(enemyBoundingSpheres);
     if ( collides(playerBoundingSpheres, enemyBoundingSpheres) )
     {
-        CollisionResult::PLAYER;
+        CollisionResult(&player, &enemy);
     }
-    return CollisionResult::NONE;
+    return CollisionResult();
 }

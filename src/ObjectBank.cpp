@@ -1,5 +1,9 @@
 #include "ObjectBank.hpp"
 
+#include "Collisions/Collider.hpp"
+
+#include <iostream>
+
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
 	 m_enemiesPool(1000),
@@ -47,4 +51,27 @@ void ObjectBank::update(unsigned int deltaTime)
 									  std::placeholders::_1,
 									  deltaTime,
 									  std::ref(m_player)));
+}
+
+bool ObjectBank::detectCollision()
+{
+    Pool<Barrier>::const_iterator it = m_barriersPool.begin();
+    for ( ; it != m_barriersPool.end() ; ++it)
+    {
+        BarrierCollisionResult bcr = Collider::collides(m_player,*it);
+        if ( bcr.collided )
+        {
+            switch (bcr.getLoser())
+            {
+                case BarrierCollisionResult::BARRIER:
+                    std::cout << "Barrier kill" << std::endl;
+                    break;
+                case BarrierCollisionResult::PLAYER:
+                    std::cout << "Player kill" << std::endl;
+                    break;
+            }
+
+            break;
+        }
+    }
 }

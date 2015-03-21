@@ -7,12 +7,39 @@ class Line;
 class Player;
 class Barrier;
 class Enemy;
+class Entity;
 
-enum CollisionResult
+class CollisionResult
 {
-    NONE,
-    PLAYER,
-    BARRIER
+public:
+    bool collided;
+    const Entity* const elem1;
+    const Entity* const elem2;
+
+    CollisionResult()
+        :collided(false),elem1(nullptr),elem2(nullptr) {}
+    CollisionResult(const Entity* const elem1, const Entity* const elem2)
+        :collided(true),elem1(elem1),elem2(elem2) {}
+};
+
+class BarrierCollisionResult : public CollisionResult
+{
+public:
+    enum Loser
+    {
+        PLAYER,
+        BARRIER
+    };
+
+private:
+    Loser loser;
+
+public:
+    BarrierCollisionResult(const Entity* const elem1, const Entity* const elem2,
+                           Loser loser)
+        :CollisionResult(elem1,elem2),loser(loser) {}
+
+    bool getLoser()const { return loser; }
 };
 
 class Collider
@@ -24,7 +51,7 @@ private:
 public:
     static bool collides(const BoundingSpheres& bs1, const BoundingSpheres& bs2);
 
-    static CollisionResult collides(const Player& player, const Barrier& barrier);
+    static BarrierCollisionResult collides(const Player& player, const Barrier& barrier);
     static CollisionResult collides(const Player& player, const Enemy& enemy);
 };
 

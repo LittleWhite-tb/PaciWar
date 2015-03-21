@@ -16,12 +16,14 @@ private:
 	
 public:
 	ObjectBank();
-	
-	void createBarrier(Barrier& b);
+
+    void createBarrier(Barrier& b);
 	void createEnemy(Enemy& e);
 
 	void draw(sf::RenderWindow& targetWindow);
 	void update(unsigned int deltaTime);
+
+    bool detectCollision();
 	
 	Player& getPlayer() { return m_player; }
 	const Player& getPlayer()const { return m_player; }
