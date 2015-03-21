@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include "Barrier.hpp"
 #include "Enemy.hpp"
+#include "RadialExplosion.hpp"
 
 #include "Sphere.hpp"
 #include "Line.hpp"
@@ -130,5 +131,23 @@ CollisionResult Collider::collides(const Player& player, const Enemy& enemy)
     {
         return CollisionResult(&player, &enemy);
     }
+    return NoCollision;
+}
+
+CollisionResult Collider::collides(const Enemy &enemy, const RadialExplosion &explosion)
+{
+    BoundingSpheres enemyBoundingSpheres;
+    enemy.getBoundingSpheres(enemyBoundingSpheres);
+
+    for (const Sphere& s : enemyBoundingSpheres )
+    {
+        float distance = SFMLUtils::distance(s.center,explosion.getCenter());
+        if ( distance < (explosion.getRadius() + RadialExplosion::EFFECT_SIZE * explosion.getRadius() + RadialExplosion::EFFECT_SIZE) &&
+             distance > (explosion.getRadius() - RadialExplosion::EFFECT_SIZE * explosion.getRadius() - RadialExplosion::EFFECT_SIZE))
+        {
+            return CollisionResult(&enemy,nullptr); // HACK : Using nullptr is really big hack and will cause some bugs
+        }
+    }
+
     return NoCollision;
 }

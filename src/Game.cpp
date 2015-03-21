@@ -11,7 +11,7 @@
 Game::Game(sf::RenderWindow& targetWindow)
     :m_targetWindow(targetWindow),
      m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20)),
-     m_particleSystemPool(10000)
+     m_particleSystemPool(10000),m_explosionsPool(10)
 {
 }
 
@@ -19,11 +19,14 @@ void Game::render()
 {
     m_targetWindow.clear(sf::Color::Black);
 
-	m_objects.draw(m_targetWindow);
+    m_objects.draw(m_targetWindow);
 
     m_particleSystemPool.update(std::bind(&ParticleSystem::draw,
                                           std::placeholders::_1,
                                           std::ref(m_targetWindow)));
+    m_explosionsPool.update(std::bind(&RadialExplosion::draw,
+                                      std::placeholders::_1,
+                                      std::ref(m_targetWindow)));
 
     m_targetWindow.display();
 }
@@ -55,9 +58,19 @@ void Game::update()
     m_particleSystemPool.purge(std::bind(&ParticleSystem::isDead,
                                           std::placeholders::_1));
 
+    m_explosionsPool.update(std::bind(&RadialExplosion::update,
+                                      std::placeholders::_1,
+                                      m_gameTime.getElapsedTime()));
+    m_explosionsPool.purge(std::bind(&RadialExplosion::isValid,
+                                     std::placeholders::_1));
+
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         spawnParticles();
+    }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+    {
+        spawnExplosion();
     }
 }
 
@@ -65,6 +78,12 @@ void Game::spawnParticles()
 {
     ParticleSystem p(sf::Vector2f(sf::Mouse::getPosition(m_targetWindow)));
     m_particleSystemPool.add(p);
+}
+
+void Game::spawnExplosion()
+{
+    RadialExplosion explo(sf::Vector2f(sf::Mouse::getPosition(m_targetWindow)));
+    m_explosionsPool.add(explo);
 }
 
 void Game::checkClosure()

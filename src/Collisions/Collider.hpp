@@ -9,6 +9,8 @@ class Barrier;
 class Enemy;
 class Entity;
 
+class RadialExplosion;
+
 class CollisionResult
 {
 public:
@@ -56,6 +58,7 @@ public:
 
     static BarrierCollisionResult collides(const Player& player, const Barrier& barrier);
     static CollisionResult collides(const Player& player, const Enemy& enemy);
+    static CollisionResult collides(const Enemy& enemy, const RadialExplosion& explosion);
 };
 
 #endif
