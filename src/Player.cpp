@@ -11,9 +11,6 @@
 
 #include "Math/Interpolation.hpp"
 
-const float Player::SPEED=10.0f;
-const float Player::radius=6.0f;
-
 Player::Player(const sf::Vector2f& position)
     :Entity(position)
 {
@@ -56,10 +53,10 @@ void Player::debugDraw(sf::RenderWindow& window)
     window.draw(debugCircle);
 }
 
-void Player::move(const sf::Vector2f& movement)
+void Player::move(const sf::Vector2f& movement, float time)
 {
     // Movement here, should be betweend 0 and 1.
-    m_position += movement * SPEED;
+    m_position += movement * SPEED * time;
     if (movement.x != 0 ||
         movement.y != 0)
     {
@@ -78,7 +75,7 @@ void Player::move(const sf::Vector2f& movement)
 
         // Extra rotation, since the initial ship is drawn up
         targetRotation+=90;
-        m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.2f);
+        m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.3f);
     }
 }
 

@@ -9,11 +9,11 @@
 class Barrier : public Entity
 {
 private:
-    static const int barrierSize = 96;
-    static const float heightSize;
-    static const float midSize;
-    static const float edgeSize;
-    static const float radius;
+    static constexpr int barrierSize = 96;
+    static constexpr float heightSize = barrierSize/16.f;
+    static constexpr float midSize = barrierSize/2.f;
+    static constexpr float edgeSize = barrierSize/8.f;
+    static constexpr float radius = 5.0f;
 
     // Object space position
     static const sf::Vector2f oj_leftEdgePosition;
@@ -21,6 +21,8 @@ private:
 
     sf::Vector2f leftEdgePosition;
     sf::Vector2f rightEdgePosition;
+
+    static constexpr float ROTATION_SPEED = 0.015f;
 
 public:
     Barrier(const sf::Vector2f& position);

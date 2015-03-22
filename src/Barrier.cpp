@@ -1,11 +1,5 @@
 #include "Barrier.hpp"
 
-const float Barrier::radius = 5.0f;
-
-const float Barrier::heightSize = barrierSize/16.f;
-const float Barrier::midSize = barrierSize/2.f;
-const float Barrier::edgeSize = barrierSize/8.f;
-
 const sf::Vector2f Barrier::oj_leftEdgePosition = sf::Vector2f(-midSize+Barrier::edgeSize/2.0f,0);
 const sf::Vector2f Barrier::oj_rightEdgePosition = sf::Vector2f(midSize-Barrier::edgeSize/2.0f,0);
 
@@ -64,7 +58,7 @@ Line Barrier::getLine()const
 
 void Barrier::update(unsigned int time)
 {
-    m_rotation+=1;
+    m_rotation+=ROTATION_SPEED*time;
 
     // Update internal members
     sf::Transform rotationMatrix;

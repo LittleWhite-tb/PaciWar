@@ -10,7 +10,7 @@
 class Enemy : public Entity
 {
 private:
-    static const float SPEED;
+    static constexpr float SPEED = 0.25f;
 
 public:
     Enemy(const sf::Vector2f& position)
@@ -21,7 +21,7 @@ public:
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 
-    static const float SIZE;
+    static constexpr float SIZE = 2;
 };
 
 #endif

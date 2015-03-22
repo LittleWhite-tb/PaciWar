@@ -8,8 +8,8 @@
 class Player : public Entity
 {
 private:
-    static const float SPEED;
-    static const float radius;
+    static constexpr float SPEED = 0.5f;
+    static constexpr float radius = 6.0f;
 	
 public:
 	Player(const sf::Vector2f& position);
@@ -17,7 +17,7 @@ public:
 	void draw(sf::RenderWindow& window);
     void debugDraw(sf::RenderWindow& window);
 
-    void move(const sf::Vector2f& movement);
+    void move(const sf::Vector2f& movement, float time);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 };

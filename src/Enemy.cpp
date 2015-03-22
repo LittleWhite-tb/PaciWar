@@ -3,12 +3,8 @@
 #include <Collisions/Collider.hpp>
 #include "SFML/Vector2Utils.hpp"
 
-const float Enemy::SPEED = 0.04;
-const float Enemy::SIZE = 2;
-
 void Enemy::draw(sf::RenderWindow& window)
 {
-
 	sf::Vertex lines[] =
 	{
         sf::Vertex(sf::Vector2f(0, 10)),

@@ -65,9 +65,9 @@ sf::Vector2f Keyboard::getMovement()const
 {
     sf::Vector2f movement;
 
-    movement.x = -getMovementByKey(Keyboard::LEFT);
+    movement.x -= getMovementByKey(Keyboard::LEFT);
     movement.x += getMovementByKey(Keyboard::RIGHT);
-    movement.y = -getMovementByKey(Keyboard::UP);
+    movement.y -= getMovementByKey(Keyboard::UP);
     movement.y += getMovementByKey(Keyboard::DOWN);
 
     return movement;

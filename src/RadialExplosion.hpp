@@ -9,8 +9,8 @@ private:
     sf::Vector2f m_spawnPoint;
     float m_radius;
 
-    static constexpr float RADIUS_MAX = 100;
-    static constexpr float GROWTH_SPEED = 0.02f;
+    static constexpr float RADIUS_MAX = 75;
+    static constexpr float GROWTH_SPEED = 0.6f;
 
 public:
     RadialExplosion(const sf::Vector2f& position)
