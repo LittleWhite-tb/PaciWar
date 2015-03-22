@@ -1,7 +1,5 @@
 #include "RadialExplosion.hpp"
 
-#include <iostream>
-
 void RadialExplosion::draw(sf::RenderWindow& window)
 {
     float outerCircleRadius = m_radius + EFFECT_SIZE/2;
