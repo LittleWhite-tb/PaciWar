@@ -37,7 +37,6 @@ void RadialExplosion::draw(sf::RenderWindow& window)
 void RadialExplosion::update(unsigned int time)
 {
     m_radius+=GROWTH_SPEED*time;
-    std::cout<<"Radius : " << m_radius << std::endl;
 }
 
 

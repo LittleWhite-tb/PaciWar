@@ -6,13 +6,13 @@
 
 class RandomGenerator
 {
-    private:
-        static std::mt19937 m_generator;
+private:
+    static std::mt19937 m_generator;
 
-    public:
+public:
 
-        static float getFloat(float min, float max);
-        static int getInt(int min, int max);
+    static float getFloat(float min, float max);
+    static int getInt(int min, int max);
 };
 
 #endif
