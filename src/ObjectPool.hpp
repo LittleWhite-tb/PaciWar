@@ -9,7 +9,7 @@ template <typename T>
 class Pool
 {
 public:
-    // typedef typename std::vector<T>::iterator iterator;
+    typedef typename std::vector<T>::iterator iterator;
     typedef typename std::vector<T>::const_iterator const_iterator;
 private:
     std::vector<T> m_pool;
@@ -82,14 +82,22 @@ public:
         return m_pool.size();
     }
 
-    typename Pool<T>::const_iterator begin()const
+    typename Pool<T>::iterator begin()
     {
         return m_pool.begin();
     }
+    typename Pool<T>::const_iterator cbegin()const
+    {
+        return m_pool.cbegin();
+    }
 
-    typename Pool<T>::const_iterator end()const
+    typename Pool<T>::iterator end()
     {
         return m_pool.end();
+    }
+    typename Pool<T>::const_iterator cend()const
+    {
+        return m_pool.cend();
     }
 };
 

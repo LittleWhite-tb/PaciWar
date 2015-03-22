@@ -7,9 +7,23 @@
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
 	 m_enemiesPool(1000),
-	 m_player(sf::Vector2f(200,100))
+     m_player(sf::Vector2f(200,100)),
+     m_particleSystemPool(100),
+     m_explosionsPool(25)
 {
 	
+}
+
+void ObjectBank::createParticleSystem(const sf::Vector2f& position)
+{
+    ParticleSystem ps(position);
+    m_particleSystemPool.add(ps);
+}
+
+void ObjectBank::createExplosion(const sf::Vector2f& position)
+{
+    RadialExplosion explo(position);
+    m_explosionsPool.add(explo);
 }
 
 void ObjectBank::createBarrier(Barrier& b)
@@ -31,6 +45,13 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 									  std::placeholders::_1,
 									  std::ref(targetWindow)));
 
+    m_particleSystemPool.update(std::bind(&ParticleSystem::draw,
+                                          std::placeholders::_1,
+                                          std::ref(targetWindow)));
+    m_explosionsPool.update(std::bind(&RadialExplosion::draw,
+                                      std::placeholders::_1,
+                                      std::ref(targetWindow)));
+
 #ifdef NDEBUG
 	m_barriersPool.update(std::bind(&Entity::debugDraw,
 									  std::placeholders::_1,
@@ -51,11 +72,25 @@ void ObjectBank::update(unsigned int deltaTime)
 									  std::placeholders::_1,
 									  deltaTime,
 									  std::ref(m_player)));
+
+    m_particleSystemPool.update(std::bind(&ParticleSystem::update,
+                                          std::placeholders::_1,
+                                          deltaTime));
+    m_particleSystemPool.purge(std::bind(&ParticleSystem::isDead,
+                                          std::placeholders::_1));
+
+    m_explosionsPool.update(std::bind(&RadialExplosion::update,
+                                      std::placeholders::_1,
+                                      deltaTime));
+    m_explosionsPool.purge(std::bind(&RadialExplosion::isValid,
+                                     std::placeholders::_1));
+
+    applyCollision();
 }
 
-bool ObjectBank::detectCollision()
+void ObjectBank::applyCollision()
 {
-    Pool<Barrier>::const_iterator itBarrier = m_barriersPool.begin();
+    Pool<Barrier>::iterator itBarrier = m_barriersPool.begin();
     for ( ; itBarrier != m_barriersPool.end() ; ++itBarrier)
     {
         BarrierCollisionResult bcr = Collider::collides(m_player,*itBarrier);
@@ -64,7 +99,8 @@ bool ObjectBank::detectCollision()
             switch (bcr.getLoser())
             {
                 case BarrierCollisionResult::BARRIER:
-                    std::cout << "Barrier kill" << std::endl;
+                    createExplosion(itBarrier->getPosition());
+                    itBarrier->kill();
                     break;
                 case BarrierCollisionResult::PLAYER:
                     std::cout << "Player kill" << std::endl;
@@ -75,13 +111,33 @@ bool ObjectBank::detectCollision()
         }
     }
 
-    Pool<Enemy>::const_iterator itEnemies = m_enemiesPool.begin();
+    Pool<Enemy>::iterator itEnemies = m_enemiesPool.begin();
     for ( ; itEnemies != m_enemiesPool.end() ; ++itEnemies )
     {
-        CollisionResult cr = Collider::collides(m_player,*itEnemies);
-        if ( cr.collided )
+        Pool<RadialExplosion>::const_iterator itExplosion = m_explosionsPool.begin();
+        for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
         {
-            std::cout << "Player kill by enemy" << std::endl;
+            CollisionResult cr = Collider::collides(*itEnemies, *itExplosion);
+            if ( cr.collided )
+            {
+                itEnemies->kill();
+                createParticleSystem(itEnemies->getPosition());
+            }
+        }
+
+        if ( ! itEnemies->isDead() )
+        {
+            CollisionResult cr = Collider::collides(m_player,*itEnemies);
+            if ( cr.collided )
+            {
+                std::cout << "Player kill by enemy" << std::endl;
+            }
         }
     }
+
+    // Purge all collided elements
+    m_barriersPool.purge(std::bind(&Entity::isDead,
+                                   std::placeholders::_1));
+    m_enemiesPool.purge(std::bind(&Entity::isDead,
+                                  std::placeholders::_1));
 }

@@ -21,7 +21,7 @@ public:
     bool isValid()const;
 
     float getRadius()const { return m_radius; }
-    sf::Vector2f& getCenter()const { m_spawnPoint; }
+    const sf::Vector2f& getCenter()const { return m_spawnPoint; }
 
     static constexpr float EFFECT_SIZE = 20;
 };

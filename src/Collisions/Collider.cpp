@@ -1,5 +1,7 @@
 #include "Collider.hpp"
 
+#include <cmath>
+
 #include "SFML/Vector2Utils.hpp"
 
 #include "Player.hpp"
@@ -17,7 +19,7 @@ bool Collider::collides(const Sphere& s1, const Sphere& s2)
 {
     // Pythagorian distance
     float distance = SFMLUtils::distance(s1.center,s2.center);
-    if ( distance <= (s1.radius*s1.radius + s2.radius*s2.radius) )
+    if ( distance <= std::pow(s1.radius + s2.radius,2) )
     {
         return true;
     }
@@ -142,8 +144,8 @@ CollisionResult Collider::collides(const Enemy &enemy, const RadialExplosion &ex
     for (const Sphere& s : enemyBoundingSpheres )
     {
         float distance = SFMLUtils::distance(s.center,explosion.getCenter());
-        if ( distance < (explosion.getRadius() + RadialExplosion::EFFECT_SIZE * explosion.getRadius() + RadialExplosion::EFFECT_SIZE) &&
-             distance > (explosion.getRadius() - RadialExplosion::EFFECT_SIZE * explosion.getRadius() - RadialExplosion::EFFECT_SIZE))
+        if ( distance < std::pow(explosion.getRadius() + RadialExplosion::EFFECT_SIZE/2,2) &&
+             distance > std::pow(explosion.getRadius() - RadialExplosion::EFFECT_SIZE/2,2))
         {
             return CollisionResult(&enemy,nullptr); // HACK : Using nullptr is really big hack and will cause some bugs
         }
