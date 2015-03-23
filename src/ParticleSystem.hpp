@@ -19,6 +19,13 @@ class ParticleSystem
         float speed;
 
         sf::Vector3f color;
+        
+        Particle(const sf::Vector2f& position,
+                 const sf::Vector2f& direction,
+                 const sf::Vector3f& color,
+                 float speed)
+                 :position(position),direction(direction),color(color),
+                  speed(speed) {}
 
 
         void draw(sf::RenderWindow& window);
@@ -33,8 +40,6 @@ private:
     sf::Vector2f m_spawnPoint;
 
     Pool<Particle> m_particles;
-
-    void genParticle();
 
 public:
     ParticleSystem(const sf::Vector2f& position);

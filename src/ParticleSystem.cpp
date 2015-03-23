@@ -39,24 +39,11 @@ ParticleSystem::ParticleSystem(const sf::Vector2f& position)
 {
     for (size_t i = 0 ; i < ParticleSystem::MAX_PARTICULES ; ++i )
     {
-        genParticle();
+        m_particles.add(m_spawnPoint,
+                        sf::Vector2f(RandomGenerator::getFloat(-1.0,1.0),RandomGenerator::getFloat(-1.0,1.0)),
+                        sf::Vector3f(RandomGenerator::getFloat(-1.0,1.0),RandomGenerator::getFloat(-1.0,1.0),RandomGenerator::getFloat(-1.0,1.0)),
+                        RandomGenerator::getFloat(0.0,2.0));
     }
-}
-
-void ParticleSystem::genParticle()
-{
-    Particle p;
-
-    p.position = m_spawnPoint;
-    p.direction.x = RandomGenerator::getFloat(-1.0,1.0);
-    p.direction.y = RandomGenerator::getFloat(-1.0,1.0);
-    p.speed = RandomGenerator::getFloat(0.0,2.0);
-
-    p.color.x = RandomGenerator::getFloat(-1.0,1.0);
-    p.color.y = RandomGenerator::getFloat(-1.0,1.0);
-    p.color.z = RandomGenerator::getFloat(0.0,2.0);
-
-    m_particles.add(p);
 }
 
 void ParticleSystem::draw(sf::RenderWindow& window)
