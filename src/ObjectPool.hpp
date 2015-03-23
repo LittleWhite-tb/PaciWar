@@ -11,6 +11,7 @@ class Pool
 public:
     typedef typename std::vector<T>::iterator iterator;
     typedef typename std::vector<T>::const_iterator const_iterator;
+    
 private:
     std::vector<T> m_pool;
 
@@ -31,11 +32,12 @@ public:
         // Should we throw an exception here ?
     }
 
-    void add(T& newElem)
+    template< class... Args >
+    void add(Args&&... args)
     {
         if ( m_pool.size() < m_pool.capacity() )
         {
-            m_pool.emplace(m_pool.end(), std::move(newElem));
+            m_pool.emplace_back(std::forward<Args>(args)...);
         }
     }
 
@@ -57,18 +59,6 @@ public:
         }
         return U();
     }
-
-/*
-    template <typename U>
-    std::vector<T>::iterator find_if(std::function<U(T&)> fct, U result)
-    {
-        return std::find_if(m_pool.begin(), m_pool.end(), [fct, result](T& elem) { return fct(elem) == result; } );
-    }
-
-    auto end()const
-    {
-        return m_pool.end();
-    }*/
 
     void purge(std::function<bool(T)> fct)
     {
