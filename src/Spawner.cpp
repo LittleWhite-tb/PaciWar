@@ -24,8 +24,7 @@ void Spawner::spawnBarriers(ObjectBank& objects)
         pos.x = RandomGenerator::getInt(m_gridPosition.x,m_gridSize.x-1);
         pos.y = RandomGenerator::getInt(m_gridPosition.y, m_gridSize.y);
 
-		Barrier b(pos);
-        objects.createBarrier(b);
+        objects.createBarrier(pos);
     }
 }
 

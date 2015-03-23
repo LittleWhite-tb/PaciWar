@@ -28,8 +28,8 @@ private:
 public:
 	ObjectBank();
 
-    void createBarrier(Barrier& b);
-	void createEnemy(Enemy& e);
+    void createBarrier(const sf::Vector2f& position);
+	void createEnemy(const sf::Vector2f& position);
 
 	void draw(sf::RenderWindow& targetWindow);
 	void update(unsigned int deltaTime);

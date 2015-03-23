@@ -35,9 +35,8 @@ void SpawnGrid::spawnEnemies(ObjectBank& objects, unsigned int number)
     for (unsigned int i = 0 ; i < number ; i++)
     {
         // TODO, this *5 is a bit weird. I have to look why I need it
-        Enemy e(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE*5) * (i%3),
-                             enemyPosition.y + (Enemy::SIZE*Enemy::SIZE*5) * (i/3)));
-        objects.createEnemy(e);
+        objects.createEnemy(sf::Vector2f(enemyPosition.x + (Enemy::SIZE*Enemy::SIZE*5) * (i%3),
+                                         enemyPosition.y + (Enemy::SIZE*Enemy::SIZE*5) * (i/3)));
     }
 
     m_lastPointUsed=selectedPoint;

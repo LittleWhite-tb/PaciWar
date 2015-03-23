@@ -16,24 +16,22 @@ ObjectBank::ObjectBank()
 
 void ObjectBank::createParticleSystem(const sf::Vector2f& position)
 {
-    ParticleSystem ps(position);
-    m_particleSystemPool.add(ps);
+    m_particleSystemPool.add(position);
 }
 
 void ObjectBank::createExplosion(const sf::Vector2f& position)
 {
-    RadialExplosion explo(position);
-    m_explosionsPool.add(explo);
+    m_explosionsPool.add(position);
 }
 
-void ObjectBank::createBarrier(Barrier& b)
+void ObjectBank::createBarrier(const sf::Vector2f& position)
 {
-	m_barriersPool.add(b);
+	m_barriersPool.add(position);
 }
 
-void ObjectBank::createEnemy(Enemy& e)
+void ObjectBank::createEnemy(const sf::Vector2f& position)
 {
-	m_enemiesPool.add(e);
+	m_enemiesPool.add(position);
 }
 
 void ObjectBank::draw(sf::RenderWindow& targetWindow)
