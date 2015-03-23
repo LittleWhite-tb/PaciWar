@@ -10,9 +10,9 @@ class Barrier : public Entity
 {
 private:
     static constexpr int barrierSize = 96;
-    static constexpr float heightSize = barrierSize/16.f;
-    static constexpr float midSize = barrierSize/2.f;
-    static constexpr float edgeSize = barrierSize/8.f;
+    static constexpr float heightSize = Barrier::barrierSize/16.f;
+    static constexpr float midSize = Barrier::barrierSize/2.f;
+    static constexpr float edgeSize = Barrier::barrierSize/8.f;
     static constexpr float radius = 5.0f;
 
     // Object space position
