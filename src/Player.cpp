@@ -1,14 +1,10 @@
 #include "Player.hpp"
 
-#define _USE_MATH_DEFINES
-#include <cmath>
-#ifndef M_PI
-    // hacky but well MinGW did want to see the symbol
-    # define M_PI		3.14159265358979323846	/* pi */
-#endif
+#include "Math/constants.hpp"
 
 #include <limits>
 
+#include "SFML/Vector2Utils.hpp"
 #include "Math/Interpolation.hpp"
 
 Player::Player(const sf::Vector2f& position)
@@ -60,18 +56,7 @@ void Player::move(const sf::Vector2f& movement, float time)
     if (movement.x != 0 ||
         movement.y != 0)
     {
-        float targetRotation = atan(movement.y/movement.x) * 180.f/M_PI;
-        if ( movement.x >= 0 ) // First quadrant, is ok
-        {
-            if ( movement.y < 0 ) // Forth quadran
-            {
-                targetRotation += 360;
-            }
-        }
-        if ( (movement.x < 0) ) // Second and third
-        {
-            targetRotation += 180;
-        }
+        float targetRotation = SFMLUtils::getAngle(movement);
 
         // Extra rotation, since the initial ship is drawn up
         targetRotation+=90;

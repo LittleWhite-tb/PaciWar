@@ -1,7 +1,14 @@
 #include "Enemy.hpp"
 
-#include <Collisions/Collider.hpp>
+#include <iostream>
+#include <cmath>
+
 #include "SFML/Vector2Utils.hpp"
+#include "Math/Interpolation.hpp"
+#include "Math/constants.hpp"
+
+#include <Collisions/Collider.hpp>
+
 
 void Enemy::draw(sf::RenderWindow& window)
 {
@@ -15,7 +22,7 @@ void Enemy::draw(sf::RenderWindow& window)
 	};
 	/*
 	sf::RectangleShape lines[] = 
-	{
+    {
 		sf::RectangleShape(sf::Vector2f(m_position.x + 0, m_position.y + 10)),
 		sf::RectangleShape(sf::Vector2f(m_position.x + 10, m_position.y + 0)),
 		sf::RectangleShape(sf::Vector2f(m_position.x + 0, m_position.y - 10)),
@@ -54,8 +61,13 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 
 void Enemy::move(unsigned int deltaTime, const Entity &target)
 {
-    sf::Vector2f dir = target.getPosition() - m_position;
-    SFMLUtils::normalise(dir);
+    sf::Vector2f targetDir = target.getPosition() - m_position;
+    // SFMLUtils::normalise(targetDir);
+
+    float targetRotation = SFMLUtils::getAngle(targetDir);
+    m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.3f);
+
+    sf::Vector2f dir = sf::Vector2f(std::cos(m_rotation*M_PI/180.f),std::sin(m_rotation*M_PI/180.f));
 
     sf::Vector2f oldPosition = m_position;
     m_position = m_position + dir * (SPEED * deltaTime);

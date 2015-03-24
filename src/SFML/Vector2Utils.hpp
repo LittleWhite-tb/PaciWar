@@ -11,6 +11,8 @@ namespace SFMLUtils
     float length(const sf::Vector2f& v);
     void normalise(sf::Vector2f& v);
     float distance(const sf::Vector2f& v1, const sf::Vector2f& v2);
+
+    float getAngle(const sf::Vector2f& v);
 }
 
 #endif

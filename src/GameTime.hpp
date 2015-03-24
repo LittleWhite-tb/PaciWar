@@ -16,8 +16,8 @@ private:
     /**
      * Times are in ms
      */
-    unsigned int ENEMY_SPAWN_TIME = 1000;
-    unsigned int BARRIER_SPAWN_TIME = 5000;
+    static constexpr unsigned int ENEMY_SPAWN_TIME = 1000;
+    static constexpr unsigned int BARRIER_SPAWN_TIME = 5000;
 
 public:
     GameTime();
