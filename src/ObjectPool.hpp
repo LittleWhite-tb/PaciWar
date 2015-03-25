@@ -68,6 +68,11 @@ public:
                    m_pool.end());
     }
 
+    std::size_t capacity()const
+    {
+        return m_pool.capacity();
+    }
+
     std::size_t nbAlive()const
     {
         return m_pool.size();

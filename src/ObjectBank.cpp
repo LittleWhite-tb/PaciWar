@@ -43,7 +43,7 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 									  std::placeholders::_1,
 									  std::ref(targetWindow)));
 
-    m_particleSystemPool.update(std::bind(&ParticleSystem::draw,
+    m_particleSystemPool.update(std::bind(&ExplosionParticleSystem::draw,
                                           std::placeholders::_1,
                                           std::ref(targetWindow)));
     m_explosionsPool.update(std::bind(&RadialExplosion::draw,
@@ -71,10 +71,10 @@ void ObjectBank::update(unsigned int deltaTime)
 									  deltaTime,
 									  std::ref(m_player)));
 
-    m_particleSystemPool.update(std::bind(&ParticleSystem::update,
+    m_particleSystemPool.update(std::bind(&ExplosionParticleSystem::update,
                                           std::placeholders::_1,
                                           deltaTime));
-    m_particleSystemPool.purge(std::bind(&ParticleSystem::isDead,
+    m_particleSystemPool.purge(std::bind(&ExplosionParticleSystem::isDead,
                                           std::placeholders::_1));
 
     m_explosionsPool.update(std::bind(&RadialExplosion::update,
