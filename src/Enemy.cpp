@@ -1,6 +1,5 @@
 #include "Enemy.hpp"
 
-#include <iostream>
 #include <cmath>
 
 #include "SFML/Vector2Utils.hpp"
