@@ -17,7 +17,7 @@ private:
 	Pool<Enemy> m_enemiesPool;
 	Player m_player;
 
-    Pool<ExplosionParticleSystem> m_particleSystemPool;
+    Pool<ParticleSystem> m_particleSystemPool;
     Pool<RadialExplosion> m_explosionsPool;
 	
     void applyCollision();
