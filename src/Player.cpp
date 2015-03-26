@@ -36,6 +36,8 @@ void Player::draw(sf::RenderWindow& window)
 	
     window.draw(lines,4,sf::LinesStrip,t);
     window.draw(tri2,4,sf::LinesStrip,t);
+
+    m_engineParticles.draw(window);
 }
 
 void Player::debugDraw(sf::RenderWindow& window)
@@ -62,6 +64,8 @@ void Player::move(const sf::Vector2f& movement, float time)
         targetRotation+=90;
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.3f);
     }
+
+    m_engineParticles.update(m_position,-movement,time);
 }
 
 void Player::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
