@@ -7,7 +7,7 @@
 
 class EngineParticleSystem : public ParticleSystem
 {
-    static constexpr float PARTICLE_DISPERSION = 0.35;
+    static constexpr float PARTICLE_DISPERSION = 0.55;
 
 private:
     bool m_enabled;
@@ -16,7 +16,7 @@ private:
     void generateParticles();
 
 public:
-    EngineParticleSystem(std::size_t nbMaxParticle=20);
+    EngineParticleSystem(std::size_t nbMaxParticle=100);
 
     void update(const sf::Vector2f& position, const sf::Vector2f& direction, unsigned int time);
 };

@@ -5,11 +5,13 @@
 
 struct Particle
 {
-    static constexpr float SIZE = 4.0;
+    float size;
 
     sf::Vector2f position;
     sf::Vector2f direction;
     float speed;
+
+    float accel;
 
     sf::Color color;
 
@@ -17,9 +19,17 @@ struct Particle
              const sf::Vector2f& direction,
              const sf::Color& color,
              float speed)
-             :position(position),direction(direction),color(color),
-              speed(speed) {}
+             :size(4),
+              position(position),direction(direction),color(color),
+              speed(speed),accel(0.01f) {}
 
+    Particle(const sf::Vector2f& position,
+             const sf::Vector2f& direction,
+             const sf::Color& color,
+             float speed,float acceleration)
+             :size(4),
+              position(position),direction(direction),color(color),
+              speed(speed),accel(acceleration) {}
 
     void draw(sf::RenderWindow& window);
     void update(unsigned int time);

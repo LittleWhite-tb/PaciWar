@@ -21,7 +21,7 @@ void EngineParticleSystem::generateParticles()
             m_particles.add(m_spawnPoint,
                             sf::Vector2f(RandomGenerator::getFloat(startDirectionRange.x,endDirectionRange.x),RandomGenerator::getFloat(startDirectionRange.y,endDirectionRange.y)),
                             sf::Color(RandomGenerator::getInt(100,255),RandomGenerator::getInt(100,255),RandomGenerator::getInt(100,255)),
-                            0.6f);
+                            0.1f,0.0002f);
         }
     }
 }
