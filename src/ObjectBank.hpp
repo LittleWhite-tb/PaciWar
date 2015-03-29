@@ -7,7 +7,7 @@
 #include "Barrier.hpp"
 #include "Enemy.hpp"
 
-#include "ParticleSystem.hpp"
+#include "FixedColorParticleSystem.hpp"
 #include "RadialExplosion.hpp"
 
 class ObjectBank
@@ -17,12 +17,14 @@ private:
 	Pool<Enemy> m_enemiesPool;
 	Player m_player;
 
-    Pool<ParticleSystem> m_particleSystemPool;
+    Pool<FixedColorParticleSystem> m_particleSystemPool;
     Pool<RadialExplosion> m_explosionsPool;
+
+    float m_rainbowGradient;
 	
     void applyCollision();
 
-    void createParticleSystem(const sf::Vector2f& position);
+    void createParticleSystem(const sf::Vector2f& position, const sf::Color &color);
     void createExplosion(const sf::Vector2f& position);
 
 public:

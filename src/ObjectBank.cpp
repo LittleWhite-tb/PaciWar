@@ -1,6 +1,7 @@
 #include "ObjectBank.hpp"
 
 #include "Collisions/Collider.hpp"
+#include "Palette.hpp"
 
 #include <iostream>
 
@@ -9,14 +10,15 @@ ObjectBank::ObjectBank()
 	 m_enemiesPool(1000),
      m_player(sf::Vector2f(200,100)),
      m_particleSystemPool(100),
-     m_explosionsPool(25)
+     m_explosionsPool(25),
+     m_rainbowGradient(0)
 {
 	
 }
 
-void ObjectBank::createParticleSystem(const sf::Vector2f& position)
+void ObjectBank::createParticleSystem(const sf::Vector2f& position, const sf::Color& color)
 {
-    m_particleSystemPool.add(position);
+    m_particleSystemPool.add(position,color);
 }
 
 void ObjectBank::createExplosion(const sf::Vector2f& position)
@@ -43,7 +45,7 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 									  std::placeholders::_1,
 									  std::ref(targetWindow)));
 
-    m_particleSystemPool.update(std::bind(&ParticleSystem::draw,
+    m_particleSystemPool.update(std::bind(&FixedColorParticleSystem::draw,
                                           std::placeholders::_1,
                                           std::ref(targetWindow)));
     m_explosionsPool.update(std::bind(&RadialExplosion::draw,
@@ -71,10 +73,10 @@ void ObjectBank::update(unsigned int deltaTime)
 									  deltaTime,
 									  std::ref(m_player)));
 
-    m_particleSystemPool.update(std::bind(&ParticleSystem::update,
+    m_particleSystemPool.update(std::bind(&FixedColorParticleSystem::update,
                                           std::placeholders::_1,
                                           deltaTime));
-    m_particleSystemPool.purge(std::bind(&ParticleSystem::isDead,
+    m_particleSystemPool.purge(std::bind(&FixedColorParticleSystem::isDead,
                                           std::placeholders::_1));
 
     m_explosionsPool.update(std::bind(&RadialExplosion::update,
@@ -84,6 +86,8 @@ void ObjectBank::update(unsigned int deltaTime)
                                      std::placeholders::_1));
 
     applyCollision();
+
+    m_rainbowGradient += deltaTime;
 }
 
 void ObjectBank::applyCollision()
@@ -109,6 +113,7 @@ void ObjectBank::applyCollision()
         }
     }
 
+    sf::Color particlesColor = Palette::fromHSV(m_rainbowGradient,1,1);
     Pool<Enemy>::iterator itEnemies = m_enemiesPool.begin();
     for ( ; itEnemies != m_enemiesPool.end() ; ++itEnemies )
     {
@@ -119,7 +124,7 @@ void ObjectBank::applyCollision()
             if ( cr.collided )
             {
                 itEnemies->kill();
-                createParticleSystem(itEnemies->getPosition());
+                createParticleSystem(itEnemies->getPosition(),particlesColor);
             }
         }
 

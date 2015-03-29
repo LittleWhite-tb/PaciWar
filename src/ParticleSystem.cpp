@@ -5,7 +5,7 @@
 ParticleSystem::ParticleSystem(const sf::Vector2f& position, std::size_t nbMaxParticle)
     :m_spawnPoint(position),m_particles(nbMaxParticle)
 {
-    generateParticles();
+    // generateParticles();
 }
 
 void ParticleSystem::generateParticles()
