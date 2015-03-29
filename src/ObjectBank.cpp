@@ -87,7 +87,7 @@ void ObjectBank::update(unsigned int deltaTime)
 
     applyCollision();
 
-    m_rainbowGradient += deltaTime;
+    m_rainbowGradient += deltaTime*0.03;
 }
 
 void ObjectBank::applyCollision()
