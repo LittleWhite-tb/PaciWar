@@ -41,13 +41,13 @@ sf::Color Palette::fromHSV(float hue, float saturation, float value)
     }
     else if (huePrime < 5)
     {
-        r = chroma;
-        b = x;
+        r = x;
+        b = chroma;
     }
     else if (huePrime < 6)
     {
-        r = x;
-        b = chroma;
+        r = chroma;
+        b = x;
     }
     else
     {
