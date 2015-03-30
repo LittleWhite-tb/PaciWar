@@ -19,6 +19,9 @@ class Game
 {
 private:
     sf::RenderWindow& m_targetWindow;
+#ifndef NDEBUG
+    sf::Font m_debugFont;
+#endif
 
     ObjectBank m_objects;
 

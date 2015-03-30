@@ -1,6 +1,7 @@
 #include "Game.hpp"
 
 #include <iostream>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
 
@@ -12,6 +13,9 @@ Game::Game(sf::RenderWindow& targetWindow)
     :m_targetWindow(targetWindow),
      m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20))
 {
+#ifndef NDEBUG
+     m_debugFont.loadFromFile("./data/DejaVuSansMono.ttf");
+#endif
 }
 
 void Game::render()
@@ -19,6 +23,26 @@ void Game::render()
     m_targetWindow.clear(sf::Color::Black);
 
     m_objects.draw(m_targetWindow);
+
+#ifndef NDEBUG
+    {
+        sf::Text text;
+        text.setFont(m_debugFont);
+
+        text.setColor(sf::Color::White);
+        text.setCharacterSize(10);
+
+
+        {
+            std::ostringstream oss;
+            oss << m_gameTime.getElapsedTime();
+            text.setString("DeltaTime : " + oss.str());
+        }
+
+
+        m_targetWindow.draw(text);
+    }
+#endif
 
     m_targetWindow.display();
 }
