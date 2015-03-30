@@ -15,6 +15,7 @@ void FixedColorParticleSystem::generateParticles()
         m_particles.add(m_spawnPoint,
                         sf::Vector2f(RandomGenerator::getFloat(-1.0,1.0),RandomGenerator::getFloat(-1.0,1.0)),
                         m_color,
-                        RandomGenerator::getFloat(0.0,2.0));
+                        RandomGenerator::getFloat(0.0,1.5),
+                        0.006f);
     }
 }
