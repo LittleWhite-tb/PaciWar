@@ -51,9 +51,13 @@ IF(WIN32 AND NOT UNIX)
 		install(FILES ${dll} DESTINATION bin)
 	endforeach()
 #else
-
 endif(WIN32 AND NOT UNIX)
 
+# Resources file installation
+file(GLOB dataFiles "./data/*")
+foreach(data ${dataFiles})
+	install(FILES ${data} DESTINATION bin/data)
+endforeach()
 
 # CPack part
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Remake of the pacific mode from Geometry Wars 2")
