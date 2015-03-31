@@ -57,7 +57,7 @@ public:
     static bool collides(const BoundingSpheres& bs1, const BoundingSpheres& bs2);
 
     static BarrierCollisionResult collides(const Player& player, const Barrier& barrier);
-    static CollisionResult collides(const Player& player, const Enemy& enemy);
+    static CollisionResult collides(const Player& player, const Entity &entity);
     static CollisionResult collides(const Enemy& enemy, const RadialExplosion& explosion);
 };
 

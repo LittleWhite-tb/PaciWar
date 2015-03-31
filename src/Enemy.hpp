@@ -1,8 +1,6 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
 
-#include <memory>
-
 #include <SFML/Graphics.hpp>
 
 #include "Entity.hpp"

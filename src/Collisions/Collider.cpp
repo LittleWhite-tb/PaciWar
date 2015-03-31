@@ -122,16 +122,16 @@ BarrierCollisionResult Collider::collides(const Player& player, const Barrier& b
     return NoBarrierCollision;
 }
 
-CollisionResult Collider::collides(const Player& player, const Enemy& enemy)
+CollisionResult Collider::collides(const Player& player, const Entity& entity)
 {
     BoundingSpheres playerBoundingSpheres;
     player.getBoundingSpheres(playerBoundingSpheres);
 
-    BoundingSpheres enemyBoundingSpheres;
-    enemy.getBoundingSpheres(enemyBoundingSpheres);
-    if ( collides(playerBoundingSpheres, enemyBoundingSpheres) )
+    BoundingSpheres entityBoundingSpheres;
+    entity.getBoundingSpheres(entityBoundingSpheres);
+    if ( collides(playerBoundingSpheres, entityBoundingSpheres) )
     {
-        return CollisionResult(&player, &enemy);
+        return CollisionResult(&player, &entity);
     }
     return NoCollision;
 }
