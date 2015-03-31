@@ -60,7 +60,7 @@ foreach(data ${dataFiles})
 endforeach()
 
 # CPack part
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Remake of the pacific mode from Geometry Wars 2")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Pacifism mode remake from Geometry Wars 2")
 SET(CPACK_PACKAGE_VENDOR "LittleWhite")
 SET(CPACK_PACKAGE_EXECUTABLES "PaciWar" "PaciWar")
 
