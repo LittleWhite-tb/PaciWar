@@ -2,9 +2,7 @@
 
 #include <cmath>
 
-#include "SFML/Vector2Utils.hpp"
-#include "Math/Interpolation.hpp"
-#include "Math/constants.hpp"
+#include "Tracker.hpp"
 
 #include <Collisions/Collider.hpp>
 
@@ -60,16 +58,7 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 
 void Enemy::move(unsigned int deltaTime, const Entity &target)
 {
-    sf::Vector2f targetDir = target.getPosition() - m_position;
-    // SFMLUtils::normalise(targetDir);
-
-    float targetRotation = SFMLUtils::getAngle(targetDir);
-    m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.3f);
-
-    sf::Vector2f dir = sf::Vector2f(std::cos(m_rotation*M_PI/180.f),std::sin(m_rotation*M_PI/180.f));
-
-    sf::Vector2f oldPosition = m_position;
-    m_position = m_position + dir * (SPEED * deltaTime);
+    Tracker::update(m_position,m_rotation,target,SPEED,0.3f,deltaTime);
 /*
     // Enemies avoidance
     BoundingSpheres self;

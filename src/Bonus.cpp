@@ -3,11 +3,9 @@
 #include <cmath>
 
 #include "SFML/Vector2Utils.hpp"
-#include "Math/Interpolation.hpp"
-#include "Math/constants.hpp"
+#include "Tracker.hpp"
 
 #include <Collisions/Collider.hpp>
-
 
 void Bonus::draw(sf::RenderWindow& window)
 {
@@ -57,17 +55,7 @@ void Bonus::move(unsigned int deltaTime, const Entity &target)
     float targetDistance = SFMLUtils::distance(target.getPosition(),this->getPosition());
     if ( targetDistance < MAGNET_DISTANCE*MAGNET_DISTANCE )
     {
-        // TODO Refactor. This code is a copy of Enemy::move
-        sf::Vector2f targetDir = target.getPosition() - m_position;
-        // SFMLUtils::normalise(targetDir);
-
-        float targetRotation = SFMLUtils::getAngle(targetDir);
-        m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.5f);
-
-        sf::Vector2f dir = sf::Vector2f(std::cos(m_rotation*M_PI/180.f),std::sin(m_rotation*M_PI/180.f));
-
-        sf::Vector2f oldPosition = m_position;
-        m_position = m_position + dir * (SPEED * deltaTime);
+        Tracker::update(m_position,m_rotation,target,SPEED,0.5f,deltaTime);
 
         // Normally, we can't lose bonus/untract player
         m_life = 1000;
