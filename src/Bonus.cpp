@@ -10,13 +10,14 @@
 void Bonus::draw(sf::RenderWindow& window)
 {
     static constexpr float shapeSize = 3;
+    static const sf::Color bonusColor = sf::Color(120,230,50);
     sf::Vertex lines[] =
     {
-        sf::Vertex(sf::Vector2f(0         , shapeSize )),
-        sf::Vertex(sf::Vector2f(shapeSize , 0         )),
-        sf::Vertex(sf::Vector2f(0         , -shapeSize)),
-        sf::Vertex(sf::Vector2f(-shapeSize, 0         )),
-        sf::Vertex(sf::Vector2f(0         , shapeSize ))
+        sf::Vertex(sf::Vector2f(0         , shapeSize ), bonusColor),
+        sf::Vertex(sf::Vector2f(shapeSize , 0         ), bonusColor),
+        sf::Vertex(sf::Vector2f(0         , -shapeSize), bonusColor),
+        sf::Vertex(sf::Vector2f(-shapeSize, 0         ), bonusColor),
+        sf::Vertex(sf::Vector2f(0         , shapeSize ), bonusColor)
     };
 
 
