@@ -13,7 +13,15 @@ void Tracker::update(sf::Vector2f& position, float& rotation, const Entity &targ
     float targetRotation = SFMLUtils::getAngle(targetDir);
     rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(rotation,targetRotation,rotationSpeed);
 
-    sf::Vector2f dir = sf::Vector2f(std::cos(rotation*M_PI/180.f),std::sin(rotation*M_PI/180.f));
+    sf::Vector2f dir;
+    if ( SFMLUtils::length(targetDir) > 5 )
+    {
+         dir = sf::Vector2f(std::cos(rotation*M_PI/180.f),std::sin(rotation*M_PI/180.f));
+         position = position + dir * (moveSpeed * deltaTime);
+    }
+    else
+    {
+        position = target.getPosition();
+    }
 
-    position = position + dir * (moveSpeed * deltaTime);
 }
