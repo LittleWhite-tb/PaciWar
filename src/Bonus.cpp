@@ -52,6 +52,8 @@ void Bonus::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 
 void Bonus::move(unsigned int deltaTime, const Entity &target)
 {
+    m_momentum.update(this->m_position,this->m_rotation,deltaTime);
+
     float targetDistance = SFMLUtils::distance(target.getPosition(),this->getPosition());
     if ( targetDistance < MAGNET_DISTANCE*MAGNET_DISTANCE )
     {
@@ -66,6 +68,9 @@ void Bonus::move(unsigned int deltaTime, const Entity &target)
 
         sf::Vector2f oldPosition = m_position;
         m_position = m_position + dir * (SPEED * deltaTime);
+
+        // Normally, we can't lose bonus/untract player
+        m_life = 1000;
     }
 /*
     // Enemies avoidance

@@ -5,6 +5,8 @@
 
 #include "Entity.hpp"
 
+#include "Momentum.hpp"
+
 class Bonus : public Entity
 {
 private:
@@ -15,6 +17,8 @@ private:
                                                         // to keep player going back to get these and take risk
 
     int m_life;
+
+    Momentum m_momentum;
 
 public:
     Bonus(const sf::Vector2f& position)

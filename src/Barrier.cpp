@@ -64,7 +64,7 @@ Line Barrier::getLine()const
 
 void Barrier::update(unsigned int time)
 {
-    m_rotation+=ROTATION_SPEED*time;
+    m_momentum.update(m_position,m_rotation,time);
 
     // Update internal members
     sf::Transform rotationMatrix;

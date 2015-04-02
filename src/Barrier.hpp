@@ -5,6 +5,7 @@
 
 #include "Collisions/Line.hpp"
 #include "Entity.hpp"
+#include "Momentum.hpp"
 
 class Barrier : public Entity
 {
@@ -18,11 +19,12 @@ private:
     // Object space position
     static const sf::Vector2f oj_leftEdgePosition;
     static const sf::Vector2f oj_rightEdgePosition;
+    Momentum m_momentum;
 
     sf::Vector2f leftEdgePosition;
     sf::Vector2f rightEdgePosition;
 
-    static constexpr float ROTATION_SPEED = 0.015f;
+    // static constexpr float ROTATION_SPEED = 0.015f;
 
 public:
     Barrier(const sf::Vector2f& position);
