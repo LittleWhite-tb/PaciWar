@@ -7,17 +7,20 @@
 
 #include <Collisions/Collider.hpp>
 
+const sf::Color Bonus::normalColor = sf::Color(120,230,50);
+const sf::Color Bonus::lightColor = sf::Color(250,250,170);
+
 void Bonus::draw(sf::RenderWindow& window)
 {
     static constexpr float shapeSize = 3;
-    static const sf::Color bonusColor = sf::Color(120,230,50);
+
     sf::Vertex lines[] =
     {
-        sf::Vertex(sf::Vector2f(0         , shapeSize ), bonusColor),
-        sf::Vertex(sf::Vector2f(shapeSize , 0         ), bonusColor),
-        sf::Vertex(sf::Vector2f(0         , -shapeSize), bonusColor),
-        sf::Vertex(sf::Vector2f(-shapeSize, 0         ), bonusColor),
-        sf::Vertex(sf::Vector2f(0         , shapeSize ), bonusColor)
+        sf::Vertex(sf::Vector2f(0         , shapeSize ), m_color),
+        sf::Vertex(sf::Vector2f(shapeSize , 0         ), m_color),
+        sf::Vertex(sf::Vector2f(0         , -shapeSize), m_color),
+        sf::Vertex(sf::Vector2f(-shapeSize, 0         ), m_color),
+        sf::Vertex(sf::Vector2f(0         , shapeSize ), m_color)
     };
 
 
@@ -59,7 +62,7 @@ void Bonus::move(unsigned int deltaTime, const Entity &target)
         Tracker::update(m_position,m_rotation,target,SPEED,0.5f,deltaTime);
 
         // Normally, we can't lose bonus/untract player
-        m_life = 1000;
+        m_life = LIFETIME;
     }
 /*
     // Enemies avoidance
@@ -82,4 +85,15 @@ void Bonus::move(unsigned int deltaTime, const Entity &target)
     }
 */
     m_life -= deltaTime;
+    if (m_life < BLINK_TIME)
+    {
+        if ((m_life / BLINK_DELAY) % 2)
+        {
+            m_color = normalColor;
+        }
+        else
+        {
+            m_color = lightColor;
+        }
+    }
 }
