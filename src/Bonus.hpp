@@ -10,7 +10,7 @@
 class Bonus : public Entity
 {
 private:
-    static constexpr float SPEED = 0.542f;              // Should be a bit greater than Player::SPEED otherwise
+    static constexpr float SPEED = 0.58f;              // Should be a bit greater than Player::SPEED otherwise
                                                         // you can't get them
     static constexpr unsigned int LIFETIME = 4000;
     static constexpr unsigned int MAGNET_DISTANCE = 60; // Should be a bit smaller than RadialExplosion::RADIUS_MAX

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "ObjectPool.hpp"
 #include "Entity.hpp"
 
 class Enemy : public Entity
@@ -15,7 +16,7 @@ public:
         :Entity(position) {}
 	
 	void draw(sf::RenderWindow& window);
-    void move(unsigned int deltaTime, const Entity& target);
+    void move(const Pool<Enemy>& enemies, unsigned int deltaTime, const Entity& target);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 

@@ -56,20 +56,23 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
     boundingSpheres.push_back(Sphere(m_position, Enemy::SIZE));
 }
 
-void Enemy::move(unsigned int deltaTime, const Entity &target)
+void Enemy::move(const Pool<Enemy>& enemies, unsigned int deltaTime, const Entity &target)
 {
+    sf::Vector2f oldPosition = m_position;
     Tracker::update(m_position,m_rotation,target,SPEED,0.3f,deltaTime);
-/*
+
     // Enemies avoidance
     BoundingSpheres self;
     self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
 
-    for (auto e : enemies)
+    Pool<Enemy>::const_iterator itBarrier = enemies.cbegin();
+    for ( ; itBarrier != enemies.cend() ; ++itBarrier)
     {
-        if (e.get() != this) // Avoid colliding with myself
+        if (itBarrier->getPosition() != oldPosition) // Avoid colliding with myself
+                                                     // HACK Not good at all
         {
             BoundingSpheres other;
-            e->getBoundingSpheres(other);
+            itBarrier->getBoundingSpheres(other);
 
             if ( Collider::collides(other,self))
             {
@@ -78,5 +81,4 @@ void Enemy::move(unsigned int deltaTime, const Entity &target)
             }
         }
     }
-*/
 }

@@ -81,7 +81,7 @@ void ObjectBank::update(unsigned int deltaTime)
 									  deltaTime));
 	m_enemiesPool.update(std::bind(&Enemy::move,
 									  std::placeholders::_1,
-									  deltaTime,
+                                      m_enemiesPool,deltaTime,
 									  std::ref(m_player)));
     m_bonusPool.update(std::bind(&Bonus::move,
                                  std::placeholders::_1,
