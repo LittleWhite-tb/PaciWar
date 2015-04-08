@@ -16,7 +16,7 @@ protected:
 
     Pool<Particle> m_particles;
 
-    virtual void generateParticles();
+    virtual void generateParticle();
 
 public:
     ParticleSystem(const sf::Vector2f& position, std::size_t nbMaxParticle=100);

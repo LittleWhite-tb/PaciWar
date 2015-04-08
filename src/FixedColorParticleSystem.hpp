@@ -10,7 +10,7 @@ class FixedColorParticleSystem : public ParticleSystem
 private:
     sf::Color m_color;
 
-    void generateParticles();
+    void generateParticle();
 
 public:
     FixedColorParticleSystem(const sf::Vector2f& position, const sf::Color& color, std::size_t nbMaxParticle=100);

@@ -5,19 +5,19 @@
 
 EngineParticleSystem::EngineParticleSystem(std::size_t nbMaxParticle)
     :ParticleSystem(sf::Vector2f(0,0),nbMaxParticle),
-     m_enabled(false),m_direction(0,0),rainbowGradient(0)
+     m_enabled(false),m_direction(0,0),m_rainbowGradient(0),m_remaining_birth_time(0)
 {
 
 }
 
-void EngineParticleSystem::generateParticles()
+void EngineParticleSystem::generateParticle()
 {
-    sf::Color particleColor = Palette::fromHSV(rainbowGradient,1,1);
+    sf::Color particleColor = Palette::fromHSV(m_rainbowGradient,1,1);
     sf::Vector2f startDirectionRange = { m_direction.x - PARTICLE_DISPERSION, m_direction.y - PARTICLE_DISPERSION };
     sf::Vector2f endDirectionRange = { m_direction.x + PARTICLE_DISPERSION, m_direction.y + PARTICLE_DISPERSION };
 
-    // while (m_particles.nbAlive() != m_particles.capacity())
     {
+        // Relies on the fact that the pool will never extend
         m_particles.add(m_spawnPoint,
                         sf::Vector2f(RandomGenerator::getFloat(startDirectionRange.x,endDirectionRange.x),RandomGenerator::getFloat(startDirectionRange.y,endDirectionRange.y)),
                         particleColor,
@@ -36,7 +36,14 @@ void EngineParticleSystem::update(const sf::Vector2f &position, const sf::Vector
 
     if (m_enabled)
     {
-        rainbowGradient+=time*GRADIENT_SPEED;
-        generateParticles();
+        m_rainbowGradient+=time*GRADIENT_SPEED;
+
+        time += m_remaining_birth_time;
+        while ( time > BIRTH_PERIOD )
+        {
+            generateParticle();
+            time-=BIRTH_PERIOD;
+        }
+        m_remaining_birth_time = time;
     }
 }
