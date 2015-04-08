@@ -59,7 +59,7 @@ void Bonus::move(unsigned int deltaTime, const Entity &target)
     float targetDistance = SFMLUtils::distance(target.getPosition(),this->getPosition());
     if ( targetDistance < MAGNET_DISTANCE*MAGNET_DISTANCE )
     {
-        Tracker::update(m_position,m_rotation,target,SPEED,0.7f,deltaTime);
+        Tracker::update(m_position,m_rotation,target,SPEED,0.5f,deltaTime);
 
         // Normally, we can't lose bonus/untract player
         m_life = LIFETIME;

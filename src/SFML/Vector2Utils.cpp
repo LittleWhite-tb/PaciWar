@@ -9,6 +9,11 @@ float SFMLUtils::length(const sf::Vector2f& v)
 
 void SFMLUtils::normalise(sf::Vector2f& v)
 {
+    if (v.x == 0 && v.y == 0)
+    {
+        return;
+    }
+
     float l = SFMLUtils::length(v);
     v.x = v.x/l;
     v.y = v.y/l;
