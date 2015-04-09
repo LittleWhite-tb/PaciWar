@@ -1,20 +1,19 @@
 #include "Game.hpp"
 
-#include <iostream>
-#include <sstream>
-
 #include <SFML/Graphics.hpp>
 
 #include "Collisions/Collider.hpp"
 
+#include "Utils.hpp"
 #include "globals.hpp"
 
 Game::Game(sf::RenderWindow& targetWindow)
     :m_targetWindow(targetWindow),
      m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20))
 {
+    m_uiFont.loadFromFile(FONT_PATH);
 #ifndef NDEBUG
-     m_debugFont.loadFromFile("./data/DejaVuSansMono.ttf");
+     m_debugFont.loadFromFile(DEBUG_FONT_PATH);
 #endif
 }
 
@@ -24,6 +23,17 @@ void Game::render()
 
     m_objects.draw(m_targetWindow);
 
+    {
+        sf::Text multiplierText;
+        multiplierText.setFont(m_uiFont);
+        multiplierText.setColor(sf::Color(120,230,50));
+        multiplierText.setCharacterSize(16);
+        multiplierText.setString("x" + Utils::toString(m_state.getMultiplier()));
+        multiplierText.setPosition(m_targetWindow.getSize().x/2-multiplierText.getLocalBounds().width/2,0);
+
+        m_targetWindow.draw(multiplierText);
+    }
+
 #ifndef NDEBUG
     {
         sf::Text text;
@@ -31,14 +41,7 @@ void Game::render()
 
         text.setColor(sf::Color::White);
         text.setCharacterSize(10);
-
-
-        {
-            std::ostringstream oss;
-            oss << m_gameTime.getElapsedTime();
-            text.setString("DeltaTime : " + oss.str());
-        }
-
+        text.setString("DeltaTime : " + Utils::toString(m_gameTime.getElapsedTime()));
 
         m_targetWindow.draw(text);
     }

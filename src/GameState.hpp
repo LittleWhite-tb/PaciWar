@@ -12,6 +12,7 @@ public:
 
     void reset();
     void addMultiplier(unsigned int number) { m_bonusMultiplier += number; }
+    unsigned int getMultiplier()const { return m_bonusMultiplier; }
 };
 
 #endif
