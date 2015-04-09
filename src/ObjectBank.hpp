@@ -3,6 +3,8 @@
 
 #include "ObjectPool.hpp"
 
+#include "GameState.hpp"
+
 #include "Player.hpp"
 #include "Barrier.hpp"
 #include "Enemy.hpp"
@@ -24,7 +26,7 @@ private:
 
     float m_rainbowGradient; // Hack since all enemies are not dying at the same time, but we want same color for particles
 	
-    void applyCollision();
+    void applyCollision(GameState& gstate);
 
     void createBonus(const sf::Vector2f& position);
     void createParticleSystem(const sf::Vector2f& position, const sf::Color &color);
@@ -37,7 +39,7 @@ public:
 	void createEnemy(const sf::Vector2f& position);
 
 	void draw(sf::RenderWindow& targetWindow);
-	void update(unsigned int deltaTime);
+    void update(GameState& gstate, unsigned int deltaTime);
 	
 	Player& getPlayer() { return m_player; }
 	const Player& getPlayer()const { return m_player; }

@@ -74,7 +74,7 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 	m_player.draw(targetWindow);
 }
 
-void ObjectBank::update(unsigned int deltaTime)
+void ObjectBank::update(GameState &gstate, unsigned int deltaTime)
 {
 	m_barriersPool.update(std::bind(&Barrier::update,
 									  std::placeholders::_1,
@@ -100,12 +100,12 @@ void ObjectBank::update(unsigned int deltaTime)
     m_explosionsPool.purge(std::bind(&RadialExplosion::isValid,
                                      std::placeholders::_1));
 
-    applyCollision();
+    applyCollision(gstate);
 
     m_rainbowGradient += deltaTime*0.03;
 }
 
-void ObjectBank::applyCollision()
+void ObjectBank::applyCollision(GameState& gstate)
 {
     Pool<Barrier>::iterator itBarrier = m_barriersPool.begin();
     for ( ; itBarrier != m_barriersPool.end() ; ++itBarrier)
@@ -175,5 +175,5 @@ void ObjectBank::applyCollision()
     m_bonusPool.purge(std::bind(&Bonus::isDead,
                                 std::placeholders::_1));
 
-    std::cout << "Collected " << collectedBonusCounter << " bonusses" << std::endl;
+    gstate.addMultiplier(collectedBonusCounter);
 }

@@ -6,8 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "ObjectPool.hpp"
-
+#include "GameState.hpp"
 #include "ObjectBank.hpp"
 
 #include "Spawner.hpp"
@@ -23,6 +22,7 @@ private:
     sf::Font m_debugFont;
 #endif
 
+    GameState m_state;
     ObjectBank m_objects;
 
     Spawner m_spawner;
