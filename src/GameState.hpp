@@ -11,8 +11,11 @@ public:
     GameState();
 
     void reset();
+
     void addMultiplier(unsigned int number) { m_bonusMultiplier += number; }
     unsigned int getMultiplier()const { return m_bonusMultiplier; }
+
+    unsigned int getScore()const { return m_score; }
 };
 
 #endif

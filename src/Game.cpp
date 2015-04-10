@@ -11,7 +11,6 @@ Game::Game(sf::RenderWindow& targetWindow)
     :m_targetWindow(targetWindow),
      m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20))
 {
-    m_uiFont.loadFromFile(FONT_PATH);
 #ifndef NDEBUG
      m_debugFont.loadFromFile(DEBUG_FONT_PATH);
 #endif
@@ -22,17 +21,7 @@ void Game::render()
     m_targetWindow.clear(sf::Color::Black);
 
     m_objects.draw(m_targetWindow);
-
-    {
-        sf::Text multiplierText;
-        multiplierText.setFont(m_uiFont);
-        multiplierText.setColor(sf::Color(120,230,50));
-        multiplierText.setCharacterSize(16);
-        multiplierText.setString("x" + Utils::toString(m_state.getMultiplier()));
-        multiplierText.setPosition(m_targetWindow.getSize().x/2-multiplierText.getLocalBounds().width/2,0);
-
-        m_targetWindow.draw(multiplierText);
-    }
+    m_userInterface.draw(m_targetWindow);
 
 #ifndef NDEBUG
     {
@@ -67,6 +56,8 @@ void Game::update()
     {
 		m_spawner.spawnBarriers(m_objects);
     }
+
+    m_userInterface.update(m_state);
 }
 
 void Game::checkClosure()

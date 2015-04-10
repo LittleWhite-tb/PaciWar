@@ -6,6 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "UI.hpp"
 #include "GameState.hpp"
 #include "ObjectBank.hpp"
 
@@ -18,7 +19,7 @@ class Game
 {
 private:
     sf::RenderWindow& m_targetWindow;
-    sf::Font m_uiFont;
+    UI m_userInterface;
 #ifndef NDEBUG
     sf::Font m_debugFont;
 #endif
