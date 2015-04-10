@@ -3,6 +3,7 @@
 #include "GameState.hpp"
 
 #include "Utils.hpp"
+#include "SFML/Vector2Utils.hpp"
 #include "globals.hpp"
 
 const sf::Color UI::textColor = sf::Color(120,230,50);
@@ -23,7 +24,8 @@ void UI::initTest(sf::Text& text)
 
 void UI::draw(sf::RenderWindow& window)
 {
-    m_scoreText.setPosition(10,10);
+    m_scoreText.setPosition(20,20);
+    m_scoreText.setRotation(-8);
     window.draw(m_scoreText);
 
     m_bonusText.setPosition(window.getSize().x/2-m_bonusText.getLocalBounds().width/2,0);
