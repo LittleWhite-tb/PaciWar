@@ -120,6 +120,8 @@ void ObjectBank::applyCollision(GameState& gstate)
             switch (bcr.getLoser())
             {
                 case BarrierCollisionResult::BARRIER:
+                    createBonus(itBarrier->getLeftEdgePosition());
+                    createBonus(itBarrier->getRightEdgePosition());
                     createExplosion(itBarrier->getPosition());
                     itBarrier->kill();
                     barriersKilled+=2;

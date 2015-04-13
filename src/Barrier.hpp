@@ -36,6 +36,9 @@ public:
     Line getLine()const;
 
     void update(unsigned int time);
+
+    const sf::Vector2f& getLeftEdgePosition()const { return leftEdgePosition; }
+    const sf::Vector2f& getRightEdgePosition()const { return rightEdgePosition; }
 };
 
 #endif
