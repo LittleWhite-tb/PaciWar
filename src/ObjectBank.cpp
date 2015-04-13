@@ -107,6 +107,10 @@ void ObjectBank::update(GameState &gstate, unsigned int deltaTime)
 
 void ObjectBank::applyCollision(GameState& gstate)
 {
+    unsigned int barriersKilled = 0;
+    unsigned int enemiesKilled = 0;
+    unsigned int collectedBonusCounter = 0;
+
     Pool<Barrier>::iterator itBarrier = m_barriersPool.begin();
     for ( ; itBarrier != m_barriersPool.end() ; ++itBarrier)
     {
@@ -118,6 +122,7 @@ void ObjectBank::applyCollision(GameState& gstate)
                 case BarrierCollisionResult::BARRIER:
                     createExplosion(itBarrier->getPosition());
                     itBarrier->kill();
+                    barriersKilled+=2;
                     break;
                 case BarrierCollisionResult::PLAYER:
                     std::cout << "Player kill" << std::endl;
@@ -141,6 +146,7 @@ void ObjectBank::applyCollision(GameState& gstate)
                 itEnemies->kill();
                 createBonus(itEnemies->getPosition());
                 createParticleSystem(itEnemies->getPosition(),particlesColor);
+                enemiesKilled +=1;
             }
         }
 
@@ -154,7 +160,6 @@ void ObjectBank::applyCollision(GameState& gstate)
         }
     }
 
-    unsigned int collectedBonusCounter = 0;
     Pool<Bonus>::iterator itBonusses = m_bonusPool.begin();
     for ( ; itBonusses != m_bonusPool.end() ; ++itBonusses )
     {
@@ -176,4 +181,5 @@ void ObjectBank::applyCollision(GameState& gstate)
                                 std::placeholders::_1));
 
     gstate.addMultiplier(collectedBonusCounter);
+    gstate.addKill(enemiesKilled,barriersKilled);
 }
