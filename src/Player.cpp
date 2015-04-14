@@ -16,18 +16,18 @@ void Player::draw(sf::RenderWindow& window)
 {
     const sf::Vertex lines[] =
     {
-        sf::Vertex(sf::Vector2f(0, -5)),
-        sf::Vertex(sf::Vector2f(5, 5)),
+        sf::Vertex(sf::Vector2f(5, 0)),
         sf::Vertex(sf::Vector2f(-5, 5)),
-        sf::Vertex(sf::Vector2f(0, -5))
+        sf::Vertex(sf::Vector2f(-5, -5)),
+        sf::Vertex(sf::Vector2f(5, 0))
     };
 
     const sf::Vertex tri2[] =
     {
-        sf::Vertex(sf::Vector2f(0, -6)),
-        sf::Vertex(sf::Vector2f(2, 2)),
+        sf::Vertex(sf::Vector2f(6, 0)),
         sf::Vertex(sf::Vector2f(-2, 2)),
-        sf::Vertex(sf::Vector2f(0, -6))
+        sf::Vertex(sf::Vector2f(-2, -2)),
+        sf::Vertex(sf::Vector2f(6, 0))
     };
 
     sf::Transform t;
@@ -60,10 +60,9 @@ void Player::move(const sf::Vector2f& movement, float time)
         float targetRotation = SFMLUtils::getAngle(movement);
 
         // Extra rotation, since the initial ship is drawn up
-        targetRotation+=90;
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
 
-        sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(m_rotation-90); // Isn't really strange for player ?
+        sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(m_rotation); // Isn't really strange for player ?
         m_position += realDirection * SPEED * time;
     }
 
