@@ -43,7 +43,7 @@ float SFMLUtils::getAngle(const sf::Vector2f& v)
     return angle;
 }
 
-const sf::Vector2f& SFMLUtils::getVectorFromAngle(float angle)
+sf::Vector2f SFMLUtils::getVectorFromAngle(float angle)
 {
     return std::move(sf::Vector2f(std::cos(angle*M_PI/180.f),std::sin(angle*M_PI/180.f)));
 
