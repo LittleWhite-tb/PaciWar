@@ -54,7 +54,6 @@ void Player::debugDraw(sf::RenderWindow& window)
 void Player::move(const sf::Vector2f& movement, float time)
 {
     // Movement here, should be betweend 0 and 1.
-    m_position += movement * SPEED * time;
     if (movement.x != 0 ||
         movement.y != 0)
     {
@@ -62,7 +61,10 @@ void Player::move(const sf::Vector2f& movement, float time)
 
         // Extra rotation, since the initial ship is drawn up
         targetRotation+=90;
-        m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.3f);
+        m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
+
+        sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(m_rotation-90); // Isn't really strange for player ?
+        m_position += realDirection * SPEED * time;
     }
 
     m_engineParticles.update(m_position,-movement,time);
