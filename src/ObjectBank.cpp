@@ -60,7 +60,7 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
                                       std::placeholders::_1,
                                       std::ref(targetWindow)));
 
-#ifdef NDEBUG
+#ifndef NDEBUG
 	m_barriersPool.update(std::bind(&Entity::debugDraw,
 									  std::placeholders::_1,
 									  std::ref(targetWindow)));
@@ -70,7 +70,9 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
     m_bonusPool.update(std::bind(&Entity::debugDraw,
                                  std::placeholders::_1,
                                  std::ref(targetWindow)));
+    m_player.debugDraw(targetWindow);
 #endif
+
 	m_player.draw(targetWindow);
 }
 
