@@ -51,7 +51,7 @@ void Player::debugDraw(sf::RenderWindow& window)
     window.draw(debugCircle);
 }
 
-void Player::move(const sf::Vector2f& movement, float time)
+void Player::move(const sf::Vector2f& movement, long unsigned int time)
 {
     // Movement here, should be betweend 0 and 1.
     if (movement.x != 0 ||
@@ -63,7 +63,7 @@ void Player::move(const sf::Vector2f& movement, float time)
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
 
         sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(m_rotation); // Isn't really strange for player ?
-        m_position += realDirection * SPEED * time;
+        m_position += realDirection * SPEED * static_cast<float>(time);
     }
 
     m_engineParticles.update(m_position,-movement,time);

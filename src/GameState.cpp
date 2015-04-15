@@ -6,6 +6,11 @@ GameState::GameState()
     reset();
 }
 
+void GameState::update()
+{
+    m_gameTime.update();
+}
+
 void GameState::reset()
 {
     m_bonusMultiplier=1;

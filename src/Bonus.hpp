@@ -7,6 +7,8 @@
 
 #include "Momentum.hpp"
 
+class GameState;
+
 class Bonus : public Entity
 {
 private:
@@ -33,7 +35,7 @@ public:
         :Entity(position),m_color(normalColor),m_life(LIFETIME) {}
 
     void draw(sf::RenderWindow& window);
-    void move(unsigned int deltaTime, const Entity& target);
+    void move(long unsigned int deltaTime, const Entity& target);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 

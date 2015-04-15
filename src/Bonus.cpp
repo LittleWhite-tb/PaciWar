@@ -5,6 +5,8 @@
 #include "SFML/Vector2Utils.hpp"
 #include "Tracker.hpp"
 
+#include "GameState.hpp"
+
 #include <Collisions/Collider.hpp>
 
 const sf::Color Bonus::normalColor = sf::Color(120,230,50);
@@ -52,7 +54,7 @@ void Bonus::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
     boundingSpheres.push_back(Sphere(m_position, Bonus::SIZE));
 }
 
-void Bonus::move(unsigned int deltaTime, const Entity &target)
+void Bonus::move(unsigned long deltaTime, const Entity &target)
 {
     m_momentum.update(this->m_position,this->m_rotation,deltaTime);
 
@@ -64,26 +66,7 @@ void Bonus::move(unsigned int deltaTime, const Entity &target)
         // Normally, we can't lose bonus/untract player
         m_life = LIFETIME;
     }
-/*
-    // Enemies avoidance
-    BoundingSpheres self;
-    self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
 
-    for (auto e : enemies)
-    {
-        if (e.get() != this) // Avoid colliding with myself
-        {
-            BoundingSpheres other;
-            e->getBoundingSpheres(other);
-
-            if ( Collider::collides(other,self))
-            {
-                m_position = oldPosition;
-                break;
-            }
-        }
-    }
-*/
     m_life -= deltaTime;
     if (m_life < BLINK_TIME)
     {

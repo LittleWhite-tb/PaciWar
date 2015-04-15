@@ -39,7 +39,7 @@ public:
 	void createEnemy(const sf::Vector2f& position);
 
 	void draw(sf::RenderWindow& targetWindow);
-    void update(GameState& gstate, unsigned int deltaTime);
+    void update(GameState& gstate);
 	
 	Player& getPlayer() { return m_player; }
 	const Player& getPlayer()const { return m_player; }

@@ -21,7 +21,7 @@ public:
 	void draw(sf::RenderWindow& window);
     void debugDraw(sf::RenderWindow& window);
 
-    void move(const sf::Vector2f& movement, float time);
+    void move(const sf::Vector2f& movement, unsigned long time);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 };

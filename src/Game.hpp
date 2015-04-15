@@ -11,7 +11,6 @@
 #include "ObjectBank.hpp"
 
 #include "Spawner.hpp"
-#include "GameTime.hpp"
 
 #include "Keyboard.hpp"
 
@@ -30,7 +29,6 @@ private:
     Spawner m_spawner;
 
     Keyboard m_keyboard;
-    GameTime m_gameTime;
 
     void render();
     void update();

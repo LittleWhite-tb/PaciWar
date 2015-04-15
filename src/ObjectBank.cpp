@@ -76,35 +76,35 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 	m_player.draw(targetWindow);
 }
 
-void ObjectBank::update(GameState &gstate, unsigned int deltaTime)
+void ObjectBank::update(GameState& gstate)
 {
 	m_barriersPool.update(std::bind(&Barrier::update,
 									  std::placeholders::_1,
-									  deltaTime));
+                                      gstate.getTime().getElapsedTime()));
 	m_enemiesPool.update(std::bind(&Enemy::move,
 									  std::placeholders::_1,
-                                      m_enemiesPool,deltaTime,
+                                      m_enemiesPool,gstate.getTime().getElapsedTime(),
 									  std::ref(m_player)));
     m_bonusPool.update(std::bind(&Bonus::move,
                                  std::placeholders::_1,
-                                 deltaTime,
+                                 gstate.getTime().getElapsedTime(),
                                  std::ref(m_player)));
 
     m_particleSystemPool.update(std::bind(&FixedColorParticleSystem::update,
                                           std::placeholders::_1,
-                                          deltaTime));
+                                          gstate.getTime().getElapsedTime()));
     m_particleSystemPool.purge(std::bind(&FixedColorParticleSystem::isDead,
                                           std::placeholders::_1));
 
     m_explosionsPool.update(std::bind(&RadialExplosion::update,
                                       std::placeholders::_1,
-                                      deltaTime));
+                                      gstate.getTime().getElapsedTime()));
     m_explosionsPool.purge(std::bind(&RadialExplosion::isValid,
                                      std::placeholders::_1));
 
     applyCollision(gstate);
 
-    m_rainbowGradient += deltaTime*0.03;
+    m_rainbowGradient += gstate.getTime().getElapsedTime()*0.03;
 }
 
 void ObjectBank::applyCollision(GameState& gstate)

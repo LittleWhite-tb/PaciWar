@@ -41,18 +41,18 @@ void Game::render()
 
 void Game::update()
 {
-    m_gameTime.update();
+    m_state.update();
     m_keyboard.update();
 
-    m_objects.getPlayer().move(m_keyboard.getMovement(),m_gameTime.getElapsedTime());
-    m_objects.update(m_state, m_gameTime.getElapsedTime());
+    m_objects.getPlayer().move(m_keyboard.getMovement(),m_state.getTime().getElapsedTime());
+    m_objects.update(m_state);
 
-    if ( m_gameTime.shouldSpawnEnemy())
+    if ( m_state.getTime().shouldSpawnEnemy())
     {
         m_spawner.spawnEnemies(m_objects);
     }
 
-    if ( m_gameTime.shouldSpawnBarrier())
+    if ( m_state.getTime().shouldSpawnBarrier())
     {
 		m_spawner.spawnBarriers(m_objects);
     }
