@@ -4,6 +4,8 @@
 
 #include <limits>
 
+#include "GameState.hpp"
+
 #include "SFML/Vector2Utils.hpp"
 #include "Math/Interpolation.hpp"
 
@@ -51,8 +53,9 @@ void Player::debugDraw(sf::RenderWindow& window)
     window.draw(debugCircle);
 }
 
-void Player::move(const sf::Vector2f& movement, long unsigned int time)
+void Player::update(GameState& gstate)
 {
+    sf::Vector2f movement = gstate.getKeyboard().getMovement();
     // Movement here, should be betweend 0 and 1.
     if (movement.x != 0 ||
         movement.y != 0)
@@ -63,10 +66,10 @@ void Player::move(const sf::Vector2f& movement, long unsigned int time)
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
 
         sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(m_rotation); // Isn't really strange for player ?
-        m_position += realDirection * SPEED * static_cast<float>(time);
+        m_position += realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
     }
 
-    m_engineParticles.update(m_position,-movement,time);
+    m_engineParticles.update(m_position,-movement,gstate.getTime().getElapsedTime());
 }
 
 void Player::getBoundingSpheres(BoundingSpheres &boundingSpheres)const

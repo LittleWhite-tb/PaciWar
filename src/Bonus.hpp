@@ -35,7 +35,7 @@ public:
         :Entity(position),m_color(normalColor),m_life(LIFETIME) {}
 
     void draw(sf::RenderWindow& window);
-    void move(long unsigned int deltaTime, const Entity& target);
+    void update(GameState& gstate);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 

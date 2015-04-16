@@ -80,19 +80,17 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 
 void ObjectBank::update(GameState& gstate)
 {
-    m_player.move(gstate.getKeyboard().getMovement(),gstate.getTime().getElapsedTime());
+    m_player.update(gstate);
 
 	m_barriersPool.update(std::bind(&Barrier::update,
 									  std::placeholders::_1,
-                                      gstate.getTime().getElapsedTime()));
-	m_enemiesPool.update(std::bind(&Enemy::move,
+                                      gstate));
+    m_enemiesPool.update(std::bind(&Enemy::update,
 									  std::placeholders::_1,
-                                      m_enemiesPool,gstate.getTime().getElapsedTime(),
-									  std::ref(m_player)));
-    m_bonusPool.update(std::bind(&Bonus::move,
+                                      gstate));
+    m_bonusPool.update(std::bind(&Bonus::update,
                                  std::placeholders::_1,
-                                 gstate.getTime().getElapsedTime(),
-                                 std::ref(m_player)));
+                                 gstate));
 
     m_particleSystemPool.update(std::bind(&FixedColorParticleSystem::update,
                                           std::placeholders::_1,

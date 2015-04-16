@@ -35,7 +35,7 @@ public:
     void getBoundingSpheres(BoundingSpheres &boundingSpheres)const;
     Line getLine()const;
 
-    void update(unsigned int time);
+    void update(GameState& gstate);
 
     const sf::Vector2f& getLeftEdgePosition()const { return leftEdgePosition; }
     const sf::Vector2f& getRightEdgePosition()const { return rightEdgePosition; }

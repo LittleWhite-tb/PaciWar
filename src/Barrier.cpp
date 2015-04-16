@@ -1,5 +1,7 @@
 #include "Barrier.hpp"
 
+#include "GameState.hpp"
+
 constexpr int Barrier::barrierSize;
 constexpr float Barrier::heightSize;
 constexpr float Barrier::midSize;
@@ -62,9 +64,9 @@ Line Barrier::getLine()const
     return Line(leftEdgePosition,rightEdgePosition);
 }
 
-void Barrier::update(unsigned int time)
+void Barrier::update(GameState &gstate)
 {
-    m_momentum.update(m_position,m_rotation,time);
+    m_momentum.update(m_position,m_rotation,gstate.getTime().getElapsedTime());
 
     // Update internal members
     sf::Transform rotationMatrix;

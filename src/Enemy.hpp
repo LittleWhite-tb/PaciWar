@@ -16,7 +16,7 @@ public:
         :Entity(position) {}
 	
 	void draw(sf::RenderWindow& window);
-    void move(const Pool<Enemy>& enemies, unsigned int deltaTime, const Entity& target);
+    void update(GameState& gstate);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 

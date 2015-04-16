@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "GameState.hpp"
 #include "Tracker.hpp"
 
 #include <Collisions/Collider.hpp>
@@ -56,17 +57,17 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
     boundingSpheres.push_back(Sphere(m_position, Enemy::SIZE));
 }
 
-void Enemy::move(const Pool<Enemy>& enemies, unsigned int deltaTime, const Entity &target)
+void Enemy::update(GameState& gstate)
 {
     sf::Vector2f oldPosition = m_position;
-    Tracker::update(m_position,m_rotation,target,SPEED,0.3f,deltaTime);
+    Tracker::update(m_position,m_rotation,gstate.getObjects().getPlayer(),SPEED,0.3f,gstate.getTime().getElapsedTime());
 
     // Enemies avoidance
     BoundingSpheres self;
     self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
 
-    Pool<Enemy>::const_iterator itBarrier = enemies.cbegin();
-    for ( ; itBarrier != enemies.cend() ; ++itBarrier)
+    Pool<Enemy>::const_iterator itBarrier = gstate.getObjects().getEnemies().cbegin();
+    for ( ; itBarrier != gstate.getObjects().getEnemies().cend() ; ++itBarrier)
     {
         if (itBarrier->getPosition() != oldPosition) // Avoid colliding with myself
                                                      // HACK Not good at all

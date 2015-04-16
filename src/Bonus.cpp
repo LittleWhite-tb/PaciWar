@@ -54,20 +54,21 @@ void Bonus::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
     boundingSpheres.push_back(Sphere(m_position, Bonus::SIZE));
 }
 
-void Bonus::move(unsigned long deltaTime, const Entity &target)
+void Bonus::update(GameState& gstate)
 {
-    m_momentum.update(this->m_position,this->m_rotation,deltaTime);
+    m_momentum.update(this->m_position,this->m_rotation,gstate.getTime().getElapsedTime());
 
+    const Player& target = gstate.getObjects().getPlayer();
     float targetDistance = SFMLUtils::distance(target.getPosition(),this->getPosition());
     if ( targetDistance < MAGNET_DISTANCE*MAGNET_DISTANCE )
     {
-        Tracker::update(m_position,m_rotation,target,SPEED,0.5f,deltaTime);
+        Tracker::update(m_position,m_rotation,target,SPEED,0.5f,gstate.getTime().getElapsedTime());
 
         // Normally, we can't lose bonus/untract player
         m_life = LIFETIME;
     }
 
-    m_life -= deltaTime;
+    m_life -= gstate.getTime().getElapsedTime();
     if (m_life < BLINK_TIME)
     {
         if ((m_life / BLINK_DELAY) % 2)
