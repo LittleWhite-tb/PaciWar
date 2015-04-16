@@ -17,7 +17,8 @@ Linux (Makefiles), debug version :
 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DSFML_ROOT=path_to_sfml
 ```
 
-If you need more information about that, read CMake documentation.
+If you need more information about that, read [CMake 
+documentation](http://www.cmake.org/runningcmake/).
 
 ## Building installer
 
