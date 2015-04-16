@@ -25,7 +25,7 @@ public:
     void addKill(unsigned int nbEnemies, unsigned int nbBarrier);
     unsigned int getScore()const { return m_score; }
 
-    GameTime& getTime() { return m_gameTime; }
+    const GameTime& getTime()const { return m_gameTime; }
 };
 
 #endif
