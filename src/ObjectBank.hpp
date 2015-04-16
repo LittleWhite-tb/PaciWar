@@ -3,8 +3,6 @@
 
 #include "ObjectPool.hpp"
 
-#include "GameState.hpp"
-
 #include "Player.hpp"
 #include "Barrier.hpp"
 #include "Enemy.hpp"
@@ -12,6 +10,8 @@
 
 #include "FixedColorParticleSystem.hpp"
 #include "RadialExplosion.hpp"
+
+class GameState;
 
 class ObjectBank
 {

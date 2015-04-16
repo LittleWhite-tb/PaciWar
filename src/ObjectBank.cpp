@@ -3,6 +3,8 @@
 #include "Collisions/Collider.hpp"
 #include "Palette.hpp"
 
+#include "GameState.hpp"
+
 #include <iostream>
 
 ObjectBank::ObjectBank()

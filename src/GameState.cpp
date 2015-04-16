@@ -9,6 +9,8 @@ GameState::GameState()
 void GameState::update()
 {
     m_gameTime.update();
+
+    m_objects.update(*this);
 }
 
 void GameState::reset()

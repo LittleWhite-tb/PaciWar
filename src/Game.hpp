@@ -8,7 +8,6 @@
 
 #include "UI.hpp"
 #include "GameState.hpp"
-#include "ObjectBank.hpp"
 
 #include "Spawner.hpp"
 
@@ -24,7 +23,6 @@ private:
 #endif
 
     GameState m_state;
-    ObjectBank m_objects;
 
     Spawner m_spawner;
 

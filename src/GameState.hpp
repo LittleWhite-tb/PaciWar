@@ -2,11 +2,13 @@
 #define GAMESTATE_HPP
 
 #include "GameTime.hpp"
+#include "ObjectBank.hpp"
 
 class GameState
 {
 private:
     GameTime m_gameTime;
+    ObjectBank m_objects;
 
     unsigned int m_bonusMultiplier;
     unsigned int m_score;
@@ -26,6 +28,7 @@ public:
     unsigned int getScore()const { return m_score; }
 
     const GameTime& getTime()const { return m_gameTime; }
+    ObjectBank& getObjects() { return m_objects; }
 };
 
 #endif
