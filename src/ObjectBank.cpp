@@ -80,6 +80,8 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 
 void ObjectBank::update(GameState& gstate)
 {
+    m_player.move(gstate.getKeyboard().getMovement(),gstate.getTime().getElapsedTime());
+
 	m_barriersPool.update(std::bind(&Barrier::update,
 									  std::placeholders::_1,
                                       gstate.getTime().getElapsedTime()));

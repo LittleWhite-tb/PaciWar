@@ -11,8 +11,6 @@
 
 #include "Spawner.hpp"
 
-#include "Keyboard.hpp"
-
 class Game
 {
 private:
@@ -25,8 +23,6 @@ private:
     GameState m_state;
 
     Spawner m_spawner;
-
-    Keyboard m_keyboard;
 
     void render();
     void update();

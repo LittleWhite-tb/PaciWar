@@ -4,11 +4,15 @@
 #include "GameTime.hpp"
 #include "ObjectBank.hpp"
 
+#include "Keyboard.hpp"
+
 class GameState
 {
 private:
     GameTime m_gameTime;
     ObjectBank m_objects;
+
+    Keyboard m_keyboard;
 
     unsigned int m_bonusMultiplier;
     unsigned int m_score;
@@ -29,6 +33,7 @@ public:
 
     const GameTime& getTime()const { return m_gameTime; }
     ObjectBank& getObjects() { return m_objects; }
+    const Keyboard getKeyboard()const { return m_keyboard; }
 };
 
 #endif

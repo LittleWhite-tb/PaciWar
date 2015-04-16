@@ -9,6 +9,7 @@ GameState::GameState()
 void GameState::update()
 {
     m_gameTime.update();
+    m_keyboard.update();
 
     m_objects.update(*this);
 }

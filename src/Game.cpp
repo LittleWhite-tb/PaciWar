@@ -42,9 +42,6 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
-    m_keyboard.update();
-
-    m_state.getObjects().getPlayer().move(m_keyboard.getMovement(),m_state.getTime().getElapsedTime());
 
     if ( m_state.getTime().shouldSpawnEnemy())
     {
