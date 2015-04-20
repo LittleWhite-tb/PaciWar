@@ -9,13 +9,18 @@
 
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
-     m_enemiesPool(1000),m_bonusPool(1000),
+     m_enemiesPool(1000),m_enemiesDeathPool(1000),m_bonusPool(1000),
      m_player(sf::Vector2f(200,100)),
      m_particleSystemPool(100),
      m_explosionsPool(25),
      m_rainbowGradient(0)
 {
 	
+}
+
+void ObjectBank::createEnemyDeath(const sf::Vector2f& position)
+{
+    m_enemiesDeathPool.add(position);
 }
 
 void ObjectBank::createBonus(const sf::Vector2f& position)
@@ -51,6 +56,9 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 	m_enemiesPool.update(std::bind(&Entity::draw,
 									  std::placeholders::_1,
 									  std::ref(targetWindow)));
+    m_enemiesDeathPool.update(std::bind(&EnemyDeath::draw,
+                                         std::placeholders::_1,
+                                         std::ref(targetWindow)));
     m_bonusPool.update(std::bind(&Entity::draw,
                        std::placeholders::_1,
                        std::ref(targetWindow)));
@@ -91,6 +99,12 @@ void ObjectBank::update(GameState& gstate)
     m_bonusPool.update(std::bind(&Bonus::update,
                                  std::placeholders::_1,
                                  gstate));
+
+    m_enemiesDeathPool.update(std::bind(&EnemyDeath::update,
+                                        std::placeholders::_1,
+                                        gstate));
+    m_enemiesDeathPool.purge(std::bind(&EnemyDeath::isDead,
+                                        std::placeholders::_1));
 
     m_particleSystemPool.update(std::bind(&FixedColorParticleSystem::update,
                                           std::placeholders::_1,
@@ -150,6 +164,7 @@ void ObjectBank::applyCollision(GameState& gstate)
             if ( cr.collided )
             {
                 itEnemies->kill();
+                createEnemyDeath(itEnemies->getPosition());
                 createBonus(itEnemies->getPosition());
                 createParticleSystem(itEnemies->getPosition(),particlesColor);
                 enemiesKilled +=1;

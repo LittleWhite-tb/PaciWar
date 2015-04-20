@@ -49,7 +49,7 @@ private:
     static constexpr long unsigned int DURATION = 1000;
 
 public:
-    EnemyDeath(const Enemy& enemy);
+    EnemyDeath(const sf::Vector2f& position);
 
     void draw(sf::RenderWindow& window);
     void update(GameState& gstate);

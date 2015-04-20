@@ -6,6 +6,7 @@
 #include "Player.hpp"
 #include "Barrier.hpp"
 #include "Enemy.hpp"
+#include "EnemyDeath.hpp"
 #include "Bonus.hpp"
 
 #include "FixedColorParticleSystem.hpp"
@@ -18,6 +19,7 @@ class ObjectBank
 private:
 	Pool<Barrier> m_barriersPool;
 	Pool<Enemy> m_enemiesPool;
+    Pool<EnemyDeath> m_enemiesDeathPool;
     Pool<Bonus> m_bonusPool;
 	Player m_player;
 
@@ -28,6 +30,7 @@ private:
 	
     void applyCollision(GameState& gstate);
 
+    void createEnemyDeath(const sf::Vector2f& position);
     void createBonus(const sf::Vector2f& position);
     void createParticleSystem(const sf::Vector2f& position, const sf::Color &color);
     void createExplosion(const sf::Vector2f& position);

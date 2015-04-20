@@ -3,16 +3,16 @@
 #include "GameState.hpp"
 #include "Enemy.hpp"
 
-EnemyDeath::EnemyDeath(const Enemy& enemy)
+EnemyDeath::EnemyDeath(const sf::Vector2f &position)
     :m_lines{{
-         Line(sf::Vector2f(enemy.getPosition().x-5,
-                           enemy.getPosition().y+5),45),
-         Line(sf::Vector2f(enemy.getPosition().x-5,
-                           enemy.getPosition().y-5),45+90),
-         Line(sf::Vector2f(enemy.getPosition().x+5,
-                           enemy.getPosition().y-5),45+180),
-         Line(sf::Vector2f(enemy.getPosition().x+5,
-                           enemy.getPosition().y+5),45+270)
+         Line(sf::Vector2f(position.x-5,
+                           position.y+5),45),
+         Line(sf::Vector2f(position.x-5,
+                           position.y-5),45+90),
+         Line(sf::Vector2f(position.x+5,
+                           position.y-5),45+180),
+         Line(sf::Vector2f(position.x+5,
+                           position.y+5),45+270)
             }},
      m_lifeTime(0)
 {
