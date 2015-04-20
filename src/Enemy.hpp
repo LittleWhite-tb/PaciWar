@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "ObjectPool.hpp"
 #include "Entity.hpp"
 
 class Enemy : public Entity
