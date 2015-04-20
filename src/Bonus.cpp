@@ -5,6 +5,8 @@
 #include "SFML/Vector2Utils.hpp"
 #include "Tracker.hpp"
 
+#include "GameState.hpp"
+
 #include <Collisions/Collider.hpp>
 
 const sf::Color Bonus::normalColor = sf::Color(120,230,50);
@@ -52,39 +54,21 @@ void Bonus::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
     boundingSpheres.push_back(Sphere(m_position, Bonus::SIZE));
 }
 
-void Bonus::move(unsigned int deltaTime, const Entity &target)
+void Bonus::update(GameState& gstate)
 {
-    m_momentum.update(this->m_position,this->m_rotation,deltaTime);
+    m_momentum.update(this->m_position,this->m_rotation,gstate.getTime().getElapsedTime());
 
+    const Player& target = gstate.getObjects().getPlayer();
     float targetDistance = SFMLUtils::distance(target.getPosition(),this->getPosition());
     if ( targetDistance < MAGNET_DISTANCE*MAGNET_DISTANCE )
     {
-        Tracker::update(m_position,m_rotation,target,SPEED,0.5f,deltaTime);
+        Tracker::update(m_position,m_rotation,target,SPEED,0.5f,gstate.getTime().getElapsedTime());
 
         // Normally, we can't lose bonus/untract player
         m_life = LIFETIME;
     }
-/*
-    // Enemies avoidance
-    BoundingSpheres self;
-    self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
 
-    for (auto e : enemies)
-    {
-        if (e.get() != this) // Avoid colliding with myself
-        {
-            BoundingSpheres other;
-            e->getBoundingSpheres(other);
-
-            if ( Collider::collides(other,self))
-            {
-                m_position = oldPosition;
-                break;
-            }
-        }
-    }
-*/
-    m_life -= deltaTime;
+    m_life -= gstate.getTime().getElapsedTime();
     if (m_life < BLINK_TIME)
     {
         if ((m_life / BLINK_DELAY) % 2)

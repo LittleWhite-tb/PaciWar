@@ -8,10 +8,13 @@ class GameTime
 private:
     sf::Clock m_gameClock;
     sf::Time m_elapsedTime;
-
     sf::Time m_previousUpdateTime;
+
     sf::Time m_enemySpawnTime;
+    bool m_shouldSpawnEnemy;
+
     sf::Time m_barrierSpawnTime;
+    bool m_shouldSpawnBarrier;
 
     /**
      * Times are in ms
@@ -26,8 +29,8 @@ public:
     int64_t getElapsedTime()const;
 
 
-    bool shouldSpawnEnemy();
-    bool shouldSpawnBarrier();
+    bool shouldSpawnEnemy()const { return m_shouldSpawnEnemy; }
+    bool shouldSpawnBarrier()const { return m_shouldSpawnBarrier; }
 };
 
 #endif

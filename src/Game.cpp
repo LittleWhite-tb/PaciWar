@@ -20,7 +20,7 @@ void Game::render()
 {
     m_targetWindow.clear(sf::Color::Black);
 
-    m_objects.draw(m_targetWindow);
+    m_state.getObjects().draw(m_targetWindow);
     m_userInterface.draw(m_targetWindow);
 
 #ifndef NDEBUG
@@ -41,20 +41,16 @@ void Game::render()
 
 void Game::update()
 {
-    m_gameTime.update();
-    m_keyboard.update();
+    m_state.update();
 
-    m_objects.getPlayer().move(m_keyboard.getMovement(),m_gameTime.getElapsedTime());
-    m_objects.update(m_state, m_gameTime.getElapsedTime());
-
-    if ( m_gameTime.shouldSpawnEnemy())
+    if ( m_state.getTime().shouldSpawnEnemy())
     {
-        m_spawner.spawnEnemies(m_objects);
+        m_spawner.spawnEnemies(m_state.getObjects());
     }
 
-    if ( m_gameTime.shouldSpawnBarrier())
+    if ( m_state.getTime().shouldSpawnBarrier())
     {
-		m_spawner.spawnBarriers(m_objects);
+        m_spawner.spawnBarriers(m_state.getObjects());
     }
 
     m_userInterface.update(m_state);

@@ -8,12 +8,8 @@
 
 #include "UI.hpp"
 #include "GameState.hpp"
-#include "ObjectBank.hpp"
 
 #include "Spawner.hpp"
-#include "GameTime.hpp"
-
-#include "Keyboard.hpp"
 
 class Game
 {
@@ -25,12 +21,8 @@ private:
 #endif
 
     GameState m_state;
-    ObjectBank m_objects;
 
     Spawner m_spawner;
-
-    Keyboard m_keyboard;
-    GameTime m_gameTime;
 
     void render();
     void update();

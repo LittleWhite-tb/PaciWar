@@ -5,6 +5,8 @@
 
 #include "Collisions/Sphere.hpp"
 
+class GameState;
+
 class Entity{
 private:
 
@@ -23,6 +25,8 @@ public:
 
     virtual void draw(sf::RenderWindow& window)=0;
     virtual void debugDraw(sf::RenderWindow& window) {}
+
+    virtual void update(GameState& gstate)=0;
 
     const sf::Vector2f& getPosition()const { return m_position; }
     bool isDead()const { return m_dead; }
