@@ -30,7 +30,7 @@ void Game::render()
 
         text.setColor(sf::Color::White);
         text.setCharacterSize(10);
-        text.setString("DeltaTime : " + Utils::toString(m_gameTime.getElapsedTime()));
+        text.setString("DeltaTime : " + Utils::toString(m_state.getTime().getElapsedTime()));
 
         m_targetWindow.draw(text);
     }
