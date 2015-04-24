@@ -1,6 +1,6 @@
 #include "UI.hpp"
 
-#include "GameState.hpp"
+#include "Score.hpp"
 
 #include "Utils.hpp"
 #include "SFML/Vector2Utils.hpp"
@@ -32,8 +32,8 @@ void UI::draw(sf::RenderWindow& window)
     window.draw(m_bonusText);
 }
 
-void UI::update(const GameState& gstate)
+void UI::update(const Score& score)
 {
-    m_bonusText.setString("x" + Utils::toString(gstate.getMultiplier()));
-    m_scoreText.setString("Score\n" + Utils::toString(gstate.getScore()));
+    m_bonusText.setString("x" + Utils::toString(score.getMultiplier()));
+    m_scoreText.setString("Score\n" + Utils::toString(score.getScore()));
 }

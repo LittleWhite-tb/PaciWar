@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class GameState;
+class Score;
 
 class UI
 {
@@ -21,7 +21,7 @@ public:
     UI();
 
     void draw(sf::RenderWindow& window);
-    void update(const GameState& gstate);
+    void update(const Score& score);
 };
 
 #endif

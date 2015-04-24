@@ -53,7 +53,7 @@ void Game::update()
         m_spawner.spawnBarriers(m_state.getObjects());
     }
 
-    m_userInterface.update(m_state);
+    m_userInterface.update(m_state.getScore());
 }
 
 void Game::checkClosure()

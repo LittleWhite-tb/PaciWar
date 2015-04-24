@@ -201,6 +201,6 @@ void ObjectBank::applyCollision(GameState& gstate)
     m_bonusPool.purge(std::bind(&Bonus::isDead,
                                 std::placeholders::_1));
 
-    gstate.addMultiplier(collectedBonusCounter);
-    gstate.addKill(enemiesKilled,barriersKilled);
+    gstate.getScore().addMultiplier(collectedBonusCounter);
+    gstate.getScore().addKill(enemiesKilled,barriersKilled);
 }
