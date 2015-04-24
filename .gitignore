@@ -1,17 +1,2 @@
-# Executable
-PaciWar
-
-# Qt Creator files
-PaciWar.config
-PaciWar.creator
-PaciWar.creator.user
-PaciWar.files
-PaciWar.includes
-
-# CMake files
-CMakeCache.txt
-cmake_install.cmake
-CMakeFiles
-
-Makefile
-
+./build
+./CMakeLists.txt.user
