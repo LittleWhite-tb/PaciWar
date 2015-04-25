@@ -1,10 +1,11 @@
 #include "Joystick.hpp"
 
-#include <SFML/Window.hpp>
-
 #include <iostream>
 #include <cassert>
 
+#include <SFML/Window.hpp>
+
+#include "SFML/Vector2Utils.hpp"
 
 
 void Joystick::update()
@@ -40,9 +41,8 @@ sf::Vector2f Joystick::getMovement()const
     {
         if ( sf::Joystick::hasAxis(0,sf::Joystick::Axis::X) && sf::Joystick::hasAxis(0,sf::Joystick::Axis::Y) )
         {
-            return sf::Vector2f(
-                        sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::X),
-                        sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::Y));
+            return sf::Vector2f(sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::X)/100.f,
+                                sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::Y)/100.f);
         }
     }
     else

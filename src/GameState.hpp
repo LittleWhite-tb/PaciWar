@@ -5,7 +5,7 @@
 #include "ObjectBank.hpp"
 #include "Score.hpp"
 
-#include "Keyboard.hpp"
+#include "Input.hpp"
 
 class GameState
 {
@@ -14,8 +14,9 @@ private:
     ObjectBank m_objects;
     Score m_score;
 
-    Keyboard m_keyboard;
+    Input m_input;
 
+    GameState(GameState&)=delete;
 
 public:
     GameState();
@@ -27,7 +28,8 @@ public:
     const GameTime& getTime()const { return m_gameTime; }
     ObjectBank& getObjects() { return m_objects; }
     Score& getScore() { return m_score; }
-    const Keyboard getKeyboard()const { return m_keyboard; }
+
+    sf::Vector2f getInputMovement()const { return m_input.getMovement(); }
 };
 
 #endif

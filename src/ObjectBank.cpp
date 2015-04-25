@@ -90,19 +90,19 @@ void ObjectBank::update(GameState& gstate)
 {
     m_player.update(gstate);
 
-	m_barriersPool.update(std::bind(&Barrier::update,
+    m_barriersPool.update(std::bind(&Barrier::update,
 									  std::placeholders::_1,
-                                      gstate));
+                                      std::ref(gstate)));
     m_enemiesPool.update(std::bind(&Enemy::update,
 									  std::placeholders::_1,
-                                      gstate));
+                                      std::ref(gstate)));
     m_bonusPool.update(std::bind(&Bonus::update,
                                  std::placeholders::_1,
-                                 gstate));
+                                 std::ref(gstate)));
 
     m_enemiesDeathPool.update(std::bind(&EnemyDeath::update,
                                         std::placeholders::_1,
-                                        gstate));
+                                        std::ref(gstate)));
     m_enemiesDeathPool.purge(std::bind(&EnemyDeath::isDead,
                                         std::placeholders::_1));
 
@@ -145,7 +145,7 @@ void ObjectBank::applyCollision(GameState& gstate)
                     barriersKilled+=2;
                     break;
                 case BarrierCollisionResult::PLAYER:
-                    std::cout << "Player kill" << std::endl;
+                    // std::cout << "Player kill" << std::endl;
                     break;
             }
 
@@ -176,7 +176,7 @@ void ObjectBank::applyCollision(GameState& gstate)
             CollisionResult cr = Collider::collides(m_player,*itEnemies);
             if ( cr.collided )
             {
-                std::cout << "Player kill by enemy" << std::endl;
+                // std::cout << "Player kill by enemy" << std::endl;
             }
         }
     }

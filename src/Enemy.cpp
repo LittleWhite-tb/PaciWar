@@ -66,14 +66,14 @@ void Enemy::update(GameState& gstate)
     BoundingSpheres self;
     self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
 
-    Pool<Enemy>::const_iterator itBarrier = gstate.getObjects().getEnemies().cbegin();
-    for ( ; itBarrier != gstate.getObjects().getEnemies().cend() ; ++itBarrier)
+    Pool<Enemy>::const_iterator itEnemy = gstate.getObjects().getEnemies().cbegin();
+    for ( ; itEnemy != gstate.getObjects().getEnemies().cend() ; ++itEnemy)
     {
-        if (itBarrier->getPosition() != oldPosition) // Avoid colliding with myself
+        if (&(*itEnemy) != &(*this)) // Avoid colliding with myself
                                                      // HACK Not good at all
         {
             BoundingSpheres other;
-            itBarrier->getBoundingSpheres(other);
+            itEnemy->getBoundingSpheres(other);
 
             if ( Collider::collides(other,self))
             {
