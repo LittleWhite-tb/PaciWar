@@ -13,6 +13,8 @@ private:
     static const int UP;
     static const int DOWN;
 
+    static const int PRESSURE_TIME = 200;
+
 
     sf::Clock m_clock;
 
@@ -25,8 +27,6 @@ private:
 public:
     Keyboard()
         :m_pressureInterpolator(0,1) {}
-
-    static const int PRESSURE_TIME = 200;
 
     void update();
 
