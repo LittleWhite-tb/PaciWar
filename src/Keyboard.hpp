@@ -8,18 +8,17 @@
 class Keyboard
 {
 private:
-    static const int LEFT;
-    static const int RIGHT;
-    static const int UP;
-    static const int DOWN;
+    static constexpr int LEFT = 0;
+    static constexpr int RIGHT = 1;
+    static constexpr int UP = 2;
+    static constexpr int DOWN = 3;
 
     static const int PRESSURE_TIME = 200;
 
-
     sf::Clock m_clock;
 
-    bool m_pressInfo[4];
-    sf::Int32 m_pressTimes[4];
+    // Contains boolean to remember if the key is pressed, and time of the pressure
+    std::pair<bool, sf::Int32> m_pressInfos[4];
 
     Math::EaseInEaseOut<float> m_pressureInterpolator;
 

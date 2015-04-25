@@ -8,11 +8,6 @@
 #include "Math/Interpolation.hpp"
 #include "SFML/Vector2Utils.hpp"
 
-const int Keyboard::LEFT = 0;
-const int Keyboard::RIGHT = 1;
-const int Keyboard::UP = 2;
-const int Keyboard::DOWN = 3;
-
 void Keyboard::update()
 {
     static const std::vector<std::pair< sf::Keyboard::Key , int > > m_keyMatch =
@@ -27,16 +22,16 @@ void Keyboard::update()
     {
         if ( sf::Keyboard::isKeyPressed(itPair.first))
         {
-            if ( m_pressInfo[itPair.second] == false ) // If not yet pressed
+            if ( m_pressInfos[itPair.second].first == false ) // If not yet pressed
             {
                 // Set time
-                m_pressTimes[itPair.second] = m_clock.getElapsedTime().asMilliseconds();
+                m_pressInfos[itPair.second].second = m_clock.getElapsedTime().asMilliseconds();
             }
-            m_pressInfo[itPair.second] = true;
+            m_pressInfos[itPair.second].first = true;
         }
         else
         {
-            m_pressInfo[itPair.second] = false;
+            m_pressInfos[itPair.second].first = false;
         }
     }
 }
@@ -46,9 +41,9 @@ float Keyboard::getMovementByKey(int key)const
     sf::Int32 actualMsTime = m_clock.getElapsedTime().asMilliseconds();
     float keyMovement=0;
 
-    if (m_pressInfo[key])
+    if (m_pressInfos[key].first)
     {
-        sf::Int32 delta = actualMsTime - m_pressTimes[key];
+        sf::Int32 delta = actualMsTime - m_pressInfos[key].second;
         if ( delta > PRESSURE_TIME )
         {
             keyMovement = 1.0f;
