@@ -1,11 +1,11 @@
 #ifndef KEYBOARD_HPP
 #define KEYBOARD_HPP
 
-#include <SFML/System.hpp>
+#include "InputDevice.hpp"
 
 #include "Math/Interpolation.hpp"
 
-class Keyboard
+class Keyboard : public InputDevice
 {
 private:
     static constexpr int LEFT = 0;

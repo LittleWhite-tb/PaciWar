@@ -11,7 +11,7 @@ void Joystick::update()
 {
     if (sf::Joystick::isConnected(0))
     {
-        if ( m_isConnected == false ) // Was not connected until now
+        if ( m_isEnabled == false ) // Was not connected until now
         {
             std::cout << "Joystick has been plugged" << std::endl;
 #ifndef NDEBUG
@@ -21,14 +21,22 @@ void Joystick::update()
             {
                 std::cout << "Joystick invalid" << std::endl;
             }
+            m_isEnabled=true;
         }
-        m_isConnected=false;
+    }
+    else
+    {
+        if ( m_isEnabled == true )
+        {
+            std::cout << "Joystick disconnected" << std::endl;
+            m_isEnabled = false;
+        }
     }
 }
 
 sf::Vector2f Joystick::getMovement()const
 {
-    if ( m_isConnected )
+    if ( m_isEnabled )
     {
         if ( sf::Joystick::hasAxis(0,sf::Joystick::Axis::X) && sf::Joystick::hasAxis(0,sf::Joystick::Axis::Y) )
         {
