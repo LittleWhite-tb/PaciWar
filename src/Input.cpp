@@ -39,6 +39,5 @@ sf::Vector2f Input::getMovement()const
             }
         }
     }
-    assert(false); // No device enable ?
     return sf::Vector2f(0,0);
 }

@@ -8,6 +8,11 @@
 #include "Math/Interpolation.hpp"
 #include "SFML/Vector2Utils.hpp"
 
+constexpr int Keyboard::LEFT;
+constexpr int Keyboard::RIGHT;
+constexpr int Keyboard::UP;
+constexpr int Keyboard::DOWN;
+
 void Keyboard::update()
 {
     static const std::vector<std::pair< sf::Keyboard::Key , int > > m_keyMatch =

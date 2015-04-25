@@ -16,7 +16,7 @@ void Joystick::update()
         {
             std::cout << "Joystick has been plugged" << std::endl;
 #ifndef NDEBUG
-            std::cout << "===> " << sf::Joystick::getIdentification(0).name << std::endl;
+            std::cout << "===> " << sf::Joystick::getIdentification(0).name.toAnsiString() << std::endl;
 #endif
             if ( sf::Joystick::hasAxis(0,sf::Joystick::Axis::X) == false || sf::Joystick::hasAxis(0,sf::Joystick::Axis::Y) == false )
             {
