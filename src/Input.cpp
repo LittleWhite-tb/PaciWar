@@ -34,6 +34,7 @@ sf::Vector2f Input::getMovement()const
             // the devices in case that the user uses another device actively
             if (SFMLUtils::length(movement) >= DEADZONE_LIMIT)
             {
+                SFMLUtils::normalise(movement);
                 return movement;
             }
         }

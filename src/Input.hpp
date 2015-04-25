@@ -14,7 +14,6 @@ class Input
 
 private:
     std::list<std::unique_ptr<InputDevice> > m_devices;
-    //std::list<InputDevice* > m_devices;
 
     Input(const Input&)=delete;
 
