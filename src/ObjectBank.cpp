@@ -10,7 +10,6 @@
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
      m_enemiesPool(1000),m_enemiesDeathPool(1000),m_bonusPool(1000),
-     m_player(sf::Vector2f(200,100)),
      m_particleSystemPool(100),
      m_explosionsPool(25),
      m_rainbowGradient(0)

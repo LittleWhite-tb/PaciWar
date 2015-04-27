@@ -9,8 +9,8 @@
 #include "SFML/Vector2Utils.hpp"
 #include "Math/Interpolation.hpp"
 
-Player::Player(const sf::Vector2f& position)
-    :Entity(position)
+Player::Player()
+    :Entity(sf::Vector2f())
 {
 }
 	

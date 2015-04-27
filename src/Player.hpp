@@ -16,7 +16,7 @@ private:
     EngineParticleSystem m_engineParticles;
 	
 public:
-	Player(const sf::Vector2f& position);
+    Player();
 	
 	void draw(sf::RenderWindow& window);
     void debugDraw(sf::RenderWindow& window);
