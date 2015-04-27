@@ -22,6 +22,7 @@ void Game::render()
     m_targetWindow.setView(m_view);
 
     m_state.getObjects().draw(m_targetWindow);
+    m_state.getBorders().draw(m_targetWindow);
 
 
     m_targetWindow.setView(m_targetWindow.getDefaultView());
@@ -46,6 +47,7 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
+    // m_view.setCenter((m_state.getObjects().getPlayer().getPosition()-sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT))/10.f);
     m_view.setCenter(m_state.getObjects().getPlayer().getPosition());
 
     if ( m_state.getTime().shouldSpawnEnemy())

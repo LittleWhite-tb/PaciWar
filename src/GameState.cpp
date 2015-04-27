@@ -1,7 +1,9 @@
 #include "GameState.hpp"
 
+#include "globals.hpp"
 
 GameState::GameState()
+    :m_borders(sf::IntRect(-WIN_WIDTH/2,-WIN_HEIGHT/2, WIN_WIDTH, WIN_HEIGHT))
 {
     reset();
 }
