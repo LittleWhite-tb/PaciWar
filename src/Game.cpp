@@ -8,7 +8,7 @@
 #include "globals.hpp"
 
 Game::Game(sf::RenderWindow& targetWindow)
-    :m_targetWindow(targetWindow),
+    :m_targetWindow(targetWindow),m_view(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2),sf::Vector2f(WIN_WIDTH,WIN_HEIGHT)),
      m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20))
 {
 #ifndef NDEBUG
@@ -19,8 +19,12 @@ Game::Game(sf::RenderWindow& targetWindow)
 void Game::render()
 {
     m_targetWindow.clear(sf::Color::Black);
+    m_targetWindow.setView(m_view);
 
     m_state.getObjects().draw(m_targetWindow);
+
+
+    m_targetWindow.setView(m_targetWindow.getDefaultView());
     m_userInterface.draw(m_targetWindow);
 
 #ifndef NDEBUG
@@ -42,6 +46,7 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
+    m_view.setCenter(m_state.getObjects().getPlayer().getPosition());
 
     if ( m_state.getTime().shouldSpawnEnemy())
     {

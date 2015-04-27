@@ -15,6 +15,8 @@ class Game
 {
 private:
     sf::RenderWindow& m_targetWindow;
+    sf::View m_view;
+
     UI m_userInterface;
 #ifndef NDEBUG
     sf::Font m_debugFont;
