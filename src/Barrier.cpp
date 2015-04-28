@@ -74,4 +74,20 @@ void Barrier::update(GameState &gstate)
 
     leftEdgePosition = rotationMatrix.transformPoint(oj_leftEdgePosition) + m_position;
     rightEdgePosition = rotationMatrix.transformPoint(oj_rightEdgePosition) + m_position;
+
+    // Bounce against the grid
+    sf::Vector2f direction = m_momentum.getDirection();
+    if ( gstate.getBorders().isOutside(m_position))
+    {
+        gstate.getBorders().bounce(m_position,direction);
+    }
+    else if ( gstate.getBorders().isOutside(leftEdgePosition))
+    {
+        gstate.getBorders().bounce(leftEdgePosition,direction);
+    }
+    else if ( gstate.getBorders().isOutside(rightEdgePosition))
+    {
+        gstate.getBorders().bounce(rightEdgePosition,direction);
+    }
+    m_momentum.updateDirection(direction);
 }

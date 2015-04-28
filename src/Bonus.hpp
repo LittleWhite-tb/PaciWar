@@ -32,7 +32,8 @@ private:
 
 public:
     Bonus(const sf::Vector2f& position)
-        :Entity(position),m_color(normalColor),m_life(LIFETIME) {}
+        :Entity(position),m_color(normalColor),m_life(LIFETIME),
+         m_momentum(0.02f,0.2f) {}
 
     void draw(sf::RenderWindow& window);
     void update(GameState& gstate);

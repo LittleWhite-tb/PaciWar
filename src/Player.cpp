@@ -66,7 +66,14 @@ void Player::update(GameState& gstate)
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
 
         sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(m_rotation); // Isn't really strange for player ?
+
+        sf::Vector2f oldPosition = m_position;
         m_position += realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
+        if ( gstate.getBorders().isOutside(m_position))
+        {
+            gstate.getBorders().clamp(m_position,realDirection);
+            m_position=oldPosition + realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
+        }
     }
 
     m_engineParticles.update(m_position,-movement,gstate.getTime().getElapsedTime());
