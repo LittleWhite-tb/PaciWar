@@ -25,8 +25,6 @@ private:
 
     Pool<FixedColorParticleSystem> m_particleSystemPool;
     Pool<RadialExplosion> m_explosionsPool;
-
-    float m_rainbowGradient; // Hack since all enemies are not dying at the same time, but we want same color for particles
 	
     void applyCollision(GameState& gstate);
 

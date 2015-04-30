@@ -11,8 +11,7 @@ ObjectBank::ObjectBank()
 	:m_barriersPool(250),
      m_enemiesPool(1000),m_enemiesDeathPool(1000),m_bonusPool(1000),
      m_particleSystemPool(100),
-     m_explosionsPool(25),
-     m_rainbowGradient(0)
+     m_explosionsPool(25)
 {
 	
 }
@@ -118,8 +117,6 @@ void ObjectBank::update(GameState& gstate)
                                      std::placeholders::_1));
 
     applyCollision(gstate);
-
-    m_rainbowGradient += gstate.getTime().getElapsedTime()*0.03;
 }
 
 void ObjectBank::applyCollision(GameState& gstate)
@@ -152,7 +149,7 @@ void ObjectBank::applyCollision(GameState& gstate)
         }
     }
 
-    sf::Color particlesColor = Palette::fromHSV(m_rainbowGradient,1,1);
+    sf::Color particlesColor = Palette::fromHSV(gstate.getRainbowGradient(),1,1);
     Pool<Enemy>::iterator itEnemies = m_enemiesPool.begin();
     for ( ; itEnemies != m_enemiesPool.end() ; ++itEnemies )
     {

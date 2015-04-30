@@ -18,6 +18,8 @@ private:
 
     Input m_input;
 
+    float m_rainbowGradient;
+
     GameState(GameState&)=delete;
 
 public:
@@ -33,6 +35,8 @@ public:
     Score& getScore() { return m_score; }
 
     sf::Vector2f getInputMovement()const { return m_input.getMovement(); }
+
+    float getRainbowGradient()const { return m_rainbowGradient; }
 };
 
 #endif
