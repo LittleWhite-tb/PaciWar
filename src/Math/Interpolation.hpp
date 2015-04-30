@@ -37,6 +37,7 @@ namespace Math
         }
     };
 
+
     template <typename T>
     class EaseInEaseOutInterpolation
     {

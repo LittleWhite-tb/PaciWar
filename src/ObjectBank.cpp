@@ -125,6 +125,8 @@ void ObjectBank::applyCollision(GameState& gstate)
     unsigned int enemiesKilled = 0;
     unsigned int collectedBonusCounter = 0;
 
+    sf::Color rainbowColor = Palette::fromHSV(gstate.getRainbowGradient(),1,1);
+
     Pool<Barrier>::iterator itBarrier = m_barriersPool.begin();
     for ( ; itBarrier != m_barriersPool.end() ; ++itBarrier)
     {
@@ -139,6 +141,8 @@ void ObjectBank::applyCollision(GameState& gstate)
                     createExplosion(itBarrier->getPosition());
                     itBarrier->kill();
                     barriersKilled+=2;
+
+                    gstate.getBorders().impulse(rainbowColor);
                     break;
                 case BarrierCollisionResult::PLAYER:
                     // std::cout << "Player kill" << std::endl;
@@ -149,7 +153,7 @@ void ObjectBank::applyCollision(GameState& gstate)
         }
     }
 
-    sf::Color particlesColor = Palette::fromHSV(gstate.getRainbowGradient(),1,1);
+
     Pool<Enemy>::iterator itEnemies = m_enemiesPool.begin();
     for ( ; itEnemies != m_enemiesPool.end() ; ++itEnemies )
     {
@@ -162,7 +166,7 @@ void ObjectBank::applyCollision(GameState& gstate)
                 itEnemies->kill();
                 createEnemyDeath(itEnemies->getPosition());
                 createBonus(itEnemies->getPosition());
-                createParticleSystem(itEnemies->getPosition(),particlesColor);
+                createParticleSystem(itEnemies->getPosition(),rainbowColor);
                 enemiesKilled +=1;
             }
         }

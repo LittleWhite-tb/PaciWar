@@ -8,6 +8,7 @@ class Entity;
 class Borders
 {
     static constexpr float GAP = 1.5f;
+    static constexpr unsigned int IMPULSE_TIME = 750;
 
     static const sf::Color normalColor;
 
@@ -20,7 +21,8 @@ class Borders
 private:
     sf::IntRect m_limits;
     sf::IntRect m_innerLimits;
-    int m_onImpulse;
+    int m_impulseCounter;
+    sf::Color m_impulseColor;
 
     Location getCollisionLocation(const sf::Vector2f& position)const;
 
@@ -30,15 +32,18 @@ public:
                                         m_limits.top+GAP,
                                         m_limits.width-GAP,
                                         m_limits.height-GAP),
-         m_onImpulse(0) {}
+         m_impulseCounter(0) {}
 
     void draw(sf::RenderWindow& window);
+    void update(unsigned int deltaTime);
 
     bool isOutside(const sf::Vector2f& position);
     bool isOutside(const Entity& entity);
 
     void clamp(const sf::Vector2f& position, sf::Vector2f& direction)const;
     void bounce(const sf::Vector2f& position, sf::Vector2f& direction)const;
+
+    void impulse(const sf::Color& impulseColor);
 
     sf::IntRect getLimits()const { return m_limits; }
 };

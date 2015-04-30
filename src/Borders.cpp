@@ -1,6 +1,9 @@
 #include "Borders.hpp"
 
+#include <algorithm>
+
 #include "Entity.hpp"
+#include "Math/ColorInterpolation.hpp"
 
 const sf::Color Borders::normalColor = sf::Color(220,220,220);
 
@@ -33,7 +36,16 @@ Borders::Location Borders::getCollisionLocation(const sf::Vector2f& position)con
 
 void Borders::draw(sf::RenderWindow& window)
 {
-    sf::Color color = normalColor;
+    sf::Color color;
+    if ( m_impulseCounter == 0 )
+    {
+        color = normalColor;
+    }
+    else
+    {
+        color = Math::Lerp<sf::Color>::get(normalColor,m_impulseColor,m_impulseCounter/static_cast<float>(IMPULSE_TIME));
+    }
+
     sf::Vertex outerRect[] =
     {
         sf::Vertex(sf::Vector2f(m_limits.left - Borders::GAP, m_limits.top - Borders::GAP),                                   color),
@@ -55,6 +67,11 @@ void Borders::draw(sf::RenderWindow& window)
 
     window.draw(outerRect,5,sf::LinesStrip);
     window.draw(innerRect,5,sf::LinesStrip);
+}
+
+void Borders::update(unsigned int deltaTime)
+{
+    m_impulseCounter = std::max(m_impulseCounter-static_cast<int>(deltaTime),0);
 }
 
 bool Borders::isOutside(const sf::Vector2f& position)
@@ -100,4 +117,10 @@ void Borders::bounce(const sf::Vector2f& position, sf::Vector2f& direction)const
     if ( location & Borders::TOP ||
          location & Borders::DOWN )
             direction.y = -direction.y;
+}
+
+void Borders::impulse(const sf::Color& impulseColor)
+{
+    m_impulseColor = impulseColor;
+    m_impulseCounter = Borders::IMPULSE_TIME;
 }

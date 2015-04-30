@@ -13,6 +13,7 @@ void GameState::update()
 {
     m_gameTime.update();
     m_input.update();
+    m_borders.update(m_gameTime.getElapsedTime());
 
     m_objects.update(*this);
 
