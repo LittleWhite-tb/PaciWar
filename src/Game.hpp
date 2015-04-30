@@ -13,6 +13,8 @@
 
 class Game
 {
+    static constexpr float VIEW_DELAY_FACTOR = 2.f;
+
 private:
     sf::RenderWindow& m_targetWindow;
     sf::View m_view;

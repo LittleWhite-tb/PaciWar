@@ -47,8 +47,7 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
-    // m_view.setCenter((m_state.getObjects().getPlayer().getPosition()-sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT))/10.f);
-    m_view.setCenter(m_state.getObjects().getPlayer().getPosition());
+    m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 
     if ( m_state.getTime().shouldSpawnEnemy())
     {
