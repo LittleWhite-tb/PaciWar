@@ -30,7 +30,7 @@ private:
 
     std::array<Line,4> m_lines;
     long unsigned int m_lifeTime;
-
+    // TODO More Explosive long
     static constexpr long unsigned int DURATION = 500;
 
 public:

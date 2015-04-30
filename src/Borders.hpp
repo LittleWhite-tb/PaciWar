@@ -20,6 +20,7 @@ class Borders
 
 private:
     sf::IntRect m_limits;
+    sf::IntRect m_outerLimits;
     sf::IntRect m_innerLimits;
     int m_impulseCounter;
     sf::Color m_impulseColor;
@@ -28,10 +29,16 @@ private:
 
 public:
     Borders(const sf::IntRect& limits)
-        :m_limits(limits),m_innerLimits(m_limits.left+GAP,
-                                        m_limits.top+GAP,
-                                        m_limits.width-GAP,
-                                        m_limits.height-GAP),
+        :m_limits(limits),
+          m_outerLimits(m_limits.left-GAP,
+                        m_limits.top-GAP,
+                        m_limits.width+GAP*2,
+                        m_limits.height+GAP*2),
+
+          m_innerLimits(m_limits.left+GAP,
+                        m_limits.top+GAP,
+                        m_limits.width-GAP*2,
+                        m_limits.height-GAP*2),
          m_impulseCounter(0) {}
 
     void draw(sf::RenderWindow& window);

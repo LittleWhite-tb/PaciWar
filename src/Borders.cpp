@@ -48,21 +48,21 @@ void Borders::draw(sf::RenderWindow& window)
 
     sf::Vertex outerRect[] =
     {
-        sf::Vertex(sf::Vector2f(m_limits.left - Borders::GAP, m_limits.top - Borders::GAP),                                   color),
-        sf::Vertex(sf::Vector2f(m_limits.left+m_limits.width + Borders::GAP, m_limits.top - Borders::GAP),                    color),
-        sf::Vertex(sf::Vector2f(m_limits.left+m_limits.width + Borders::GAP, m_limits.top+m_limits.height + Borders::GAP),    color),
-        sf::Vertex(sf::Vector2f(m_limits.left - Borders::GAP, m_limits.top+m_limits.height + Borders::GAP),                   color),
-        sf::Vertex(sf::Vector2f(m_limits.left - Borders::GAP, m_limits.top - Borders::GAP),                                   color)
+        sf::Vertex(sf::Vector2f(m_outerLimits.left,                     m_outerLimits.top),                      color),
+        sf::Vertex(sf::Vector2f(m_outerLimits.left+m_outerLimits.width, m_outerLimits.top),                      color),
+        sf::Vertex(sf::Vector2f(m_outerLimits.left+m_outerLimits.width, m_outerLimits.top+m_outerLimits.height), color),
+        sf::Vertex(sf::Vector2f(m_outerLimits.left,                     m_outerLimits.top+m_outerLimits.height), color),
+        sf::Vertex(sf::Vector2f(m_outerLimits.left,                     m_outerLimits.top),                      color)
     };
 
     // Second lines
     sf::Vertex innerRect[] =
     {
-        sf::Vertex(sf::Vector2f(m_limits.left + Borders::GAP, m_limits.top + Borders::GAP),                                   color),
-        sf::Vertex(sf::Vector2f(m_limits.left+m_limits.width - Borders::GAP, m_limits.top + Borders::GAP),                    color),
-        sf::Vertex(sf::Vector2f(m_limits.left+m_limits.width - Borders::GAP, m_limits.top+m_limits.height - Borders::GAP),    color),
-        sf::Vertex(sf::Vector2f(m_limits.left + Borders::GAP, m_limits.top+m_limits.height - Borders::GAP),                   color),
-        sf::Vertex(sf::Vector2f(m_limits.left + Borders::GAP, m_limits.top + Borders::GAP),                                   color)
+        sf::Vertex(sf::Vector2f(m_innerLimits.left,                     m_innerLimits.top),                      color),
+        sf::Vertex(sf::Vector2f(m_innerLimits.left+m_innerLimits.width, m_innerLimits.top),                      color),
+        sf::Vertex(sf::Vector2f(m_innerLimits.left+m_innerLimits.width, m_innerLimits.top+m_innerLimits.height), color),
+        sf::Vertex(sf::Vector2f(m_innerLimits.left,                     m_innerLimits.top+m_innerLimits.height), color),
+        sf::Vertex(sf::Vector2f(m_innerLimits.left,                     m_innerLimits.top),                      color)
     };
 
     window.draw(outerRect,5,sf::LinesStrip);
