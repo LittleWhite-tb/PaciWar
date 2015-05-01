@@ -9,7 +9,7 @@ private:
     sf::Vector2f m_spawnPoint;
     float m_radius;
 
-    static constexpr float RADIUS_MAX = 75;
+    static constexpr float RADIUS_MAX = 115;
     static constexpr float GROWTH_SPEED = 0.6f;
 
 public:
