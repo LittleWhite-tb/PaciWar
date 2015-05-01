@@ -3,10 +3,12 @@
 
 #include "SpawnGrid.hpp"
 
-class ObjectBank;
+class GameState;
 
 class Spawner
 {
+    static constexpr float BARRIER_SPAWN_DISTANCE = 300;
+
 private:
     SpawnGrid m_spawnGrid;
 
@@ -17,10 +19,10 @@ private:
     unsigned int m_numberEnemiesBySpawn;
 
 public:
-    Spawner(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize);
+    Spawner(const sf::IntRect &limits);
 
-    void spawnBarriers(ObjectBank& objects);
-    void spawnEnemies(ObjectBank& objects);
+    void spawnBarriers(GameState &gstate);
+    void spawnEnemies(GameState &gstate);
 };
 
 #endif

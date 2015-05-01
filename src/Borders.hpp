@@ -8,6 +8,7 @@ class Entity;
 class Borders
 {
     static constexpr float GAP = 1.5f;
+    static constexpr float GRID_REDUCTION = 50.f;
     static constexpr unsigned int IMPULSE_TIME = 750;
 
     static const sf::Color normalColor;
@@ -19,7 +20,7 @@ class Borders
     static constexpr Location DOWN = 8;
 
 private:
-    sf::IntRect m_limits;
+    sf::IntRect m_restrictedLimits;
     sf::IntRect m_outerLimits;
     sf::IntRect m_innerLimits;
     int m_impulseCounter;
@@ -29,16 +30,19 @@ private:
 
 public:
     Borders(const sf::IntRect& limits)
-        :m_limits(limits),
-          m_outerLimits(m_limits.left-GAP,
-                        m_limits.top-GAP,
-                        m_limits.width+GAP*2,
-                        m_limits.height+GAP*2),
+        :m_restrictedLimits(limits.left+GRID_REDUCTION,
+                            limits.top+GRID_REDUCTION,
+                            limits.width-GRID_REDUCTION*2,
+                            limits.height-GRID_REDUCTION*2),
+          m_outerLimits(limits.left-GAP,
+                        limits.top-GAP,
+                        limits.width+GAP*2,
+                        limits.height+GAP*2),
 
-          m_innerLimits(m_limits.left+GAP,
-                        m_limits.top+GAP,
-                        m_limits.width-GAP*2,
-                        m_limits.height-GAP*2),
+          m_innerLimits(limits.left+GAP,
+                        limits.top+GAP,
+                        limits.width-GAP*2,
+                        limits.height-GAP*2),
          m_impulseCounter(0) {}
 
     void draw(sf::RenderWindow& window);
@@ -52,7 +56,7 @@ public:
 
     void impulse(const sf::Color& impulseColor);
 
-    sf::IntRect getLimits()const { return m_limits; }
+    sf::IntRect getRestrictedLimits()const { return m_restrictedLimits; }
 };
 
 #endif

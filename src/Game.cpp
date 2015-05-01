@@ -9,7 +9,7 @@
 
 Game::Game(sf::RenderWindow& targetWindow)
     :m_targetWindow(targetWindow),m_view(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2),sf::Vector2f(WIN_WIDTH,WIN_HEIGHT)),
-     m_spawner(sf::Vector2f(20,20),sf::Vector2f(WIN_WIDTH-20,WIN_HEIGHT-20))
+     m_spawner(m_state.getBorders().getRestrictedLimits())
 {
 #ifndef NDEBUG
      m_debugFont.loadFromFile(DEBUG_FONT_PATH);
@@ -51,12 +51,12 @@ void Game::update()
 
     if ( m_state.getTime().shouldSpawnEnemy())
     {
-        m_spawner.spawnEnemies(m_state.getObjects());
+        m_spawner.spawnEnemies(m_state);
     }
 
     if ( m_state.getTime().shouldSpawnBarrier())
     {
-        m_spawner.spawnBarriers(m_state.getObjects());
+        m_spawner.spawnBarriers(m_state);
     }
 
     m_userInterface.update(m_state.getScore());

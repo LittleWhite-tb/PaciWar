@@ -5,19 +5,21 @@
 
 #include <SFML/Graphics.hpp>
 
-class ObjectBank;
+class GameState;
 
 class SpawnGrid
 {
+    static constexpr float ENEMY_SPAWN_DISTANCE = 300.f;
+
 private:
     std::vector<sf::Vector2f> m_spawnPoints;
     unsigned int m_lastPointUsed;
 
 
 public:
-    SpawnGrid(const sf::Vector2f& gridPosition, const sf::Vector2f& gridSize, unsigned int subDivision);
+    SpawnGrid(const sf::IntRect &limits);
 
-    void spawnEnemies(ObjectBank& objects, unsigned int number);
+    void spawnEnemies(GameState& gstate, unsigned int number);
 };
 
 #endif
