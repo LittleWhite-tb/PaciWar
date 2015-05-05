@@ -5,7 +5,8 @@
 #include "GameState.hpp"
 #include "Tracker.hpp"
 
-#include <Collisions/Collider.hpp>
+#include "Collisions/Collider.hpp"
+#include "SFML/Vector2Utils.hpp"
 
 
 void Enemy::draw(sf::RenderWindow& window)
@@ -60,25 +61,36 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 void Enemy::update(GameState& gstate)
 {
     sf::Vector2f oldPosition = m_position;
-    Tracker::update(m_position,m_rotation,gstate.getObjects().getPlayer(),SPEED,0.3f,gstate.getTime().getElapsedTime());
+    Tracker::update(m_position,m_rotation,gstate.getObjects().getPlayer(),m_speed,0.3f,gstate.getTime().getElapsedTime());
 
-    // Enemies avoidance
-    BoundingSpheres self;
-    self.push_back(Sphere(m_position, Enemy::SIZE*Enemy::SIZE*2));
-
+    // Enemies brood behaviour
+    // When an enemy is too close, we will check if we need to slow move speed.
+    // The slowdown is applied only if the enemy is moving toward another one. It means that
+    // if the current one is in the borders of the brood, no slowdown is applied.
     Pool<Enemy>::const_iterator itEnemy = gstate.getObjects().getEnemies().cbegin();
     for ( ; itEnemy != gstate.getObjects().getEnemies().cend() ; ++itEnemy)
     {
         if (&(*itEnemy) != &(*this)) // Avoid colliding with myself
-                                                     // HACK Not good at all
         {
-            BoundingSpheres other;
-            itEnemy->getBoundingSpheres(other);
-
-            if ( Collider::collides(other,self))
+            float newDistance = SFMLUtils::distance(m_position,itEnemy->getPosition());
+            if ( newDistance < SIZE * SIZE * 15 )
             {
-                m_position = oldPosition;
-                break;
+                // We are going toward the enemy
+                if ( SFMLUtils::distance(oldPosition,itEnemy->getPosition()) > newDistance )
+                {
+                    // Slow down
+                    m_speed = m_speed * BROOD_SPEED_REDUCTION;
+                    m_speed = std::max(m_speed,MIN_SPEED);
+                    sf::Vector2f direction = m_position - oldPosition;
+                    SFMLUtils::normalise(direction);
+                    m_position = oldPosition + direction * m_speed;
+                }
+            }
+            else
+            {
+                // Speed up
+                m_speed = m_speed / BROOD_SPEED_REDUCTION;
+                m_speed = std::min(m_speed,DEFAULT_SPEED);
             }
         }
     }

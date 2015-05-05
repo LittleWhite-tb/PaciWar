@@ -9,11 +9,15 @@
 class Enemy : public Entity
 {
 private:
-    static constexpr float SPEED = 0.25f;
+    static constexpr float DEFAULT_SPEED = 0.25f;
+    static constexpr float MIN_SPEED = 0.005f;
+    static constexpr float BROOD_SPEED_REDUCTION = 0.65f;
+
+    float m_speed;
 
 public:
     Enemy(const sf::Vector2f& position)
-        :Entity(position) {}
+        :Entity(position),m_speed(DEFAULT_SPEED) {}
 	
 	void draw(sf::RenderWindow& window);
     void update(GameState& gstate);
