@@ -8,6 +8,10 @@
 #include "Collisions/Collider.hpp"
 #include "SFML/Vector2Utils.hpp"
 
+constexpr float Enemy::DEFAULT_SPEED;
+constexpr float Enemy::MIN_SPEED;
+constexpr float Enemy::BROOD_SPEED_REDUCTION;
+
 
 void Enemy::draw(sf::RenderWindow& window)
 {
