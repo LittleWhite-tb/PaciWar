@@ -21,8 +21,9 @@ void SFMLUtils::normalise(sf::Vector2f& v)
 
 float SFMLUtils::distance(const sf::Vector2f& v1, const sf::Vector2f& v2)
 {
-    sf::Vector2f delta = v1 - v2;
-    return delta.x*delta.x+delta.y*delta.y;
+    float deltaX = v1.x - v2.x;
+    float deltaY = v1.y - v2.y;
+    return deltaX*deltaX + deltaY*deltaY;
 }
 
 float SFMLUtils::getAngle(const sf::Vector2f& v)

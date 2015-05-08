@@ -72,7 +72,8 @@ void Enemy::update(GameState& gstate)
     // The slowdown is applied only if the enemy is moving toward another one. It means that
     // if the current one is in the borders of the brood, no slowdown is applied.
     Pool<Enemy>::const_iterator itEnemy = gstate.getObjects().getEnemies().cbegin();
-    for ( ; itEnemy != gstate.getObjects().getEnemies().cend() ; ++itEnemy)
+    Pool<Enemy>::const_iterator itEnd = gstate.getObjects().getEnemies().cend();
+    for ( ; itEnemy != itEnd ; ++itEnemy)
     {
         if (&(*itEnemy) != &(*this)) // Avoid colliding with myself
         {
