@@ -52,6 +52,7 @@ class Collider
 private:
     static bool collides(const Sphere& s1, const Sphere& s2);
     static bool collides(const Sphere& s, const Line& l);
+    static bool collides(const Line& l1, const Line& l2);
 
 public:
     static bool collides(const BoundingSpheres& bs1, const BoundingSpheres& bs2);
