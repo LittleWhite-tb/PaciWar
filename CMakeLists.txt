@@ -89,11 +89,12 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
     endif()
     set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include" PATH "Path to SFML headers")
 
+    message("Link lib dir : ${SFML_LIBRARY_DIR}")
+    link_directories(${SFML_LIBRARY_DIR})
+
     # Clean up after ourselves
     unset(TMP_TOOLSET)
     unset(TMP_ARCH)
-
-    link_directories(${SFML_LIBRARY_DIR})
 
     if (WIN32)
         set(SFML_LIBRARIES sfml-main sfml-system sfml-graphics sfml-window sfml-audio)
