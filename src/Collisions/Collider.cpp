@@ -101,6 +101,28 @@ bool Collider::collides(const Sphere& s, const Line& l)
     }
 }
 
+bool Collider::collides(const Line& l1, const Line& l2)
+{
+    // Check for parallel
+    sf::Vector2f vector1 = l1.end - l1.start;
+    sf::Vector2f vector2 = l2.end - l2.start;
+    if ( l1.start.y/l1.start.x != l2.start.y/l2.start.x )
+    {
+        float d = vector1.x * vector2.y - vector1.y * vector2.x;
+        if ( d != 0 )
+        {
+            sf::Vector2f vertor3 = l1.start - l2.start;
+            float r = (vertor3.y * vector2.x - vertor3.x * vector2.y) / d;
+            float s = (vertor3.y * vector1.x - vertor3.x * vector1.y) / d;
+            if ( r >= 0 && r <= 1 && s >= 0 && s <= 1 )
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 BarrierCollisionResult Collider::collides(const Player& player, const Barrier& barrier)
 {
     BoundingSpheres playerBoundingSpheres;
