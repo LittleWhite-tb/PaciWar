@@ -65,7 +65,7 @@ void Player::update(GameState& gstate)
         // Extra rotation, since the initial ship is drawn up
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
 
-        sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(m_rotation); // Isn't really strange for player ?
+        sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(targetRotation);
 
         sf::Vector2f oldPosition = m_position;
         m_position += realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
