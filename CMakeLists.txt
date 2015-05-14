@@ -59,12 +59,10 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
 
             set(TMP_TOOLSET "msvc_${TMP_TOOLSET}-${TMP_ARCH}")
         else() # Certainly mingw
-            message ("Mingw detected for SFML")
             # Assume mingw
             if (CMAKE_SIZEOF_VOID_P EQUAL 8)
                 set(TMP_ARCH "x86_64")
             elseif (CMAKE_SIZEOF_VOID_P EQUAL 4)
-                message ("Mingw 32bits detected for SFML")
                 set(TMP_ARCH "i686")
             else()
                 set(TMP_ARCH "UNKNOWN")
@@ -87,9 +85,9 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
         set(SFML_LIBRARY_DIR "${SFML_PREFIX}/lib" PATH "Path to SFML libraries")
     else()
         set(SFML_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/deps/SFML-2.3.bin")
-        set(SFML_LIBRARY_DIRS "${SFML_PREFIX}/lib-${TMP_TOOLSET}" CACHE PATH "Path to SFML libraries")
+        set(SFML_LIBRARY_DIRS "${SFML_PREFIX}/lib-${TMP_TOOLSET}" PATH "Path to SFML libraries")
     endif()
-    set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include" CACHE PATH "Path to SFML headers")
+    set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include" PATH "Path to SFML headers")
 
     # Clean up after ourselves
     unset(TMP_TOOLSET)
