@@ -85,7 +85,7 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
         set(SFML_LIBRARY_DIR "${SFML_PREFIX}/lib" PATH "Path to SFML libraries")
     else()
         set(SFML_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/deps/SFML-2.3.bin")
-        set(SFML_LIBRARY_DIRS "${SFML_PREFIX}/lib-${TMP_TOOLSET}" PATH "Path to SFML libraries")
+        set(SFML_LIBRARY_DIR "${SFML_PREFIX}/lib-${TMP_TOOLSET}" PATH "Path to SFML libraries")
     endif()
     set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include" PATH "Path to SFML headers")
 
