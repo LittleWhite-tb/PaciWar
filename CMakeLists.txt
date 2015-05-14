@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 # Projet name
 project("PaciWar")
 
-cmake_policy(SET CMP0015 OLD)
+cmake_policy(SET CMP0015 NEW)
 
 # Additional compiler setting
 SET(CMAKE_CXX_WARNING_LEVEL 4)
@@ -98,6 +98,10 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
 
     if (WIN32)
         set(SFML_LIBRARIES sfml-main sfml-system sfml-graphics sfml-window sfml-audio)
+        if (MINGW)
+            # If should use find_library
+            set(SFML_LIBRARIES ${SFML_LIBRARY_DIR}/libsfml-main.a ${SFML_LIBRARY_DIR}/libsfml-system.a ${SFML_LIBRARY_DIR}/libsfml-graphics.a ${SFML_LIBRARY_DIR}/libsfml-window.a ${SFML_LIBRARY_DIR}/libsfml-audio.a)
+        endif()
     else()
         set(SFML_LIBRARIES sfml-system sfml-graphics sfml-window sfml-audio)
     endif()
