@@ -8,7 +8,7 @@
 
 EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
     :center(center),rotation(rotation),
-     moveDirectionBias(RandomGenerator::getFloat(-1.0f,1.0f),RandomGenerator::getFloat(-1.0f,1.0f)),
+     moveDirectionBias(RandomGenerator::getNormalizedDirection()),
      moveSpeed(RandomGenerator::getFloat(0.25,0.45f)),
      rotationSpeed(RandomGenerator::getFloat(0.8,1.2f))
 {

@@ -19,7 +19,7 @@ void EngineParticleSystem::generateParticle()
     {
         // Relies on the fact that the pool will never extend
         m_particles.add(m_spawnPoint,
-                        sf::Vector2f(RandomGenerator::getFloat(startDirectionRange.x,endDirectionRange.x),RandomGenerator::getFloat(startDirectionRange.y,endDirectionRange.y)),
+                        RandomGenerator::getFloatVector(startDirectionRange.x,endDirectionRange.x,startDirectionRange.y,endDirectionRange.y),
                         particleColor,
                         0.1f,0.0002f);
     }

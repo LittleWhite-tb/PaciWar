@@ -4,8 +4,7 @@
 #include "RandomGenerator.hpp"
 
 Momentum::Momentum()
-    :m_direction(sf::Vector2f(RandomGenerator::getFloat(-1,1),
-                              RandomGenerator::getFloat(-1,1))),
+    :m_direction(RandomGenerator::getNormalizedDirection()),
      m_moveSpeed(RandomGenerator::getFloat(0,0.1f)),
      m_rotationSpeed(RandomGenerator::getFloat(0,m_moveSpeed))
 {
@@ -13,8 +12,7 @@ Momentum::Momentum()
 }
 
 Momentum::Momentum(float maxMoveSpeed, float maxRotationSpeed)
-    :m_direction(sf::Vector2f(RandomGenerator::getFloat(-1,1),
-                              RandomGenerator::getFloat(-1,1))),
+    :m_direction(RandomGenerator::getNormalizedDirection()),
      m_moveSpeed(RandomGenerator::getFloat(0,maxMoveSpeed)),
      m_rotationSpeed(RandomGenerator::getFloat(0,maxRotationSpeed))
 {
