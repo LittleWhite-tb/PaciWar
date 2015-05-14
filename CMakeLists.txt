@@ -89,7 +89,6 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
     endif()
     set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include")
 
-    message("Link lib dir : ${SFML_LIBRARY_DIR}")
     link_directories(${SFML_LIBRARY_DIR})
 
     # Clean up after ourselves
