@@ -34,6 +34,7 @@ endif()
 
 find_package(SFML QUIET COMPONENTS system window graphics audio)
 if (NOT SFML_FOUND) # Let's try to find it ourselves
+    set(TMP_NEED_COMPILE_SFML FALSE)
     if (WIN32)
         if (MSVC)
             if (CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -58,10 +59,12 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
 
             set(TMP_TOOLSET "msvc_${TMP_TOOLSET}-${TMP_ARCH}")
         else() # Certainly mingw
+            message ("Mingw detected for SFML")
             # Assume mingw
             if (CMAKE_SIZEOF_VOID_P EQUAL 8)
                 set(TMP_ARCH "x86_64")
             elseif (CMAKE_SIZEOF_VOID_P EQUAL 4)
+                message ("Mingw 32bits detected for SFML")
                 set(TMP_ARCH "i686")
             else()
                 set(TMP_ARCH "UNKNOWN")
