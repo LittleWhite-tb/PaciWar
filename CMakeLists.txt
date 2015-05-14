@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 # Projet name
 project("PaciWar")
 
-cmake_policy(SET CMP0015 NEW)
+cmake_policy(SET CMP0015 OLD)
 
 # Additional compiler setting
 SET(CMAKE_CXX_WARNING_LEVEL 4)
@@ -84,7 +84,7 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
         set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include")
         set(SFML_LIBRARY_DIR "${SFML_PREFIX}/lib")
     else()
-        set(SFML_PREFIX "./deps/SFML-2.3.bin")
+        set(SFML_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/deps/SFML-2.3.bin")
         set(SFML_LIBRARY_DIR "${SFML_PREFIX}/lib-${TMP_TOOLSET}")
     endif()
     set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include")
