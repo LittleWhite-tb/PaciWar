@@ -166,8 +166,7 @@ CollisionResult Collider::collides(const Enemy &enemy, const RadialExplosion &ex
     for (const Sphere& s : enemyBoundingSpheres )
     {
         float distance = SFMLUtils::distance(s.center,explosion.getCenter());
-        if ( distance < std::pow(explosion.getRadius() + RadialExplosion::EFFECT_SIZE/2,2) &&
-             distance > std::pow(explosion.getRadius() - RadialExplosion::EFFECT_SIZE/2,2))
+        if ( distance < std::pow(explosion.getRadius(),2))
         {
             return CollisionResult(&enemy,nullptr); // HACK : Using nullptr is really big hack and will cause some bugs
         }
