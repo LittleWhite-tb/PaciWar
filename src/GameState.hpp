@@ -3,10 +3,10 @@
 
 #include "GameTime.hpp"
 #include "ObjectBank.hpp"
-#include "Borders.hpp"
+#include "Objects/Borders.hpp"
 #include "Score.hpp"
 
-#include "Input.hpp"
+#include "Input/Input.hpp"
 
 class GameState
 {

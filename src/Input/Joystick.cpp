@@ -5,7 +5,7 @@
 
 #include <SFML/Window.hpp>
 
-#include "SFML/Vector2Utils.hpp"
+#include "Math/Vector2.hpp"
 
 
 void Joystick::update()

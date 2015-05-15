@@ -6,7 +6,7 @@
 
 #include "GameState.hpp"
 
-#include "SFML/Vector2Utils.hpp"
+#include "Math/Vector2.hpp"
 #include "Math/Interpolation.hpp"
 
 Player::Player()
@@ -60,12 +60,12 @@ void Player::update(GameState& gstate)
     if (movement.x != 0 ||
         movement.y != 0)
     {
-        float targetRotation = SFMLUtils::getAngle(movement);
+        float targetRotation = Math::getAngle(movement);
 
         // Extra rotation, since the initial ship is drawn up
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
 
-        sf::Vector2f realDirection = SFMLUtils::getVectorFromAngle(targetRotation);
+        sf::Vector2f realDirection = Math::getVectorFromAngle(targetRotation);
 
         sf::Vector2f oldPosition = m_position;
         m_position += realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());

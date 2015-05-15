@@ -1,7 +1,7 @@
 #include "EngineParticleSystem.hpp"
 
-#include "RandomGenerator.hpp"
-#include "Palette.hpp"
+#include "Utils/RandomGenerator.hpp"
+#include "Utils/Palette.hpp"
 
 EngineParticleSystem::EngineParticleSystem(std::size_t nbMaxParticle)
     :ParticleSystem(sf::Vector2f(0,0),nbMaxParticle),

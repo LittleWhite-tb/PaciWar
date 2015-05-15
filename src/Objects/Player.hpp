@@ -5,7 +5,7 @@
 
 #include "Entity.hpp"
 
-#include "EngineParticleSystem.hpp"
+#include "Particles/EngineParticleSystem.hpp"
 
 class Player : public Entity
 {

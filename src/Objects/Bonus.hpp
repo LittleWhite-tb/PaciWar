@@ -5,7 +5,7 @@
 
 #include "Entity.hpp"
 
-#include "Momentum.hpp"
+#include "Actors/Momentum.hpp"
 
 class GameState;
 

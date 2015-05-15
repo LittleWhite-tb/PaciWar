@@ -1,12 +1,10 @@
-#ifndef VECTOR2UTILS_HPP
-#define VECTOR2UTILS_HPP
+#ifndef VECTOR2_HPP
+#define VECTOR2_HPP
 
 #include <SFML/Graphics.hpp>
 
-// Todo :
-// Make this class handling all Vector2
-
-namespace SFMLUtils
+// TODO Make this class handling all Vector2
+namespace Math
 {
     float length(const sf::Vector2f& v);
     void normalise(sf::Vector2f& v);

@@ -2,8 +2,8 @@
 
 #include "Score.hpp"
 
-#include "Utils.hpp"
-#include "SFML/Vector2Utils.hpp"
+#include "Utils/Utils.hpp"
+#include "Math/Vector2.hpp"
 #include "globals.hpp"
 
 const sf::Color UI::textColor = sf::Color(120,230,50);

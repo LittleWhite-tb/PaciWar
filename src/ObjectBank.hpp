@@ -3,14 +3,14 @@
 
 #include "ObjectPool.hpp"
 
-#include "Player.hpp"
-#include "Barrier.hpp"
-#include "Enemy.hpp"
-#include "EnemyDeath.hpp"
-#include "Bonus.hpp"
+#include "Objects/Player.hpp"
+#include "Objects/Barrier.hpp"
+#include "Objects/Enemy.hpp"
+#include "Objects/EnemyDeath.hpp"
+#include "Objects/Bonus.hpp"
 
-#include "FixedColorParticleSystem.hpp"
-#include "RadialExplosion.hpp"
+#include "Particles/FixedColorParticleSystem.hpp"
+#include "Objects/RadialExplosion.hpp"
 
 class GameState;
 

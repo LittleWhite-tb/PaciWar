@@ -5,7 +5,7 @@
 
 #include "Collisions/Line.hpp"
 #include "Entity.hpp"
-#include "Momentum.hpp"
+#include "Actors/Momentum.hpp"
 
 class Barrier : public Entity
 {

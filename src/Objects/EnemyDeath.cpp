@@ -3,8 +3,8 @@
 #include "GameState.hpp"
 #include "Enemy.hpp"
 
-#include "RandomGenerator.hpp"
-#include "SFML/Vector2Utils.hpp"
+#include "Utils/RandomGenerator.hpp"
+#include "Math/Vector2.hpp"
 
 EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
     :center(center),rotation(rotation),
@@ -12,7 +12,7 @@ EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
      moveSpeed(RandomGenerator::getFloat(0.25,0.45f)),
      rotationSpeed(RandomGenerator::getFloat(0.8,1.2f))
 {
-    SFMLUtils::normalise(moveDirectionBias);
+    Math::normalise(moveDirectionBias);
 }
 
 void EnemyDeath::Line::draw(sf::RenderWindow &window)
@@ -62,7 +62,7 @@ void EnemyDeath::update(GameState& gstate)
     for (Line& line : m_lines)
     {
         sf::Vector2f direction = line.center - m_position + line.moveDirectionBias ;
-        SFMLUtils::normalise(direction);
+        Math::normalise(direction);
 
         line.center +=  direction * (line.moveSpeed * deltaTime);
         line.rotation += line.rotationSpeed * deltaTime;

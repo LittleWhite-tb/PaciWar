@@ -1,7 +1,7 @@
 #include "ObjectBank.hpp"
 
 #include "Collisions/Collider.hpp"
-#include "Palette.hpp"
+#include "Utils/Palette.hpp"
 
 #include "GameState.hpp"
 

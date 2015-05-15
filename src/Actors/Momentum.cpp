@@ -1,14 +1,14 @@
 #include "Momentum.hpp"
 
-#include "SFML/Vector2Utils.hpp"
-#include "RandomGenerator.hpp"
+#include "Math/Vector2.hpp"
+#include "Utils/RandomGenerator.hpp"
 
 Momentum::Momentum()
     :m_direction(RandomGenerator::getNormalizedDirection()),
      m_moveSpeed(RandomGenerator::getFloat(0,0.1f)),
      m_rotationSpeed(RandomGenerator::getFloat(0,m_moveSpeed))
 {
-    SFMLUtils::normalise(m_direction);
+    Math::normalise(m_direction);
 }
 
 Momentum::Momentum(float maxMoveSpeed, float maxRotationSpeed)
@@ -16,7 +16,7 @@ Momentum::Momentum(float maxMoveSpeed, float maxRotationSpeed)
      m_moveSpeed(RandomGenerator::getFloat(0,maxMoveSpeed)),
      m_rotationSpeed(RandomGenerator::getFloat(0,maxRotationSpeed))
 {
-    SFMLUtils::normalise(m_direction);
+    Math::normalise(m_direction);
 }
 
 Momentum::Momentum(const sf::Vector2f& direction, float moveSpeed, float rotationSpeed)

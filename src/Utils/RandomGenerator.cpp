@@ -1,6 +1,6 @@
 #include "RandomGenerator.hpp"
 
-#include "SFML/Vector2Utils.hpp"
+#include "Math/Vector2.hpp"
 
 std::mt19937 RandomGenerator::m_generator = std::mt19937(std::random_device()());
 
@@ -34,7 +34,7 @@ sf::Vector2f RandomGenerator::getNormalizedDirection()
 {
     std::uniform_real_distribution<> dist(-1.0f,1.0f);
     sf::Vector2f direction(dist(m_generator),dist(m_generator));
-    SFMLUtils::normalise(direction);
+    Math::normalise(direction);
     return direction;
 }
 

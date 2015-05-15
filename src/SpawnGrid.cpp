@@ -1,10 +1,10 @@
 #include "SpawnGrid.hpp"
 
 #include "GameState.hpp"
-#include "Enemy.hpp"
+#include "Objects/Enemy.hpp"
 
-#include "RandomGenerator.hpp"
-#include "SFML/Vector2Utils.hpp"
+#include "Utils/RandomGenerator.hpp"
+#include "Math/Vector2.hpp"
 
 SpawnGrid::SpawnGrid(const sf::IntRect& limits)
     :m_lastPointUsed(-1)
@@ -23,7 +23,7 @@ void SpawnGrid::spawnEnemies(GameState& gstate, unsigned int number)
     do
     {
         selectedPoint = RandomGenerator::getInt(0,m_spawnPoints.size()-1);
-    }while(SFMLUtils::distance(m_spawnPoints[selectedPoint],gstate.getObjects().getPlayer().getPosition()) < ENEMY_SPAWN_DISTANCE * ENEMY_SPAWN_DISTANCE);
+    }while(Math::distance(m_spawnPoints[selectedPoint],gstate.getObjects().getPlayer().getPosition()) < ENEMY_SPAWN_DISTANCE * ENEMY_SPAWN_DISTANCE);
 
     sf::Vector2f enemyPosition = m_spawnPoints[selectedPoint];
 

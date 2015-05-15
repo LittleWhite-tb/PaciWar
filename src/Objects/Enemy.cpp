@@ -3,10 +3,10 @@
 #include <cmath>
 
 #include "GameState.hpp"
-#include "Tracker.hpp"
+#include "Actors/Tracker.hpp"
 
 #include "Collisions/Collider.hpp"
-#include "SFML/Vector2Utils.hpp"
+#include "Math/Vector2.hpp"
 
 constexpr float Enemy::DEFAULT_SPEED;
 constexpr float Enemy::MIN_SPEED;
@@ -77,17 +77,17 @@ void Enemy::update(GameState& gstate)
     {
         if (&(*itEnemy) != &(*this)) // Avoid colliding with myself
         {
-            float newDistance = SFMLUtils::distance(m_position,itEnemy->getPosition());
+            float newDistance = Math::distance(m_position,itEnemy->getPosition());
             if ( newDistance < SIZE * SIZE * 15 )
             {
                 // We are going toward the enemy
-                if ( SFMLUtils::distance(oldPosition,itEnemy->getPosition()) > newDistance )
+                if ( Math::distance(oldPosition,itEnemy->getPosition()) > newDistance )
                 {
                     // Slow down
                     m_speed = m_speed * BROOD_SPEED_REDUCTION;
                     m_speed = std::max(m_speed,MIN_SPEED);
                     sf::Vector2f direction = m_position - oldPosition;
-                    SFMLUtils::normalise(direction);
+                    Math::normalise(direction);
                     m_position = oldPosition + direction * m_speed;
                 }
             }

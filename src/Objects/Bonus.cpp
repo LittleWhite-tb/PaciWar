@@ -2,8 +2,8 @@
 
 #include <cmath>
 
-#include "SFML/Vector2Utils.hpp"
-#include "Tracker.hpp"
+#include "Math/Vector2.hpp"
+#include "Actors/Tracker.hpp"
 
 #include "GameState.hpp"
 
@@ -59,7 +59,7 @@ void Bonus::update(GameState& gstate)
     m_momentum.update(this->m_position,this->m_rotation,gstate.getTime().getElapsedTime());
 
     const Player& target = gstate.getObjects().getPlayer();
-    float targetDistance = SFMLUtils::distance(target.getPosition(),this->getPosition());
+    float targetDistance = Math::distance(target.getPosition(),this->getPosition());
     if ( targetDistance < MAGNET_DISTANCE*MAGNET_DISTANCE )
     {
         Tracker::update(m_position,m_rotation,target,SPEED,0.5f,gstate.getTime().getElapsedTime());

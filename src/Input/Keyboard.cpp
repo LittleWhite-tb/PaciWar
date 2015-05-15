@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "Math/Interpolation.hpp"
-#include "SFML/Vector2Utils.hpp"
+#include "Math/Vector2.hpp"
 
 constexpr int Keyboard::LEFT;
 constexpr int Keyboard::RIGHT;

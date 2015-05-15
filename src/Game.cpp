@@ -4,7 +4,7 @@
 
 #include "Collisions/Collider.hpp"
 
-#include "Utils.hpp"
+#include "Utils/Utils.hpp"
 #include "globals.hpp"
 
 Game::Game(sf::RenderWindow& targetWindow)

@@ -4,10 +4,10 @@
 #include <vector>
 
 #include "GameState.hpp"
-#include "Barrier.hpp"
+#include "Objects/Barrier.hpp"
 
-#include "RandomGenerator.hpp"
-#include "SFML/Vector2Utils.hpp"
+#include "Utils/RandomGenerator.hpp"
+#include "Math/Vector2.hpp"
 
 Spawner::Spawner(const sf::IntRect& limits)
     :m_spawnGrid(limits),m_numberBarrierBySpawn(1),m_numberEnemiesBySpawn(1)
@@ -25,7 +25,7 @@ void Spawner::spawnBarriers(GameState& gstate)
         do
         {
             pos = RandomGenerator::getFloatVector(limits.left,limits.left+limits.width,limits.top,limits.top+limits.height);
-        }while(SFMLUtils::distance(pos,gstate.getObjects().getPlayer().getPosition()) < BARRIER_SPAWN_DISTANCE*BARRIER_SPAWN_DISTANCE);
+        }while(Math::distance(pos,gstate.getObjects().getPlayer().getPosition()) < BARRIER_SPAWN_DISTANCE*BARRIER_SPAWN_DISTANCE);
         gstate.getObjects().createBarrier(pos);
     }
 }

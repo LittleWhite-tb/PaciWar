@@ -6,7 +6,7 @@
 #include "Joystick.hpp"
 #include "Keyboard.hpp"
 
-#include "SFML/Vector2Utils.hpp"
+#include "Math/Vector2.hpp"
 
 Input::Input()
 {
@@ -32,9 +32,9 @@ sf::Vector2f Input::getMovement()const
             sf::Vector2f movement = device->getMovement();
             // A device can return 0,0 for several reason. So, we continue to check
             // the devices in case that the user uses another device actively
-            if (SFMLUtils::length(movement) >= DEADZONE_LIMIT)
+            if (Math::length(movement) >= DEADZONE_LIMIT)
             {
-                SFMLUtils::normalise(movement);
+                Math::normalise(movement);
                 return movement;
             }
         }
