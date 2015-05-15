@@ -60,9 +60,7 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
             set(TMP_TOOLSET "msvc_${TMP_TOOLSET}-${TMP_ARCH}")
         else() # Certainly mingw
             # Assume mingw
-            if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-                set(TMP_ARCH "x86_64")
-            elseif (CMAKE_SIZEOF_VOID_P EQUAL 4)
+            if (CMAKE_SIZEOF_VOID_P EQUAL 4)
                 set(TMP_ARCH "i686")
             else()
                 set(TMP_ARCH "UNKNOWN")
