@@ -26,12 +26,6 @@ add_executable(
 
 # Set new cmake module path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-
-# Look after SFML
-if (MSYS OR MINGW) # Give CMake a little hint
-	set(SFML_ROOT "./")
-endif()
-
 find_package(SFML QUIET COMPONENTS system window graphics audio)
 if (NOT SFML_FOUND) # Let's try to find it ourselves
     set(TMP_NEED_COMPILE_SFML FALSE)
@@ -43,7 +37,7 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
                 set(TMP_ARCH "Win32")
             else()
                 set(TMP_ARCH "UNKNOWN")
-                set(TMP_NEED_COMPILE_SFML "true")
+                set(TMP_NEED_COMPILE_SFML TRUE)
             endif()
 
             if (MSVC10) # Visual C++ 2010
