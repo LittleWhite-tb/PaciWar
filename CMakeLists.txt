@@ -96,7 +96,7 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
     if (WIN32)
         set(SFML_LIBRARIES sfml-main sfml-system sfml-graphics sfml-window sfml-audio)
         if (MINGW)
-            # If should use find_library
+            # I should use find_library
             set(SFML_LIBRARIES ${SFML_LIBRARY_DIR}/libsfml-main.a ${SFML_LIBRARY_DIR}/libsfml-system.a ${SFML_LIBRARY_DIR}/libsfml-graphics.a ${SFML_LIBRARY_DIR}/libsfml-window.a ${SFML_LIBRARY_DIR}/libsfml-audio.a)
         endif()
     else()
