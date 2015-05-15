@@ -12,7 +12,6 @@ class EngineParticleSystem : public ParticleSystem
     static constexpr float GRADIENT_SPEED = 0.1;
 
 private:
-    bool m_enabled;
     sf::Vector2f m_direction;
 
     float m_rainbowGradient;

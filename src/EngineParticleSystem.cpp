@@ -5,7 +5,7 @@
 
 EngineParticleSystem::EngineParticleSystem(std::size_t nbMaxParticle)
     :ParticleSystem(sf::Vector2f(0,0),nbMaxParticle),
-     m_enabled(false),m_direction(0,0),m_rainbowGradient(0),m_remaining_birth_time(0)
+     m_direction(0,0),m_rainbowGradient(0),m_remaining_birth_time(0)
 {
 
 }
@@ -32,9 +32,7 @@ void EngineParticleSystem::update(const sf::Vector2f &position, const sf::Vector
     // Add particules with updated settings
     m_spawnPoint = position;
     m_direction = direction;
-    m_enabled = !(direction.x == 0 && direction.y == 0); // Only enabled the direction is valid
-
-    if (m_enabled)
+    if (!(direction.x == 0 && direction.y == 0)) // Only enabled the direction is valid
     {
         m_rainbowGradient+=time*GRADIENT_SPEED;
 
