@@ -34,7 +34,7 @@ Borders::Location Borders::getCollisionLocation(const sf::Vector2f& position)con
     return location;
 }
 
-void Borders::draw(sf::RenderWindow& window)
+void Borders::draw(sf::RenderWindow& window)const
 {
     sf::Color color;
     if ( m_impulseCounter == 0 )

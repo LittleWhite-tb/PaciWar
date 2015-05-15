@@ -42,25 +42,6 @@ public:
         }
     }
 
-    void update(std::function<void(T&)> fct)
-    {
-        std::for_each(m_pool.begin(),m_pool.end(), fct);
-    }
-
-    template <typename U>
-    U check(std::function<U(T&)> fct)
-    {
-        for(auto it : m_pool)
-        {
-            U result = fct(it);
-            if ( result == true )
-            {
-                return result;
-            }
-        }
-        return U();
-    }
-
     void purge(std::function<bool(T)> fct)
     {
        // Maybe we can wrap this to make a false value, removing the instance

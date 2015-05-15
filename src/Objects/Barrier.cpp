@@ -16,7 +16,7 @@ Barrier::Barrier(const sf::Vector2f& position)
 {
 }
 	
-void Barrier::draw(sf::RenderWindow& window)
+void Barrier::draw(sf::RenderWindow& window) const
 {
     const sf::Vertex lines[] =
 	{
@@ -37,7 +37,7 @@ void Barrier::draw(sf::RenderWindow& window)
     window.draw(lines,8 ,sf::LinesStrip,t);
 }
 
-void Barrier::debugDraw(sf::RenderWindow& window)
+void Barrier::debugDraw(sf::RenderWindow& window) const
 {
     sf::CircleShape debugCircle(Barrier::radius);
     debugCircle.setFillColor(sf::Color::Transparent);

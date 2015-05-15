@@ -22,7 +22,7 @@ public:
     ParticleSystem(const sf::Vector2f& position, std::size_t nbMaxParticle=100);
     virtual ~ParticleSystem() {}
 
-    virtual void draw(sf::RenderWindow& window);
+    virtual void draw(sf::RenderWindow& window)const;
     virtual void update(unsigned int time);
 
     std::size_t numberParticlesAlive()const { return m_particles.nbAlive(); }

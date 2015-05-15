@@ -23,8 +23,8 @@ public:
     virtual ~Entity() {}
 
 
-    virtual void draw(sf::RenderWindow& window)=0;
-    virtual void debugDraw(sf::RenderWindow& window) {}
+    virtual void draw(sf::RenderWindow& window)const=0;
+    virtual void debugDraw(sf::RenderWindow& window)const {}
 
     virtual void update(GameState& gstate)=0;
 

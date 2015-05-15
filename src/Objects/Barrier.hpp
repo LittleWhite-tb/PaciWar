@@ -29,8 +29,8 @@ private:
 public:
     Barrier(const sf::Vector2f& position);
 	
-	void draw(sf::RenderWindow& window);
-    void debugDraw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window)const;
+    void debugDraw(sf::RenderWindow& window)const;
 
     void getBoundingSpheres(BoundingSpheres &boundingSpheres)const;
     Line getLine()const;

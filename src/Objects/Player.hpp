@@ -18,8 +18,8 @@ private:
 public:
     Player();
 	
-	void draw(sf::RenderWindow& window);
-    void debugDraw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window)const;
+    void debugDraw(sf::RenderWindow& window)const;
 
     void update(GameState& gstate);
 

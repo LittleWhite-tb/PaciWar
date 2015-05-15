@@ -48,36 +48,19 @@ void ObjectBank::createEnemy(const sf::Vector2f& position)
 
 void ObjectBank::draw(sf::RenderWindow& targetWindow)
 {
-	m_barriersPool.update(std::bind(&Entity::draw,
-									  std::placeholders::_1,
-									  std::ref(targetWindow)));
-	m_enemiesPool.update(std::bind(&Entity::draw,
-									  std::placeholders::_1,
-									  std::ref(targetWindow)));
-    m_enemiesDeathPool.update(std::bind(&EnemyDeath::draw,
-                                         std::placeholders::_1,
-                                         std::ref(targetWindow)));
-    m_bonusPool.update(std::bind(&Entity::draw,
-                       std::placeholders::_1,
-                       std::ref(targetWindow)));
+    std::for_each(m_barriersPool.cbegin(),m_barriersPool.cend(), [&targetWindow](const Barrier& b){ b.draw(targetWindow); });
+    std::for_each(m_enemiesPool.cbegin(),m_enemiesPool.cend(), [&targetWindow](const Enemy& e){ e.draw(targetWindow); });
+    std::for_each(m_enemiesDeathPool.cbegin(),m_enemiesDeathPool.cend(), [&targetWindow](const EnemyDeath& ed){ ed.draw(targetWindow); });
+    std::for_each(m_bonusPool.cbegin(),m_bonusPool.cend(), [&targetWindow](const Bonus& b){ b.draw(targetWindow); });
 
-    m_particleSystemPool.update(std::bind(&FixedColorParticleSystem::draw,
-                                          std::placeholders::_1,
-                                          std::ref(targetWindow)));
-    m_explosionsPool.update(std::bind(&RadialExplosion::draw,
-                                      std::placeholders::_1,
-                                      std::ref(targetWindow)));
+    std::for_each(m_particleSystemPool.cbegin(),m_particleSystemPool.cend(), [&targetWindow](const FixedColorParticleSystem& ps){ ps.draw(targetWindow); });
+    std::for_each(m_explosionsPool.cbegin(),m_explosionsPool.cend(), [&targetWindow](const RadialExplosion& re){ re.draw(targetWindow); });
 
 #ifndef NDEBUG
-	m_barriersPool.update(std::bind(&Entity::debugDraw,
-									  std::placeholders::_1,
-									  std::ref(targetWindow)));
-	m_enemiesPool.update(std::bind(&Entity::debugDraw,
-									  std::placeholders::_1,
-									  std::ref(targetWindow)));
-    m_bonusPool.update(std::bind(&Entity::debugDraw,
-                                 std::placeholders::_1,
-                                 std::ref(targetWindow)));
+    std::for_each(m_barriersPool.cbegin(),m_barriersPool.cend(), [&targetWindow](const Barrier& b){ b.debugDraw(targetWindow); });
+    std::for_each(m_enemiesPool.cbegin(),m_enemiesPool.cend(), [&targetWindow](const Enemy& e){ e.debugDraw(targetWindow); });
+    std::for_each(m_bonusPool.cbegin(),m_bonusPool.cend(), [&targetWindow](const Bonus& b){ b.debugDraw(targetWindow); });
+
     m_player.debugDraw(targetWindow);
 #endif
 
@@ -88,31 +71,20 @@ void ObjectBank::update(GameState& gstate)
 {
     m_player.update(gstate);
 
-    m_barriersPool.update(std::bind(&Barrier::update,
-									  std::placeholders::_1,
-                                      std::ref(gstate)));
-    m_enemiesPool.update(std::bind(&Enemy::update,
-									  std::placeholders::_1,
-                                      std::ref(gstate)));
-    m_bonusPool.update(std::bind(&Bonus::update,
-                                 std::placeholders::_1,
-                                 std::ref(gstate)));
+    std::for_each(m_barriersPool.begin(),m_barriersPool.end(), [&gstate](Barrier& b){ b.update(gstate); });
+    std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate); });
+    std::for_each(m_bonusPool.begin(),m_bonusPool.end(), [&gstate](Bonus& b){ b.update(gstate); });
 
-    m_enemiesDeathPool.update(std::bind(&EnemyDeath::update,
-                                        std::placeholders::_1,
-                                        std::ref(gstate)));
+    std::for_each(m_enemiesDeathPool.begin(),m_enemiesDeathPool.end(), [&gstate](EnemyDeath& ed){ ed.update(gstate); });
     m_enemiesDeathPool.purge(std::bind(&EnemyDeath::isDead,
                                         std::placeholders::_1));
 
-    m_particleSystemPool.update(std::bind(&FixedColorParticleSystem::update,
-                                          std::placeholders::_1,
-                                          gstate.getTime().getElapsedTime()));
+    int64_t deltaTime = gstate.getTime().getElapsedTime();
+    std::for_each(m_particleSystemPool.begin(),m_particleSystemPool.end(), [deltaTime](FixedColorParticleSystem& ps){ ps.update(deltaTime); });
     m_particleSystemPool.purge(std::bind(&FixedColorParticleSystem::isDead,
                                           std::placeholders::_1));
 
-    m_explosionsPool.update(std::bind(&RadialExplosion::update,
-                                      std::placeholders::_1,
-                                      gstate.getTime().getElapsedTime()));
+    std::for_each(m_explosionsPool.begin(),m_explosionsPool.end(), [deltaTime](RadialExplosion& re){ re.update(deltaTime); });
     m_explosionsPool.purge(std::bind(&RadialExplosion::isValid,
                                      std::placeholders::_1));
 

@@ -12,7 +12,7 @@
 const sf::Color Bonus::normalColor = sf::Color(120,230,50);
 const sf::Color Bonus::lightColor = sf::Color(250,250,170);
 
-void Bonus::draw(sf::RenderWindow& window)
+void Bonus::draw(sf::RenderWindow& window) const
 {
     static constexpr float shapeSize = 3;
 

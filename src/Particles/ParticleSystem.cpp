@@ -16,18 +16,14 @@ void ParticleSystem::generateParticle()
                     RandomGenerator::getFloat(0.0,2.0));
 }
 
-void ParticleSystem::draw(sf::RenderWindow& window)
+void ParticleSystem::draw(sf::RenderWindow& window) const
 {
-    m_particles.update(std::bind(&Particle::draw,
-                                 std::placeholders::_1,
-                                 std::ref(window)));
+    std::for_each(m_particles.cbegin(),m_particles.cend(), [&window](const Particle& p){ p.draw(window); });
 }
 
 void ParticleSystem::update(unsigned int time)
 {
-    m_particles.update(std::bind(&Particle::update,
-                               std::placeholders::_1,
-                               time));
+    std::for_each(m_particles.begin(),m_particles.end(), [time](Particle& p){ p.update(time); });
     m_particles.purge(std::bind(&Particle::isValid,
-                              std::placeholders::_1));
+                                std::placeholders::_1));
 }

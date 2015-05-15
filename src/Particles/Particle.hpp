@@ -31,7 +31,7 @@ struct Particle
               position(position),direction(direction),color(color),
               speed(speed),accel(acceleration) {}
 
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window)const;
     void update(unsigned int time);
     bool isValid()const;
 };

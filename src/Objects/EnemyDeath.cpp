@@ -15,7 +15,7 @@ EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
     Math::normalise(moveDirectionBias);
 }
 
-void EnemyDeath::Line::draw(sf::RenderWindow &window)
+void EnemyDeath::Line::draw(sf::RenderWindow &window) const
 {
     const sf::Vertex lines[] =
     {
@@ -48,9 +48,9 @@ EnemyDeath::EnemyDeath(const sf::Vector2f &position)
 
 }
 
-void EnemyDeath::draw(sf::RenderWindow& window)
+void EnemyDeath::draw(sf::RenderWindow& window)const
 {
-    for (Line& line : m_lines)
+    for (const Line& line : m_lines)
     {
         line.draw(window);
     }

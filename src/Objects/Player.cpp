@@ -14,7 +14,7 @@ Player::Player()
 {
 }
 	
-void Player::draw(sf::RenderWindow& window)
+void Player::draw(sf::RenderWindow& window) const
 {
     const sf::Vertex lines[] =
     {
@@ -42,7 +42,7 @@ void Player::draw(sf::RenderWindow& window)
     m_engineParticles.draw(window);
 }
 
-void Player::debugDraw(sf::RenderWindow& window)
+void Player::debugDraw(sf::RenderWindow& window) const
 {
     sf::CircleShape debugCircle(Player::radius);
     debugCircle.setFillColor(sf::Color::Transparent);

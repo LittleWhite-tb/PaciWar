@@ -16,7 +16,7 @@ public:
     RadialExplosion(const sf::Vector2f& position)
         :m_spawnPoint(position),m_radius(0) {}
 
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window)const;
     void update(unsigned int time);
     bool isValid()const;
 

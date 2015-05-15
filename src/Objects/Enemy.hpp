@@ -19,7 +19,7 @@ public:
     Enemy(const sf::Vector2f& position)
         :Entity(position),m_speed(DEFAULT_SPEED) {}
 	
-	void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window)const;
     void update(GameState& gstate);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;

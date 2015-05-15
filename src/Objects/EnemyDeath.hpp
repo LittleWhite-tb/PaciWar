@@ -25,7 +25,7 @@ private:
 
         Line(const sf::Vector2f& center, float rotation);
 
-        void draw(sf::RenderWindow& window);
+        void draw(sf::RenderWindow& window)const;
     };
 
     std::array<Line,4> m_lines;
@@ -36,7 +36,7 @@ private:
 public:
     EnemyDeath(const sf::Vector2f& position);
 
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window) const;
     void update(GameState& gstate);
 
     bool isDead()const { return m_lifeTime > DURATION; }

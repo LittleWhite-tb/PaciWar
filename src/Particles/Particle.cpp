@@ -1,6 +1,6 @@
 #include "Particle.hpp"
 
-void Particle::draw(sf::RenderWindow &window)
+void Particle::draw(sf::RenderWindow &window)const
 {
     sf::Vertex pV[] =
     {

@@ -13,7 +13,7 @@ constexpr float Enemy::MIN_SPEED;
 constexpr float Enemy::BROOD_SPEED_REDUCTION;
 
 
-void Enemy::draw(sf::RenderWindow& window)
+void Enemy::draw(sf::RenderWindow& window)const
 {
 	sf::Vertex lines[] =
 	{

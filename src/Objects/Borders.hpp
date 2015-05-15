@@ -45,7 +45,7 @@ public:
                         limits.height-GAP*2),
          m_impulseCounter(0) {}
 
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window)const;
     void update(unsigned int deltaTime);
 
     bool isOutside(const sf::Vector2f& position);
