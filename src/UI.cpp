@@ -1,9 +1,8 @@
 #include "UI.hpp"
 
-#include "Score.hpp"
+#include <string>
 
-#include "Utils/Utils.hpp"
-#include "Math/Vector2.hpp"
+#include "Score.hpp"
 
 const sf::Color UI::textColor = sf::Color(120,230,50);
 
@@ -21,6 +20,24 @@ void UI::initText(sf::Text& text)
     text.setCharacterSize(16);
 }
 
+std::string UI::formatTextNumber(unsigned long number)
+{
+    std::string rawStr = std::to_string(number);
+    std::string formatStr;
+
+    std::size_t offset = 3-rawStr.size()%3;
+    for (std::size_t i = 0 ; i < rawStr.size() ; i++)
+    {
+        if (i != 0 && (i+offset) % 3 == 0 )
+        {
+            formatStr.push_back(',');
+        }
+        formatStr.push_back(rawStr[i]);
+
+    }
+    return formatStr;
+}
+
 void UI::draw(sf::RenderWindow& window)
 {
     m_scoreText.setPosition(20,20);
@@ -33,6 +50,6 @@ void UI::draw(sf::RenderWindow& window)
 
 void UI::update(const Score& score)
 {
-    m_bonusText.setString("x" + Utils::toString(score.getMultiplier()));
-    m_scoreText.setString("Score\n" + Utils::toString(score.getScore()));
+    m_bonusText.setString("x" + formatTextNumber(score.getMultiplier()));
+    m_scoreText.setString("Score\n" + formatTextNumber(score.getScore()));
 }
