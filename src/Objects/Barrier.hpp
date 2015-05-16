@@ -25,6 +25,7 @@ private:
     sf::Vector2f rightEdgePosition;
 
     // static constexpr float ROTATION_SPEED = 0.015f;
+    void updateEdgePosition();
 
 public:
     Barrier(const sf::Vector2f& position);

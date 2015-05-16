@@ -14,6 +14,16 @@ const sf::Vector2f Barrier::oj_rightEdgePosition = sf::Vector2f(midSize-Barrier:
 Barrier::Barrier(const sf::Vector2f& position)
     :Entity(position)
 {
+    updateEdgePosition();
+}
+
+void Barrier::updateEdgePosition()
+{
+    sf::Transform rotationMatrix;
+    rotationMatrix.rotate(m_rotation);
+
+    leftEdgePosition = rotationMatrix.transformPoint(oj_leftEdgePosition) + m_position;
+    rightEdgePosition = rotationMatrix.transformPoint(oj_rightEdgePosition) + m_position;
 }
 	
 void Barrier::draw(sf::RenderWindow& window) const
@@ -68,12 +78,7 @@ void Barrier::update(GameState &gstate)
 {
     m_momentum.update(m_position,m_rotation,gstate.getTime().getElapsedTime());
 
-    // Update internal members
-    sf::Transform rotationMatrix;
-    rotationMatrix.rotate(m_rotation);
-
-    leftEdgePosition = rotationMatrix.transformPoint(oj_leftEdgePosition) + m_position;
-    rightEdgePosition = rotationMatrix.transformPoint(oj_rightEdgePosition) + m_position;
+    updateEdgePosition();
 
     // Bounce against the grid
     sf::Vector2f direction = m_momentum.getDirection();
