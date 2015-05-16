@@ -5,14 +5,15 @@
 #include "Collisions/Collider.hpp"
 
 #include "Utils/Utils.hpp"
-#include "globals.hpp"
+#include "Settings.hpp"
 
-Game::Game(sf::RenderWindow& targetWindow)
-    :m_targetWindow(targetWindow),m_view(sf::Vector2f(WIN_WIDTH/2,WIN_HEIGHT/2),sf::Vector2f(WIN_WIDTH,WIN_HEIGHT)),
+Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
+    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.windowWidth/2,settings.windowHeight/2),sf::Vector2f(settings.windowWidth,settings.windowHeight)),m_userInterface(settings.fontPath),
+     m_state(settings),
      m_spawner(m_state.getBorders().getRestrictedLimits())
 {
 #ifndef NDEBUG
-     m_debugFont.loadFromFile(DEBUG_FONT_PATH);
+     m_debugFont.loadFromFile(settings.debugFontPath);
 #endif
 }
 

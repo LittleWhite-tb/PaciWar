@@ -5,11 +5,17 @@
 
 struct Settings
 {
-	unsigned int windowWidth;
-	unsigned int windowHeight;
+    int windowWidth;
+    int windowHeight;
     static const std::string windowName;
 
-    static const float playerSpeed;
+    static const std::string fontPath;
+#ifndef NDEBUG
+    static const std::string debugFontPath;
+#endif
+
+    Settings():
+        windowWidth(800),windowHeight(600) {}
 };
 
 #endif

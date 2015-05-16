@@ -18,7 +18,7 @@ private:
     void initTest(sf::Text& text);
 
 public:
-    UI();
+    UI(const std::string &fontPath);
 
     void draw(sf::RenderWindow& window);
     void update(const Score& score);

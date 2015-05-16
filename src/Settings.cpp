@@ -2,4 +2,7 @@
 
 const std::string Settings::windowName = "PaciWar";
 
-const float Settings::playerSpeed = 2.0f;
+const std::string Settings::fontPath = "./data/DejaVuSansMono.ttf";
+#ifndef NDEBUG
+    const std::string Settings::debugFontPath = "./data/DejaVuSansMono.ttf";
+#endif

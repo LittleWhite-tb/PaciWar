@@ -1,9 +1,8 @@
 #include "GameState.hpp"
 
-#include "globals.hpp"
-
-GameState::GameState()
-    :m_borders(sf::IntRect(-WIN_WIDTH/2,-WIN_HEIGHT/2, WIN_WIDTH, WIN_HEIGHT)),
+GameState::GameState(const Settings& settings)
+    :m_settings(settings),
+     m_borders(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
      m_rainbowGradient(0)
 {
     reset();

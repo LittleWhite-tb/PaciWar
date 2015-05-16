@@ -4,13 +4,12 @@
 
 #include "Utils/Utils.hpp"
 #include "Math/Vector2.hpp"
-#include "globals.hpp"
 
 const sf::Color UI::textColor = sf::Color(120,230,50);
 
-UI::UI()
+UI::UI(const std::string& fontPath)
 {
-    m_font.loadFromFile(FONT_PATH);
+    m_font.loadFromFile(fontPath);
     initTest(m_scoreText);
     initTest(m_bonusText);
 }

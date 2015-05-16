@@ -1,6 +1,8 @@
 #ifndef GAMESTATE_HPP
 #define GAMESTATE_HPP
 
+#include "Settings.hpp"
+
 #include "GameTime.hpp"
 #include "ObjectBank.hpp"
 #include "Objects/Borders.hpp"
@@ -11,6 +13,8 @@
 class GameState
 {
 private:
+    const Settings& m_settings;
+
     GameTime m_gameTime;
     ObjectBank m_objects;
     Borders m_borders;
@@ -23,7 +27,7 @@ private:
     GameState(GameState&)=delete;
 
 public:
-    GameState();
+    GameState(const Settings &settings);
 
     void reset();
 

@@ -11,6 +11,8 @@
 
 #include "Spawner.hpp"
 
+class Settings;
+
 class Game
 {
     static constexpr float VIEW_DELAY_FACTOR = 2.f;
@@ -34,7 +36,7 @@ private:
     void checkClosure();
 
 public:
-    Game(sf::RenderWindow& targetWindow);
+    Game(const Settings& settings, sf::RenderWindow& targetWindow);
 
     bool run();
 };
