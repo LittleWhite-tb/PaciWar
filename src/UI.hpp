@@ -15,7 +15,7 @@ private:
     sf::Text m_scoreText;
     sf::Text m_bonusText;
 
-    void initTest(sf::Text& text);
+    void initText(sf::Text& text);
 
 public:
     UI(const std::string &fontPath);

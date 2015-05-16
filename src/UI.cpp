@@ -10,11 +10,11 @@ const sf::Color UI::textColor = sf::Color(120,230,50);
 UI::UI(const std::string& fontPath)
 {
     m_font.loadFromFile(fontPath);
-    initTest(m_scoreText);
-    initTest(m_bonusText);
+    initText(m_scoreText);
+    initText(m_bonusText);
 }
 
-void UI::initTest(sf::Text& text)
+void UI::initText(sf::Text& text)
 {
     text.setFont(m_font);
     text.setColor(UI::textColor);
