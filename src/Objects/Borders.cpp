@@ -110,12 +110,18 @@ void Borders::bounce(const sf::Vector2f& position, sf::Vector2f& direction)const
 {
     Borders::Location location = getCollisionLocation(position);
 
-    if ( location & Borders::LEFT ||
-         location & Borders::RIGHT )
+    if ( location & Borders::LEFT )
+        if ( direction.x < 0 )
             direction.x = -direction.x;
-
-    if ( location & Borders::TOP ||
-         location & Borders::DOWN )
+    if ( location & Borders::RIGHT )
+        if ( direction.x > 0 )
+            direction.x = -direction.x;
+        
+    if ( location & Borders::TOP )
+        if ( direction.y < 0)
+            direction.y = -direction.y;
+    if ( location & Borders::DOWN )
+        if ( direction.y > 0)
             direction.y = -direction.y;
 }
 
