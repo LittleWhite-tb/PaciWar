@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "Utils/Utils.hpp"
+
 #include "Score.hpp"
 
 const sf::Color UI::textColor = sf::Color(120,230,50);
@@ -22,7 +24,7 @@ void UI::initText(sf::Text& text)
 
 std::string UI::formatTextNumber(unsigned long number)
 {
-    std::string rawStr = std::to_string(number);
+    std::string rawStr = Utils::toString(number);
     std::string formatStr;
 
     std::size_t offset = 3-rawStr.size()%3;

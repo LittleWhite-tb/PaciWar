@@ -1,7 +1,7 @@
 #include "Game.hpp"
 
 #ifndef NDEBUG
-    #include <string>
+    #include "Utils/Utils.hpp"
 #endif
 
 #include <SFML/Graphics.hpp>
@@ -39,7 +39,7 @@ void Game::render()
 
         text.setColor(sf::Color::White);
         text.setCharacterSize(10);
-        text.setString("DeltaTime : " + std::to_string(m_state.getTime().getElapsedTime()));
+        text.setString("DeltaTime : " + Utils::toString(m_state.getTime().getElapsedTime()));
 
         m_targetWindow.draw(text);
     }
