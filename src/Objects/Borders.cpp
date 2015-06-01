@@ -7,26 +7,26 @@
 
 const sf::Color Borders::normalColor = sf::Color(220,220,220);
 
-Borders::Location Borders::getCollisionLocation(const sf::Vector2f& position)const
+Borders::Location Borders::getCollisionLocation(const sf::Vector2f& position, float offset)const
 {
     Borders::Location location = 0;
 
-    if ( position.x <= m_innerLimits.left )
+    if ( position.x - offset <= m_innerLimits.left )
     {
         location |= Borders::LEFT;
     }
 
-    if ( position.x >= m_innerLimits.left+m_innerLimits.width)
+    if ( position.x + offset >= m_innerLimits.left+m_innerLimits.width)
     {
         location |= Borders::RIGHT;
     }
 
-    if ( position.y <= m_innerLimits.top )
+    if ( position.y - offset <= m_innerLimits.top )
     {
         location |= Borders::TOP;
     }
 
-    if ( position.y >= m_innerLimits.top+m_innerLimits.height )
+    if ( position.y + offset >= m_innerLimits.top+m_innerLimits.height )
     {
         location |= Borders::DOWN;
     }
@@ -85,9 +85,9 @@ bool Borders::isOutside(const Entity& entity)
     return isOutside(entity.getPosition());
 }
 
-void Borders::clamp(const sf::Vector2f& position, sf::Vector2f& direction) const
+void Borders::clamp(const sf::Vector2f& position, sf::Vector2f& direction, float offset) const
 {
-    Borders::Location location = getCollisionLocation(position);
+    Borders::Location location = getCollisionLocation(position,offset);
 
     if ( location & Borders::LEFT )
         if ( direction.x < 0)
@@ -106,9 +106,9 @@ void Borders::clamp(const sf::Vector2f& position, sf::Vector2f& direction) const
             direction.y = 0;
 }
 
-void Borders::bounce(const sf::Vector2f& position, sf::Vector2f& direction)const
+void Borders::bounce(const sf::Vector2f& position, sf::Vector2f& direction, float offset)const
 {
-    Borders::Location location = getCollisionLocation(position);
+    Borders::Location location = getCollisionLocation(position,offset);
 
     if ( location & Borders::LEFT )
         if ( direction.x < 0 )

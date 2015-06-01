@@ -44,11 +44,11 @@ void Player::draw(sf::RenderWindow& window) const
 
 void Player::debugDraw(sf::RenderWindow& window) const
 {
-    sf::CircleShape debugCircle(Player::radius);
+    sf::CircleShape debugCircle(Player::RADIUS);
     debugCircle.setFillColor(sf::Color::Transparent);
     debugCircle.setOutlineThickness(1);
     debugCircle.setOutlineColor(sf::Color(255,0,0));
-    debugCircle.setPosition(m_position - sf::Vector2f(Player::radius,Player::radius));
+    debugCircle.setPosition(m_position - sf::Vector2f(Player::RADIUS,Player::RADIUS));
 
     window.draw(debugCircle);
 }
@@ -67,13 +67,12 @@ void Player::update(GameState& gstate)
 
         sf::Vector2f realDirection = Math::getVectorFromAngle(targetRotation);
 
+        // TODO : Find better way to do it, since we are doing two times the same operations
         sf::Vector2f oldPosition = m_position;
         m_position += realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
-        if ( gstate.getBorders().isOutside(m_position))
-        {
-            gstate.getBorders().clamp(m_position,realDirection);
-            m_position=oldPosition + realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
-        }
+
+        gstate.getBorders().clamp(m_position,realDirection,Player::RADIUS);
+        m_position = oldPosition + realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
     }
 
     m_engineParticles.update(m_position,-movement,gstate.getTime().getElapsedTime());
@@ -81,5 +80,5 @@ void Player::update(GameState& gstate)
 
 void Player::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 {
-    boundingSpheres.push_back(Sphere(m_position, Player::radius));
+    boundingSpheres.push_back(Sphere(m_position, Player::RADIUS));
 }

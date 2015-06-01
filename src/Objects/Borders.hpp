@@ -26,7 +26,7 @@ private:
     int m_impulseCounter;
     sf::Color m_impulseColor;
 
-    Location getCollisionLocation(const sf::Vector2f& position)const;
+    Location getCollisionLocation(const sf::Vector2f& position, float offset=0)const;
 
 public:
     Borders(const sf::IntRect& limits)
@@ -51,8 +51,8 @@ public:
     bool isOutside(const sf::Vector2f& position);
     bool isOutside(const Entity& entity);
 
-    void clamp(const sf::Vector2f& position, sf::Vector2f& direction)const;
-    void bounce(const sf::Vector2f& position, sf::Vector2f& direction)const;
+    void clamp(const sf::Vector2f& position, sf::Vector2f& direction, float offset=0)const;
+    void bounce(const sf::Vector2f& position, sf::Vector2f& direction, float offset=0)const;
 
     void impulse(const sf::Color& impulseColor);
 
