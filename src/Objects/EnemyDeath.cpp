@@ -6,6 +6,8 @@
 #include "Utils/RandomGenerator.hpp"
 #include "Math/Vector2.hpp"
 
+const sf::Color EnemyDeath::baseColor = sf::Color(220,220,220);
+
 EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
     :center(center),rotation(rotation),
      moveDirectionBias(RandomGenerator::getNormalizedDirection()),
@@ -15,12 +17,12 @@ EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
     Math::normalise(moveDirectionBias);
 }
 
-void EnemyDeath::Line::draw(sf::RenderWindow &window) const
+void EnemyDeath::Line::draw(sf::RenderWindow &window, const sf::Color& color) const
 {
     const sf::Vertex lines[] =
     {
-        sf::Vertex(sf::Vector2f(0, 10)),
-        sf::Vertex(sf::Vector2f(10, 0))
+        sf::Vertex(sf::Vector2f(0, 10),color),
+        sf::Vertex(sf::Vector2f(10, 0),color)
     };
 
     sf::Transform t;
@@ -50,9 +52,17 @@ EnemyDeath::EnemyDeath(const sf::Vector2f &position)
 
 void EnemyDeath::draw(sf::RenderWindow& window)const
 {
+    static constexpr float ratio = 255 / static_cast<float>(HDURATION);
+    
+    sf::Color color = sf::Color(baseColor.r,baseColor.g,baseColor.b,255);
+    if ( m_lifeTime > HDURATION ) // Fades out after half lifetime
+    {
+        color.a = (DURATION - m_lifeTime) * ratio;
+    }
+    
     for (const Line& line : m_lines)
     {
-        line.draw(window);
+        line.draw(window,color);
     }
 }
 
