@@ -13,6 +13,7 @@ void ParticleSystem::generateParticle()
     m_particles.add(m_spawnPoint,
                     RandomGenerator::getNormalizedDirection(),
                     RandomGenerator::getColor(100,255),
+                    1000,
                     RandomGenerator::getFloat(0.0,2.0));
 }
 

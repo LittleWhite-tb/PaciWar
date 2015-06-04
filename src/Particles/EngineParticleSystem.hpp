@@ -8,7 +8,7 @@
 class EngineParticleSystem : public ParticleSystem
 {
     static constexpr unsigned int BIRTH_PERIOD = 8; // in milliseconds
-    static constexpr float PARTICLE_DISPERSION = 0.55;
+    static constexpr float PARTICLE_DISPERSION = 0.45;
     static constexpr float GRADIENT_SPEED = 0.1;
 
 private:
@@ -21,7 +21,7 @@ private:
     void generateParticle();
 
 public:
-    EngineParticleSystem(std::size_t nbMaxParticle=100);
+    EngineParticleSystem(std::size_t nbMaxParticle=300);
 
     void update(const sf::Vector2f& position, const sf::Vector2f& direction, unsigned int time);
 };

@@ -16,13 +16,21 @@ void Particle::update(unsigned int time)
     sf::Vector2f dir(direction.x * speed * time,
                      direction.y * speed * time);
     position = position + dir;
-    speed -= accel * time;
+    speed -= speed * accel * time;
 
+    unsigned int hLifeTime = maxLife/2;
+    float ratio = 255 / static_cast<float>(hLifeTime);
+    if ( life > hLifeTime )
+    {
+        color.a = (maxLife - life) * ratio;
+    }
+
+    life += time;
 }
 
 bool Particle::isValid()const
 {
-    if ( speed < 0 )
+    if ( life > maxLife )
     {
         return true;
     }

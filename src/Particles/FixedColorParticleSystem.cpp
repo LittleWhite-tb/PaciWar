@@ -16,6 +16,7 @@ void FixedColorParticleSystem::generateParticle()
     m_particles.add(m_spawnPoint,
                     RandomGenerator::getNormalizedDirection(),
                     m_color,
+                    750, // Max Life
                     RandomGenerator::getFloat(0.0,1.5),
                     0.006f);
 }

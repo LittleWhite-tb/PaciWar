@@ -21,7 +21,8 @@ void EngineParticleSystem::generateParticle()
         m_particles.add(m_spawnPoint,
                         RandomGenerator::getFloatVector(startDirectionRange.x,endDirectionRange.x,startDirectionRange.y,endDirectionRange.y),
                         particleColor,
-                        0.1f,0.0002f);
+                        1000, // Max Life
+                        0.1f,0.002f);
     }
 }
 
