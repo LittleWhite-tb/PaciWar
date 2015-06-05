@@ -3,7 +3,7 @@
 #include "Utils/RandomGenerator.hpp"
 
 FixedColorParticleSystem::FixedColorParticleSystem(const sf::Vector2f& position, const sf::Color& color, std::size_t nbMaxParticle)
-    :m_color(color),ParticleSystem(position)
+    :m_color(color),ParticleSystem(position,25)
 {
     while (m_particles.nbAlive() != m_particles.capacity())
     {
