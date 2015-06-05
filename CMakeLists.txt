@@ -72,11 +72,7 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
         message("SFML will be compiled")
         set(SFML_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/deps/SFML-2.3.source")
 
-        set(TMP_CMAKE_BUILD_TYPE CMAKE_BUILD_TYPE)
-        set(CMAKE_BUILD_TYPE "Release")
         add_subdirectory(${SFML_PREFIX} EXCLUDE_FROM_ALL)
-        set(CMAKE_BUILD_TYPE TMP_CMAKE_BUILD_TYPE)
-        unset(TMP_CMAKE_BUILD_TYPE)
 
         set(SFML_INCLUDE_DIR "${SFML_PREFIX}/include")
         set(SFML_LIBRARY_DIR "${SFML_PREFIX}/lib")
