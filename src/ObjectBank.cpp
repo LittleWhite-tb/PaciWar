@@ -93,6 +93,7 @@ void ObjectBank::update(GameState& gstate)
 
 void ObjectBank::applyCollision(GameState& gstate)
 {
+	bool playerKilled = false;
     unsigned int barriersKilled = 0;
     unsigned int enemiesKilled = 0;
     unsigned int collectedBonusCounter = 0;
@@ -117,7 +118,7 @@ void ObjectBank::applyCollision(GameState& gstate)
                     gstate.getBorders().impulse(rainbowColor);
                     break;
                 case BarrierCollisionResult::PLAYER:
-                    // std::cout << "Player kill" << std::endl;
+                    playerKilled = true;
                     break;
             }
 
@@ -148,7 +149,7 @@ void ObjectBank::applyCollision(GameState& gstate)
             CollisionResult cr = Collider::collides(m_player,*itEnemies);
             if ( cr.collided )
             {
-                // std::cout << "Player kill by enemy" << std::endl;
+                playerKilled = true;
             }
         }
     }
@@ -175,4 +176,20 @@ void ObjectBank::applyCollision(GameState& gstate)
 
     gstate.getScore().addMultiplier(collectedBonusCounter);
     gstate.getScore().addKill(enemiesKilled,barriersKilled);
+    
+    if (playerKilled)
+    {
+		gstate.reset();
+	}
+}
+
+void ObjectBank::reset()
+{
+	m_barriersPool.purge();
+	m_enemiesPool.purge();
+	m_enemiesDeathPool.purge();
+	m_bonusPool.purge();
+	m_particleSystemPool.purge();
+	m_explosionsPool.purge();
+	m_player = Player();
 }

@@ -21,6 +21,8 @@ private:
 public:
     Spawner(const sf::IntRect &limits);
 
+    void reset();
+
     void spawnBarriers(GameState &gstate);
     void spawnEnemies(GameState &gstate);
 };

@@ -15,6 +15,12 @@ Spawner::Spawner(const sf::IntRect& limits)
 
 }
 
+void Spawner::reset()
+{
+	m_numberBarrierBySpawn = 1;
+	m_numberEnemiesBySpawn = 1;
+}
+
 void Spawner::spawnBarriers(GameState& gstate)
 {
     sf::IntRect limits = gstate.getBorders().getRestrictedLimits();

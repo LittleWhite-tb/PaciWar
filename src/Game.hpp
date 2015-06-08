@@ -9,8 +9,6 @@
 #include "UI.hpp"
 #include "GameState.hpp"
 
-#include "Spawner.hpp"
-
 class Settings;
 
 class Game
@@ -24,8 +22,6 @@ private:
     UI m_userInterface;
 
     GameState m_state;
-
-    Spawner m_spawner;
 
     void render();
     void update();

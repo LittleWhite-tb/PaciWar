@@ -12,8 +12,7 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
     settings.debugFontPath
 #endif
     ),
-     m_state(settings),
-     m_spawner(m_state.getBorders().getRestrictedLimits())
+     m_state(settings)
 {
 }
 
@@ -36,16 +35,6 @@ void Game::update()
 {
     m_state.update();
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
-
-    if ( m_state.getTime().shouldSpawnEnemy())
-    {
-        m_spawner.spawnEnemies(m_state);
-    }
-
-    if ( m_state.getTime().shouldSpawnBarrier())
-    {
-        m_spawner.spawnBarriers(m_state);
-    }
 
     m_userInterface.update(m_state);
 }

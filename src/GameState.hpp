@@ -5,6 +5,7 @@
 
 #include "GameTime.hpp"
 #include "ObjectBank.hpp"
+#include "Spawner.hpp"
 #include "Objects/Borders.hpp"
 #include "Score.hpp"
 
@@ -18,6 +19,7 @@ private:
     GameTime m_gameTime;
     ObjectBank m_objects;
     Borders m_borders;
+    Spawner m_spawner;
     Score m_score;
 
     Input m_input;
@@ -25,6 +27,8 @@ private:
     float m_rainbowGradient;
 
     GameState(GameState&)=delete;
+    
+    void trySpawn();
 
 public:
     GameState(const Settings &settings);

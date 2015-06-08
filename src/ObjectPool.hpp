@@ -48,6 +48,10 @@ public:
         m_pool.erase(std::remove_if(m_pool.begin(),m_pool.end(), fct),
                    m_pool.end());
     }
+    void purge()
+    {
+        m_pool.erase(m_pool.begin(),m_pool.end());
+    }
 
     std::size_t capacity()const
     {

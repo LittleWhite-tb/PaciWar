@@ -4,7 +4,7 @@
 #include <string>
 
 #define DEBUG_INFO 1
-#define GOD_MODE 1
+#define GOD_MODE 0
 
 
 struct Settings

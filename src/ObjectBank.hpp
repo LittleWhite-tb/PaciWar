@@ -41,6 +41,8 @@ public:
 
 	void draw(sf::RenderWindow& targetWindow);
     void update(GameState& gstate);
+    
+    void reset();
 	
 	Player& getPlayer() { return m_player; }
 	const Player& getPlayer()const { return m_player; }
