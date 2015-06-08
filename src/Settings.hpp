@@ -14,7 +14,7 @@ struct Settings
     static const std::string windowName;
 
     static const std::string fontPath;
-#ifndef NDEBUG
+#if DEBUG_INFO == 1
     static const std::string debugFontPath;
 #endif
 
