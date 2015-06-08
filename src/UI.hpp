@@ -5,29 +5,31 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Settings.hpp"
+
 class GameState;
 
 class UI
 {
     static const sf::Color textColor;
-#ifndef NDEBUG
+#if DEBUG_INFO == 1
     static const sf::Color debugTextColor;
 #endif
 
 private:
     sf::Font m_font;
-#ifndef NDEBUG
+#if DEBUG_INFO == 1
     sf::Font m_debugFont;
 #endif
 
     sf::Text m_scoreText;
     sf::Text m_bonusText;
-#ifndef NDEBUG
+#if DEBUG_INFO == 1
     sf::Text m_debugText;
 #endif
 
     void initText(sf::Text& text);
-#ifndef NDEBUG
+#if DEBUG_INFO == 1
 	void initDebugText(sf::Text& text);
 #endif
     
