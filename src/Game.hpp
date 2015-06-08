@@ -22,9 +22,6 @@ private:
     sf::View m_view;
 
     UI m_userInterface;
-#ifndef NDEBUG
-    sf::Font m_debugFont;
-#endif
 
     GameState m_state;
 

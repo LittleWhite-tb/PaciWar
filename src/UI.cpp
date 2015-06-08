@@ -4,15 +4,26 @@
 
 #include "Utils/Utils.hpp"
 
-#include "Score.hpp"
+#include "GameState.hpp"
 
 const sf::Color UI::textColor = sf::Color(120,230,50);
+#ifndef NDEBUG
+	const sf::Color UI::debugTextColor = sf::Color(240,240,240);
+#endif
 
-UI::UI(const std::string& fontPath)
+
+UI::UI(const std::string& fontPath, const std::string& debugFontPath)
 {
     m_font.loadFromFile(fontPath);
+#ifndef NDEBUG
+    m_debugFont.loadFromFile(debugFontPath);
+#endif
+
     initText(m_scoreText);
     initText(m_bonusText);
+#ifndef NDEBUG
+    initDebugText(m_debugText);
+#endif
 }
 
 void UI::initText(sf::Text& text)
@@ -21,6 +32,15 @@ void UI::initText(sf::Text& text)
     text.setColor(UI::textColor);
     text.setCharacterSize(16);
 }
+
+#ifndef NDEBUG
+	void UI::initDebugText(sf::Text& text)
+	{
+		text.setFont(m_debugFont);
+		text.setColor(UI::debugTextColor);
+		text.setCharacterSize(8);
+	}
+#endif
 
 std::string UI::formatTextNumber(unsigned long number)
 {
@@ -48,10 +68,19 @@ void UI::draw(sf::RenderWindow& window)
 
     m_bonusText.setPosition(window.getSize().x/2-m_bonusText.getLocalBounds().width/2,0);
     window.draw(m_bonusText);
+
+#ifndef NDEBUG
+	window.draw(m_debugText);
+#endif
+
 }
 
-void UI::update(const Score& score)
+void UI::update(const GameState& state)
 {
-    m_bonusText.setString("x" + formatTextNumber(score.getMultiplier()));
-    m_scoreText.setString("Score\n" + formatTextNumber(score.getScore()));
+    m_bonusText.setString("x" + formatTextNumber(state.getScore().getMultiplier()));
+    m_scoreText.setString("Score\n" + formatTextNumber(state.getScore().getScore()));
+
+#ifndef NDEBUG
+	m_debugText.setString("DeltaTime : " + Utils::toString(state.getTime().getElapsedTime()));
+#endif
 }

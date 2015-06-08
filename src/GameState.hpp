@@ -36,6 +36,7 @@ public:
     const GameTime& getTime()const { return m_gameTime; }
     ObjectBank& getObjects() { return m_objects; }
     Borders& getBorders() { return m_borders; }
+    const Score& getScore()const { return m_score; }
     Score& getScore() { return m_score; }
 
     sf::Vector2f getInputMovement()const { return m_input.getMovement(); }

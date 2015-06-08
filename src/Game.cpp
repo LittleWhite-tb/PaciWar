@@ -1,9 +1,5 @@
 #include "Game.hpp"
 
-#ifndef NDEBUG
-    #include "Utils/Utils.hpp"
-#endif
-
 #include <SFML/Graphics.hpp>
 
 #include "Collisions/Collider.hpp"
@@ -11,13 +7,14 @@
 #include "Settings.hpp"
 
 Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
-    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.windowWidth/2,settings.windowHeight/2),sf::Vector2f(settings.windowWidth,settings.windowHeight)),m_userInterface(settings.fontPath),
+    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.windowWidth/2,settings.windowHeight/2),sf::Vector2f(settings.windowWidth,settings.windowHeight)),m_userInterface(settings.fontPath,
+#ifndef NDEBUG
+    settings.debugFontPath
+#endif
+    ),
      m_state(settings),
      m_spawner(m_state.getBorders().getRestrictedLimits())
 {
-#ifndef NDEBUG
-     m_debugFont.loadFromFile(settings.debugFontPath);
-#endif
 }
 
 void Game::render()
@@ -31,19 +28,6 @@ void Game::render()
 
     m_targetWindow.setView(m_targetWindow.getDefaultView());
     m_userInterface.draw(m_targetWindow);
-
-#ifndef NDEBUG
-    {
-        sf::Text text;
-        text.setFont(m_debugFont);
-
-        text.setColor(sf::Color::White);
-        text.setCharacterSize(10);
-        text.setString("DeltaTime : " + Utils::toString(m_state.getTime().getElapsedTime()));
-
-        m_targetWindow.draw(text);
-    }
-#endif
 
     m_targetWindow.display();
 }
@@ -63,7 +47,7 @@ void Game::update()
         m_spawner.spawnBarriers(m_state);
     }
 
-    m_userInterface.update(m_state.getScore());
+    m_userInterface.update(m_state);
 }
 
 void Game::checkClosure()
