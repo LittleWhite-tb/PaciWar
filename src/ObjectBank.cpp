@@ -4,12 +4,13 @@
 #include "Utils/Palette.hpp"
 
 #include "GameState.hpp"
+#include "Settings.hpp"
 
 #include <iostream>
 
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
-     m_enemiesPool(1000),m_enemiesDeathPool(1000),m_bonusPool(1000),
+     m_enemiesPool(MAX_ENEMY_NUMBER),m_enemiesDeathPool(1000),m_bonusPool(1000),
      m_particleSystemPool(100),
      m_explosionsPool(25)
 {

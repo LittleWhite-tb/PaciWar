@@ -4,6 +4,7 @@
 
 GameState::GameState(const Settings& settings)
     :m_settings(settings),
+     m_enemyGrid(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
      m_borders(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
      m_spawner(m_borders.getRestrictedLimits()),
      m_rainbowGradient(0)
@@ -32,6 +33,8 @@ void GameState::update()
 
     m_objects.update(*this);
     this->trySpawn();
+    
+    m_enemyGrid.update(m_objects.getEnemies());
 
     m_rainbowGradient += m_gameTime.getElapsedTime()*0.03;
 }

@@ -71,17 +71,16 @@ void Enemy::update(GameState& gstate)
     // When an enemy is too close, we will check if we need to slow move speed.
     // The slowdown is applied only if the enemy is moving toward another one. It means that
     // if the current one is in the borders of the brood, no slowdown is applied.
-    Pool<Enemy>::const_iterator itEnemy = gstate.getObjects().getEnemies().cbegin();
-    Pool<Enemy>::const_iterator itEnd = gstate.getObjects().getEnemies().cend();
-    for ( ; itEnemy != itEnd ; ++itEnemy)
+    auto localEnemies = gstate.getEnemyGrid().getNeighbours(*this);
+    for (auto pE : localEnemies)
     {
-        if (&(*itEnemy) != &(*this)) // Avoid colliding with myself
+        if (pE != this) // Avoid colliding with myself
         {
-            float newDistance = Math::distance(m_position,itEnemy->getPosition());
+            float newDistance = Math::distance(m_position,pE->getPosition());
             if ( newDistance < SIZE * SIZE * 15 )
             {
                 // We are going toward the enemy
-                if ( Math::distance(oldPosition,itEnemy->getPosition()) > newDistance )
+                if ( Math::distance(oldPosition,pE->getPosition()) > newDistance )
                 {
                     // Slow down
                     m_speed = m_speed * BROOD_SPEED_REDUCTION;
