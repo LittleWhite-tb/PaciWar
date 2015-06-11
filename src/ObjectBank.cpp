@@ -127,33 +127,33 @@ void ObjectBank::applyCollision(GameState& gstate)
         }
     }
 
+	Pool<RadialExplosion>::const_iterator itExplosion = m_explosionsPool.begin();
+	for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
+	{
+		auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(itExplosion->getCenter(),itExplosion->getRadius()));
+		for (Enemy* enemy : enemies)
+		{
+			CollisionResult cr = Collider::collides(*enemy, *itExplosion);
+			if ( cr.collided )
+			{
+				enemy->kill();
+				createEnemyDeath(enemy->getPosition());
+				createBonus(enemy->getPosition());
+				createParticleSystem(enemy->getPosition(),rainbowColor);
+				enemiesKilled +=1;
+			}
+		}
+	}
 
-    Pool<Enemy>::iterator itEnemies = m_enemiesPool.begin();
-    for ( ; itEnemies != m_enemiesPool.end() ; ++itEnemies )
-    {
-        Pool<RadialExplosion>::const_iterator itExplosion = m_explosionsPool.begin();
-        for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
-        {
-            CollisionResult cr = Collider::collides(*itEnemies, *itExplosion);
-            if ( cr.collided )
-            {
-                itEnemies->kill();
-                createEnemyDeath(itEnemies->getPosition());
-                createBonus(itEnemies->getPosition());
-                createParticleSystem(itEnemies->getPosition(),rainbowColor);
-                enemiesKilled +=1;
-            }
-        }
-
-        if ( ! itEnemies->isDead() )
-        {
-            CollisionResult cr = Collider::collides(m_player,*itEnemies);
-            if ( cr.collided )
-            {
-                playerKilled = true;
-            }
-        }
-    }
+    auto enemies = gstate.getEnemyGrid().getNeighbours(m_player.getPosition());
+	for (Enemy* enemy : enemies)
+	{
+		CollisionResult cr = Collider::collides(m_player,*enemy);
+		if ( cr.collided )
+		{
+			playerKilled = true;
+		}
+	}
 
     Pool<Bonus>::iterator itBonusses = m_bonusPool.begin();
     for ( ; itBonusses != m_bonusPool.end() ; ++itBonusses )
