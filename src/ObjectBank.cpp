@@ -131,6 +131,7 @@ void ObjectBank::applyCollision(GameState& gstate)
 	for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
 	{
 		auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(itExplosion->getCenter(),itExplosion->getRadius()));
+		std::cout << enemies.size() << std::endl;
 		for (Enemy* enemy : enemies)
 		{
 			CollisionResult cr = Collider::collides(*enemy, *itExplosion);

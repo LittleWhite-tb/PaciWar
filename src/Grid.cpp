@@ -1,5 +1,6 @@
 #include "Grid.hpp"
 
+#include <iostream>
 #include <cassert>
 
 #include "Math/Vector2.hpp"
@@ -53,6 +54,7 @@ void Grid::addInZone(const Sphere& sphere, unsigned int x, unsigned int y, std::
 {
 	float realX = getPosFromX(x);
 	float realY = getPosFromY(y);
+	std::cout << "X : " << x << " Y : " << y << " realX : " << realX << " realY : " << realY << std::endl; 
 	if ( Math::distance(sphere.center, sf::Vector2f(realX,realY)) < sphere.radius*sphere.radius )
 	{
 		enemies.insert(enemies.end(),m_grid[x][y].cbegin(),m_grid[x][y].cend());
@@ -63,17 +65,17 @@ const std::vector<Enemy*> Grid::getNeighbours(const Sphere& sphere)
 {
 	std::vector<Enemy*> enemies;
 	
-	unsigned int x = getXFromPos(sphere.center.x);
-	unsigned int y = getYFromPos(sphere.center.y);
+	int x = getXFromPos(sphere.center.x);
+	int y = getYFromPos(sphere.center.y);
 
-	for (unsigned int lx = x-6 ; lx < x+6 ; lx++ )
+	for (int lx = x-3 ; lx < x+3 ; lx++ )
 	{
-		for(unsigned int ly = y-4 ; ly < y+4 ; ly++ )
+		for(int ly = y-3 ; ly < y+3 ; ly++ )
 		{
 			if (lx > 0 && lx < GRID_WIDTH &&
 			    ly > 0 && ly < GRID_HEIGHT)
 			{
-				addInZone(sphere,x,y,enemies);
+				addInZone(sphere,lx,ly,enemies);
 			}
 		}
 	}
