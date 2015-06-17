@@ -7,9 +7,9 @@
 #include "Settings.hpp"
 
 Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
-    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.windowWidth/2,settings.windowHeight/2),sf::Vector2f(settings.windowWidth,settings.windowHeight)),m_userInterface(settings.fontPath,
+    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.windowWidth/2,settings.windowHeight/2),sf::Vector2f(settings.windowWidth,settings.windowHeight)),m_userInterface(settings.fontPath
 #if DEBUG_INFO == 1
-    settings.debugFontPath
+    ,settings.debugFontPath
 #endif
     ),
      m_state(settings)
