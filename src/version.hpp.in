@@ -1,0 +1,9 @@
+#ifndef VERSION_HPP
+#define VERSION_HPP
+
+#define VERSION_MAJOR "@PaciWar_VERSION_MAJOR@"
+#define VERSION_MINOR "@PaciWar_VERSION_MINOR@"
+#define VERSION_PATCH "@PaciWar_VERSION_PATCH@"
+#define VERSION_SHA "@PaciWar_VERSION_SHA@"
+
+#endif

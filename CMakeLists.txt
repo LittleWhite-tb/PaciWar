@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 
+# Set new cmake module path
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules")
+
 # Projet name
 project("PaciWar")
 
@@ -19,13 +22,23 @@ file(
         src/*
 )
 
+# get stuff from Git
+set (PaciWar_VERSION_MAJOR "0")
+set (PaciWar_VERSION_MINOR "1")
+set (PaciWar_VERSION_PATCH "1")
+
+include(GetGitRevisionDescription)
+git_describe(PaciWar_VERSION_SHA --always --long)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp)
+
 add_executable(
         "PaciWar"
         ${source_files}
 )
 
-# Set new cmake module path
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+
 find_package(SFML QUIET COMPONENTS system window graphics audio)
 if (NOT SFML_FOUND) # Let's try to find it ourselves
     set(TMP_NEED_COMPILE_SFML FALSE)
@@ -126,5 +139,9 @@ endforeach()
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Pacifism mode remake from Geometry Wars 2")
 SET(CPACK_PACKAGE_VENDOR "LittleWhite")
 SET(CPACK_PACKAGE_EXECUTABLES "PaciWar" "PaciWar")
+set(CPACK_PACKAGE_VERSION_MAJOR ${PaciWar_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PaciWar_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PaciWar_VERSION_PATCH})
+set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH} - ${PaciWar_VERSION_SHA}")
 
 include(CPack)
