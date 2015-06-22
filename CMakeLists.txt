@@ -33,11 +33,6 @@ git_describe(PaciWar_VERSION_SHA --always --long)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in
                ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp)
 
-add_executable(
-        "PaciWar"
-        ${source_files}
-)
-
 
 find_package(SFML QUIET COMPONENTS system window graphics audio)
 if (NOT SFML_FOUND) # Let's try to find it ourselves
@@ -76,8 +71,14 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
 
             set(TMP_TOOLSET "mingw-${TMP_ARCH}")
         endif()
-    else()
+    else() # Not Windows
         set(TMP_NEED_COMPILE_SFML TRUE)
+
+        # RPATH configuration
+        SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
+        SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+        SET(CMAKE_INSTALL_RPATH "./")
+        SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
     endif()
 
     # Try to compile
@@ -112,6 +113,11 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
     endif()
 endif()
 
+add_executable(
+        "PaciWar"
+        ${source_files}
+)
+
 target_link_libraries(PaciWar ${SFML_LIBRARIES})
 include_directories(${SFML_INCLUDE_DIR}
                     ./include/
@@ -120,19 +126,24 @@ include_directories(${SFML_INCLUDE_DIR}
 # Installation
 install(TARGETS PaciWar
         RUNTIME
-        DESTINATION bin)
+        DESTINATION .)
 
 if (WIN32)
     file(GLOB dllFiles "${SFML_LIBRARY_DIR}/*.dll")
     foreach(dll ${dllFiles})
-            install(FILES ${dll} DESTINATION bin)
+            install(FILES ${dll} DESTINATION .)
+    endforeach()
+else()
+    file(GLOB soFiles "${SFML_LIBRARY_DIR}/*.so*")
+    foreach(so ${soFiles})
+            install(FILES ${so} DESTINATION .)
     endforeach()
 endif()
 
 # Resources file installation
 file(GLOB dataFiles "./data/*")
 foreach(data ${dataFiles})
-	install(FILES ${data} DESTINATION bin/data)
+        install(FILES ${data} DESTINATION ./data)
 endforeach()
 
 # CPack part
