@@ -77,7 +77,7 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
         # RPATH configuration
         SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
         SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-        SET(CMAKE_INSTALL_RPATH "./")
+        SET(CMAKE_INSTALL_RPATH "./lib")
         SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
     endif()
 
@@ -124,9 +124,8 @@ include_directories(${SFML_INCLUDE_DIR}
                     ./src/)
 
 # Installation
-install(TARGETS PaciWar
-        RUNTIME
-        DESTINATION .)
+install(TARGETS PaciWar 
+        RUNTIME DESTINATION .)
 
 if (WIN32)
     file(GLOB dllFiles "${SFML_LIBRARY_DIR}/*.dll")
@@ -134,10 +133,9 @@ if (WIN32)
             install(FILES ${dll} DESTINATION .)
     endforeach()
 else()
-    file(GLOB soFiles "${SFML_LIBRARY_DIR}/*.so*")
-    foreach(so ${soFiles})
-            install(FILES ${so} DESTINATION .)
-    endforeach()
+    install(DIRECTORY ${SFML_LIBRARY_DIR}
+            DESTINATION .
+            FILES_MATCHING PATTERN "*.so*")
 endif()
 
 # Resources file installation
