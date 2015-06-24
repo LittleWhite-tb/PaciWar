@@ -13,11 +13,15 @@ private:
     static constexpr float MIN_SPEED = 0.005f;
     static constexpr float BROOD_SPEED_REDUCTION = 0.65f;
 
+    static const sf::Color normalColor;
+    static const sf::Color lightColor;
+
     float m_speed;
+    sf::Color m_color;
 
 public:
     Enemy(const sf::Vector2f& position)
-        :Entity(position),m_speed(DEFAULT_SPEED) {}
+        :Entity(position),m_speed(DEFAULT_SPEED),m_color(normalColor) {}
 	
     void draw(sf::RenderWindow& window)const;
     void update(GameState& gstate);
@@ -25,6 +29,8 @@ public:
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 
     static constexpr float SIZE = 2;
+
+    void kill() { m_color = lightColor; }
 };
 
 #endif

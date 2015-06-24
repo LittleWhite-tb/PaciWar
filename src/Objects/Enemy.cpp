@@ -12,16 +12,19 @@ constexpr float Enemy::DEFAULT_SPEED;
 constexpr float Enemy::MIN_SPEED;
 constexpr float Enemy::BROOD_SPEED_REDUCTION;
 
+const sf::Color Enemy::normalColor = sf::Color(255,255,255);
+const sf::Color Enemy::lightColor = sf::Color(255,0,100);
+
 
 void Enemy::draw(sf::RenderWindow& window)const
 {
 	sf::Vertex lines[] =
 	{
-        sf::Vertex(sf::Vector2f(0, 10)),
-        sf::Vertex(sf::Vector2f(10, 0)),
-        sf::Vertex(sf::Vector2f(0, -10)),
-        sf::Vertex(sf::Vector2f(-10, 0)),
-        sf::Vertex(sf::Vector2f( 0, 10))
+        sf::Vertex(sf::Vector2f(0, 10), m_color),
+        sf::Vertex(sf::Vector2f(10, 0), m_color),
+        sf::Vertex(sf::Vector2f(0, -10),m_color),
+        sf::Vertex(sf::Vector2f(-10, 0),m_color),
+        sf::Vertex(sf::Vector2f( 0, 10),m_color)
 	};
 	/*
 	sf::RectangleShape lines[] = 
@@ -98,4 +101,6 @@ void Enemy::update(GameState& gstate)
             }
         }
     }
+
+    m_color=normalColor;
 }

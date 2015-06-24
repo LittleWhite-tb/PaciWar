@@ -30,7 +30,7 @@ public:
 
     const sf::Vector2f& getPosition()const { return m_position; }
     bool isDead()const { return m_dead; }
-    void kill() { m_dead = true; }
+    virtual void kill() { m_dead = true; }
 
     virtual void getBoundingSpheres(BoundingSpheres& boundingSpheres)const=0;
 };
