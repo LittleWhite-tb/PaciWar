@@ -65,7 +65,7 @@ void Enemy::getBoundingSpheres(BoundingSpheres &boundingSpheres)const
 void Enemy::update(GameState& gstate)
 {
     sf::Vector2f oldPosition = m_position;
-    Tracker::update(m_position,m_rotation,gstate.getObjects().getPlayer(),m_speed,0.3f,gstate.getTime().getElapsedTime());
+    // Tracker::update(m_position,m_rotation,gstate.getObjects().getPlayer(),m_speed,0.3f,gstate.getTime().getElapsedTime());
 
     // Enemies brood behaviour
     // When an enemy is too close, we will check if we need to slow move speed.
