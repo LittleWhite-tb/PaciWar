@@ -127,22 +127,14 @@ void ObjectBank::applyCollision(GameState& gstate)
         }
     }
 
-	Pool<RadialExplosion>::const_iterator itExplosion = m_explosionsPool.begin();
-	for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
+    //Pool<RadialExplosion>::const_iterator itExplosion = m_explosionsPool.begin();
+    //for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
 	{
-		auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(itExplosion->getCenter(),itExplosion->getRadius()));
+        auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(m_player.getPosition(),115));
 		std::cout << enemies.size() << std::endl;
 		for (Enemy* enemy : enemies)
 		{
-			CollisionResult cr = Collider::collides(*enemy, *itExplosion);
-			if ( cr.collided )
-			{
 				enemy->kill();
-				createEnemyDeath(enemy->getPosition());
-				createBonus(enemy->getPosition());
-				createParticleSystem(enemy->getPosition(),rainbowColor);
-				enemiesKilled +=1;
-			}
 		}
 	}
 
