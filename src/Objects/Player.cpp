@@ -51,6 +51,12 @@ void Player::debugDraw(sf::RenderWindow& window) const
     debugCircle.setPosition(m_position - sf::Vector2f(Player::RADIUS,Player::RADIUS));
 
     window.draw(debugCircle);
+
+
+    debugCircle.setRadius(115);
+    debugCircle.setPosition(m_position - sf::Vector2f(115,115));
+
+    window.draw(debugCircle);
 }
 
 void Player::update(GameState& gstate)
