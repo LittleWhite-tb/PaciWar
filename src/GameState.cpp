@@ -10,14 +10,13 @@ GameState::GameState(const Settings& settings)
      m_rainbowGradient(0)
 {
     reset();
+
+    this->trySpawn();
 }
 
 void GameState::trySpawn()
 {
-	if ( m_gameTime.shouldSpawnEnemy())
-    {
-        m_spawner.spawnEnemies(*this);
-    }
+    m_spawner.spawnEnemies(*this);
 
     if ( m_gameTime.shouldSpawnBarrier())
     {
@@ -32,7 +31,6 @@ void GameState::update()
     m_borders.update(m_gameTime.getElapsedTime());
 
     m_objects.update(*this);
-    this->trySpawn();
     
     m_enemyGrid.update(m_objects.getEnemies());
 

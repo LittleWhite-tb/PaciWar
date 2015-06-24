@@ -38,6 +38,5 @@ void Spawner::spawnBarriers(GameState& gstate)
 
 void Spawner::spawnEnemies(GameState& gstate)
 {
-    m_spawnGrid.spawnEnemies(gstate,m_numberEnemiesBySpawn);
-    m_numberEnemiesBySpawn++;
+    m_spawnGrid.spawnEnemies(gstate,200);
 }

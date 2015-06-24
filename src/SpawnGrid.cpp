@@ -18,6 +18,14 @@ SpawnGrid::SpawnGrid(const sf::IntRect& limits)
 
 void SpawnGrid::spawnEnemies(GameState& gstate, unsigned int number)
 {
+    auto borders = gstate.getBorders().getRestrictedLimits();
+    for (unsigned int i = 0 ; i < number ; i++)
+    {
+        gstate.getObjects().createEnemy(sf::Vector2f(RandomGenerator::getInt(borders.left,borders.left+borders.width),
+                                                     RandomGenerator::getInt(borders.top,borders.top+borders.height)));
+    }
+
+    /*
     // Select a point
     unsigned int selectedPoint=0;
     do
@@ -34,4 +42,5 @@ void SpawnGrid::spawnEnemies(GameState& gstate, unsigned int number)
     }
 
     m_lastPointUsed=selectedPoint;
+    */
 }
