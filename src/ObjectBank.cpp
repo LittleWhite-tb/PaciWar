@@ -131,13 +131,13 @@ void ObjectBank::applyCollision(GameState& gstate)
     //for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
 	{
         auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(m_player.getPosition(),115));
-		std::cout << enemies.size() << std::endl;
 		for (Enemy* enemy : enemies)
 		{
 				enemy->kill();
 		}
 	}
 
+    /*
     auto enemies = gstate.getEnemyGrid().getNeighbours(m_player.getPosition());
 	for (Enemy* enemy : enemies)
 	{
@@ -146,8 +146,8 @@ void ObjectBank::applyCollision(GameState& gstate)
 		{
 			playerKilled = true;
 		}
-	}
-
+    }
+*/
     Pool<Bonus>::iterator itBonusses = m_bonusPool.begin();
     for ( ; itBonusses != m_bonusPool.end() ; ++itBonusses )
     {

@@ -9,8 +9,8 @@ void Grid::add(Enemy* enemy)
 {
 	assert(enemy);
 	
-	unsigned int x = getXFromPos(enemy->getPosition().x);
-	unsigned int y = getYFromPos(enemy->getPosition().y);
+    unsigned int x = getXFromPos(enemy->getPosition().x);
+    unsigned int y = getYFromPos(enemy->getPosition().y);
 	
 	if ( x < GRID_WIDTH && y < GRID_HEIGHT )
 	{
@@ -36,6 +36,7 @@ void Grid::update(Pool<Enemy>& pool)
 
 const std::vector<Enemy*>& Grid::getNeighbours(const Enemy& enemy)
 {
+    /*
 	unsigned int x = getXFromPos(enemy.getPosition().x);
 	unsigned int y = getYFromPos(enemy.getPosition().y);
 	
@@ -43,7 +44,7 @@ const std::vector<Enemy*>& Grid::getNeighbours(const Enemy& enemy)
 	{
 		return m_grid[x][y];
 	}
-	else
+    else*/
 	{
 		static const std::vector<Enemy*> dummy;
 		return dummy;
@@ -52,13 +53,15 @@ const std::vector<Enemy*>& Grid::getNeighbours(const Enemy& enemy)
 
 void Grid::addInZone(const Sphere& sphere, unsigned int x, unsigned int y, std::vector<Enemy*>& enemies)
 {
-	float realX = getPosFromX(x);
-	float realY = getPosFromY(y);
-	std::cout << "X : " << x << " Y : " << y << " realX : " << realX << " realY : " << realY << std::endl; 
-	if ( Math::distance(sphere.center, sf::Vector2f(realX,realY)) < sphere.radius*sphere.radius )
-	{
-		enemies.insert(enemies.end(),m_grid[x][y].cbegin(),m_grid[x][y].cend());
-	}
+    //std::cout << "=== " << x << ";" << y << std::endl;
+    for (std::size_t i = 0 ; i < m_grid[x][y].size() ; i++)
+    {
+        // std::cout << "Center : " << sphere.center.x << ";" << sphere.center.y << " VS : " << m_grid[x][y][i]->getPosition().x << ";" << m_grid[x][y][i]->getPosition().y << std::endl;
+        if ( Math::distance(sphere.center, m_grid[x][y][i]->getPosition()) < sphere.radius*sphere.radius )
+        {
+            enemies.push_back(m_grid[x][y][i]);
+        }
+    }
 }
 
 const std::vector<Enemy*> Grid::getNeighbours(const Sphere& sphere)
@@ -67,13 +70,15 @@ const std::vector<Enemy*> Grid::getNeighbours(const Sphere& sphere)
 	
 	int x = getXFromPos(sphere.center.x);
 	int y = getYFromPos(sphere.center.y);
+    std::cout << "For : " << sphere.center.x << ";" << sphere.center.y << " GOT : " << x << ";" << y << "Rem : " << m_gameAreaHHeight << std::endl;
 
-	for (int lx = x-3 ; lx < x+3 ; lx++ )
+    int gap = 10;
+    for (int lx = x-gap ; lx < x+gap ; lx++ )
 	{
-		for(int ly = y-3 ; ly < y+3 ; ly++ )
+        for(int ly = y-gap ; ly < y+gap ; ly++ )
 		{
-			if (lx > 0 && lx < GRID_WIDTH &&
-			    ly > 0 && ly < GRID_HEIGHT)
+            if (lx >= 0 && lx < GRID_WIDTH &&
+                ly >= 0 && ly < GRID_HEIGHT)
 			{
 				addInZone(sphere,lx,ly,enemies);
 			}

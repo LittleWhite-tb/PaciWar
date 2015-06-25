@@ -3,6 +3,7 @@
 
 #include <array>
 #include <vector>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -24,10 +25,10 @@ private:
 	int m_gameAreaHWidth;
 	int m_gameAreaHHeight;
 
-	unsigned int getXFromPos(float posX) { return (posX+m_gameAreaHWidth)/GRID_WIDTH; }
+    unsigned int getXFromPos(float posX) { return (posX+m_gameAreaHWidth)/GRID_WIDTH; }
 	unsigned int getYFromPos(float posY) { return (posY+m_gameAreaHHeight)/GRID_HEIGHT; }
 	
-	float getPosFromX(unsigned int x) { return static_cast<float>(x*GRID_WIDTH)-m_gameAreaHWidth; }
+    float getPosFromX(unsigned int x) { return static_cast<float>(x*GRID_WIDTH)-m_gameAreaHWidth; }
 	float getPosFromY(unsigned int y) { return static_cast<float>(y*GRID_HEIGHT)-m_gameAreaHHeight; }
 	
 	void addInZone(const Sphere& sphere, unsigned int x, unsigned int y, std::vector<Enemy*>& enemies);
@@ -35,7 +36,7 @@ private:
 public:
 	Grid(const sf::IntRect& gameArea)
 		:m_gameAreaHWidth(gameArea.width/2),
-		 m_gameAreaHHeight(gameArea.height/2) {};
+         m_gameAreaHHeight(gameArea.height/2) {}
 	
 	void add(Enemy* enemy);
 	void update(Pool<Enemy>& pool);

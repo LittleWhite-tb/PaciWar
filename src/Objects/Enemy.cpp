@@ -74,6 +74,7 @@ void Enemy::update(GameState& gstate)
     // When an enemy is too close, we will check if we need to slow move speed.
     // The slowdown is applied only if the enemy is moving toward another one. It means that
     // if the current one is in the borders of the brood, no slowdown is applied.
+    /*
     auto localEnemies = gstate.getEnemyGrid().getNeighbours(*this);
     for (auto pE : localEnemies)
     {
@@ -100,7 +101,7 @@ void Enemy::update(GameState& gstate)
                 m_speed = std::min(m_speed,DEFAULT_SPEED);
             }
         }
-    }
+    }*/
 
     m_color=normalColor;
 }
