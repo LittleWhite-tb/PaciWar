@@ -6,8 +6,6 @@
 #include "GameState.hpp"
 #include "Settings.hpp"
 
-#include <iostream>
-
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
      m_enemiesPool(MAX_ENEMY_NUMBER),m_enemiesDeathPool(1000),m_bonusPool(1000),
@@ -131,7 +129,6 @@ void ObjectBank::applyCollision(GameState& gstate)
 	for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
 	{
 		auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(itExplosion->getCenter(),itExplosion->getRadius()));
-		std::cout << enemies.size() << std::endl;
 		for (Enemy* enemy : enemies)
 		{
 			CollisionResult cr = Collider::collides(*enemy, *itExplosion);
