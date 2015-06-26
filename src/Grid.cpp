@@ -8,12 +8,11 @@ void Grid::add(Enemy* enemy)
 {
 	assert(enemy);
 	
-	unsigned int x = getXFromPos(enemy->getPosition().x);
-	unsigned int y = getYFromPos(enemy->getPosition().y);
+	sf::Vector2f coords = getFromPos(enemy->getPosition());
 	
-	if ( x < GRID_WIDTH && y < GRID_HEIGHT )
+	if ( coords.x < GRID_WIDTH && coords.y < GRID_HEIGHT )
 	{
-		m_grid[x][y].emplace_back(enemy);
+		m_grid[coords.x][coords.y].emplace_back(enemy);
 	}
 }
 
@@ -35,12 +34,10 @@ void Grid::update(Pool<Enemy>& pool)
 
 const std::vector<Enemy*>& Grid::getNeighbours(const Enemy& enemy)
 {
-	unsigned int x = getXFromPos(enemy.getPosition().x);
-	unsigned int y = getYFromPos(enemy.getPosition().y);
-	
-	if ( x < GRID_WIDTH && y < GRID_HEIGHT )
+	sf::Vector2f coords = getFromPos(enemy.getPosition());
+	if ( coords.x < GRID_WIDTH && coords.y < GRID_HEIGHT )
 	{
-		return m_grid[x][y];
+		return m_grid[coords.x][coords.y];
 	}
 	else
 	{
@@ -64,17 +61,16 @@ const std::vector<Enemy*> Grid::getNeighbours(const Sphere& sphere)
 {
 	std::vector<Enemy*> enemies;
 	
-	int x = getXFromPos(sphere.center.x);
-	int y = getYFromPos(sphere.center.y);
+	sf::Vector2f coords = getFromPos(sphere.center);
 
 	int xwindow = ceil((sphere.radius / m_ratio.x)/2);
 	int ywindow = ceil((sphere.radius / m_ratio.y)/2);
-	for (int lx = x-xwindow ; lx < x+xwindow ; lx++ )
+	for (int lx = coords.x-xwindow ; lx < coords.x+xwindow ; lx++ )
 	{
-		for(int ly = y-ywindow ; ly < y+ywindow ; ly++ )
+		for(int ly = coords.y-ywindow ; ly < coords.y+ywindow ; ly++ )
 		{
-			if (lx > 0 && lx < GRID_WIDTH &&
-			    ly > 0 && ly < GRID_HEIGHT)
+			if (lx >= 0 && lx < GRID_WIDTH &&
+			    ly >= 0 && ly < GRID_HEIGHT)
 			{
 				addInZone(sphere,lx,ly,enemies);
 			}

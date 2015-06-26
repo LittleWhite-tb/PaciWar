@@ -24,11 +24,18 @@ private:
 	sf::Vector2f m_gameAreaHSize;
 	sf::Vector2f m_ratio;
 
-    unsigned int getXFromPos(float posX) { return (posX+m_gameAreaHSize.x)/m_ratio.x; }
-	unsigned int getYFromPos(float posY) { return (posY+m_gameAreaHSize.y)/m_ratio.y; }
+    sf::Vector2f getFromPos(const sf::Vector2f pos) 
+    {
+		sf::Vector2f res; 
+		res = pos+m_gameAreaHSize;
+		return sf::Vector2f(res.x/m_ratio.x, res.y/m_ratio.y); 
+	}
 	
-	float getPosFromX(unsigned int x) { return static_cast<float>(x*m_ratio.x)-m_gameAreaHSize.x; }
-	float getPosFromY(unsigned int y) { return static_cast<float>(y*m_ratio.y)-m_gameAreaHSize.y; }
+    sf::Vector2f getPosFrom(const sf::Vector2f coord) 
+    { 
+		sf::Vector2f res(coord.x*m_ratio.x,coord.y*m_ratio.y);
+		return res-m_gameAreaHSize; 
+    }
 	
 	void addInZone(const Sphere& sphere, unsigned int x, unsigned int y, std::vector<Enemy*>& enemies);
 
