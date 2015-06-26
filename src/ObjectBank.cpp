@@ -131,15 +131,11 @@ void ObjectBank::applyCollision(GameState& gstate)
 		auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(itExplosion->getCenter(),itExplosion->getRadius()));
 		for (Enemy* enemy : enemies)
 		{
-			CollisionResult cr = Collider::collides(*enemy, *itExplosion);
-			if ( cr.collided )
-			{
-				enemy->kill();
-				createEnemyDeath(enemy->getPosition());
-				createBonus(enemy->getPosition());
-				createParticleSystem(enemy->getPosition(),rainbowColor);
-				enemiesKilled +=1;
-			}
+			enemy->kill();
+			createEnemyDeath(enemy->getPosition());
+			createBonus(enemy->getPosition());
+			createParticleSystem(enemy->getPosition(),rainbowColor);
+			enemiesKilled +=1;
 		}
 	}
 
