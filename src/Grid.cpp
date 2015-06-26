@@ -70,7 +70,7 @@ const std::vector<Enemy*> Grid::getNeighbours(const Sphere& sphere)
 	
 	int x = getXFromPos(sphere.center.x);
 	int y = getYFromPos(sphere.center.y);
-    std::cout << "For : " << sphere.center.x << ";" << sphere.center.y << " GOT : " << x << ";" << y << "Rem : " << m_gameAreaHHeight << std::endl;
+    std::cout << "For : " << sphere.center.x << ";" << sphere.center.y << " GOT : " << x << ";" << y << "Rem : " << m_gameAreaHSize.y << std::endl;
 
     int gap = 10;
     for (int lx = x-gap ; lx < x+gap ; lx++ )
