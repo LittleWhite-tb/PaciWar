@@ -46,7 +46,7 @@ public:
 	
 	void add(Enemy* enemy);
 	void update(Pool<Enemy>& pool);
-	const std::vector<Enemy*>& getNeighbours(const Enemy& enemy);
+    const std::vector<Enemy *> getNeighbours(const Enemy& enemy);
 	const std::vector<Enemy*> getNeighbours(const Sphere& sphere);
 };
 

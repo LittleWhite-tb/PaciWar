@@ -32,18 +32,66 @@ void Grid::update(Pool<Enemy>& pool)
 	} 
 }
 
-const std::vector<Enemy*>& Grid::getNeighbours(const Enemy& enemy)
+const std::vector<Enemy*> Grid::getNeighbours(const Enemy& enemy)
 {
+    std::vector<Enemy*> enemies;
+    enemies.reserve(9*10);
 	sf::Vector2f coords = getFromPos(enemy.getPosition());
-	if ( coords.x < GRID_WIDTH && coords.y < GRID_HEIGHT )
-	{
-		return m_grid[coords.x][coords.y];
-	}
-	else
-	{
-		static const std::vector<Enemy*> dummy;
-		return dummy;
-	}
+
+    if ( coords.x - 1 > 0)
+    {
+        if ( coords.y - 1 > 0)
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x-1][coords.y-1].begin(), m_grid[coords.x-1][coords.y-1].end());
+        }
+
+        if ( coords.y < GRID_HEIGHT )
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x-1][coords.y].begin(), m_grid[coords.x-1][coords.y].end());
+        }
+
+        if ( coords.y + 1 < GRID_HEIGHT)
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x-1][coords.y+1].begin(), m_grid[coords.x-1][coords.y+1].end());
+        }
+    }
+
+    if ( coords.x < GRID_WIDTH )
+    {
+        if ( coords.y - 1 > 0)
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x][coords.y-1].begin(), m_grid[coords.x][coords.y-1].end());
+        }
+
+        if ( coords.y < GRID_HEIGHT )
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x][coords.y].begin(), m_grid[coords.x][coords.y].end());
+        }
+
+        if ( coords.y + 1 < GRID_HEIGHT )
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x][coords.y+1].begin(), m_grid[coords.x][coords.y+1].end());
+        }
+    }
+
+    if ( coords.x + 1 < GRID_WIDTH )
+    {
+        if ( coords.y - 1 > 0)
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x+1][coords.y-1].begin(), m_grid[coords.x+1][coords.y-1].end());
+        }
+
+        if ( coords.y < GRID_HEIGHT )
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x+1][coords.y].begin(), m_grid[coords.x+1][coords.y].end());
+        }
+
+        if ( coords.y + 1 < GRID_HEIGHT)
+        {
+            enemies.insert(enemies.end(), m_grid[coords.x+1][coords.y+1].begin(), m_grid[coords.x+1][coords.y+1].end());
+        }
+    }
+    return enemies;
 }
 
 void Grid::addInZone(const Sphere& sphere, unsigned int x, unsigned int y, std::vector<Enemy*>& enemies)
@@ -59,12 +107,13 @@ void Grid::addInZone(const Sphere& sphere, unsigned int x, unsigned int y, std::
 
 const std::vector<Enemy*> Grid::getNeighbours(const Sphere& sphere)
 {
-	std::vector<Enemy*> enemies;
+    int xwindow = ceil((sphere.radius / m_ratio.x)/2);
+    int ywindow = ceil((sphere.radius / m_ratio.y)/2);
+    std::vector<Enemy*> enemies;
+    enemies.reserve(xwindow*ywindow*10);
 	
 	sf::Vector2f coords = getFromPos(sphere.center);
 
-	int xwindow = ceil((sphere.radius / m_ratio.x)/2);
-	int ywindow = ceil((sphere.radius / m_ratio.y)/2);
 	for (int lx = coords.x-xwindow ; lx < coords.x+xwindow ; lx++ )
 	{
 		for(int ly = coords.y-ywindow ; ly < coords.y+ywindow ; ly++ )
