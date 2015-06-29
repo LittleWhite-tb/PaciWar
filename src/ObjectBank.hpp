@@ -48,6 +48,7 @@ public:
 	const Player& getPlayer()const { return m_player; }
 
     const Pool<Enemy>& getEnemies()const { return m_enemiesPool; }
+    Pool<Enemy>& getEnemies() { return m_enemiesPool; }
 };
 
 #endif

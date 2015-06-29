@@ -5,6 +5,7 @@
 
 #include "GameTime.hpp"
 #include "ObjectBank.hpp"
+#include "Grid.hpp"
 #include "Spawner.hpp"
 #include "Objects/Borders.hpp"
 #include "Score.hpp"
@@ -18,6 +19,7 @@ private:
 
     GameTime m_gameTime;
     ObjectBank m_objects;
+	Grid m_enemyGrid;
     Borders m_borders;
     Spawner m_spawner;
     Score m_score;
@@ -39,6 +41,7 @@ public:
 
     const GameTime& getTime()const { return m_gameTime; }
     ObjectBank& getObjects() { return m_objects; }
+    Grid& getEnemyGrid() { return m_enemyGrid; }
     Borders& getBorders() { return m_borders; }
     const Score& getScore()const { return m_score; }
     Score& getScore() { return m_score; }
