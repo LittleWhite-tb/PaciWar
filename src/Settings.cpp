@@ -30,3 +30,7 @@ const std::string Settings::fontPath = "./data/DejaVuSansMono.ttf";
 #if DEBUG_INFO == 1
     const std::string Settings::debugFontPath = "./data/DejaVuSansMono.ttf";
 #endif
+
+#if TRACE_MODE == 1
+    const std::string Settings::traceFile = "./paciwar.trace";
+#endif

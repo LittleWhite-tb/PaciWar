@@ -37,7 +37,7 @@ private:
 
     GameTime m_gameTime;
     ObjectBank m_objects;
-	Grid m_enemyGrid;
+    Grid m_enemyGrid;
     Borders m_borders;
     Spawner m_spawner;
     Score m_score;

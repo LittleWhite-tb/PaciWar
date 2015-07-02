@@ -22,6 +22,9 @@
 
 #include "Collisions/Collider.hpp"
 
+#if TRACE_MODE == 1
+    #include "Tracer.hpp"
+#endif
 #include "Settings.hpp"
 
 Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
@@ -84,8 +87,14 @@ void Game::checkClosure()
 
 bool Game::run()
 {
+#if TRACE_MODE == 1
+    Tracer tracer(Settings::traceFile);
+#endif
     while (m_targetWindow.isOpen())
     {
+#if TRACE_MODE == 1
+        tracer.trace();
+#endif
         render();
         update();
 
