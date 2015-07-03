@@ -7,6 +7,8 @@
 import sys
 import os
 
+nbValuesPerLine = 3
+
 if len(sys.argv) != 3:
 	print "You should pass the trace file as argument to this script and the file to write"
 	sys.exit(-1)
@@ -25,14 +27,18 @@ outputFile = open(outputFileName,'w')
 with open(traceFileName, 'r') as traceFile:
 	for line in traceFile:
 		values = line.split(';')
-		if len(values) != 2:
+		if len(values) != nbValuesPerLine:
 			print "Looks as an invalid file"
 			sys.exit(-4)
 		
 		try:
 			if baseTime != 0:
 				baseTime = int(values[0])
-			outputFile.write(str(int(values[0])-baseTime) + ";" + values[1])
+			for i in range(nbValuesPerLine):
+				if i == 0:
+					outputFile.write(str(int(values[0])-baseTime))
+				else:
+					outputFile.write(" " + values[i])
 		except ValueError:
 			print "Fail to convert value from file"
 			sys.exit(-5)

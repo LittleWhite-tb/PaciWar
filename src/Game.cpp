@@ -93,7 +93,7 @@ bool Game::run()
     while (m_targetWindow.isOpen())
     {
 #if TRACE_MODE == 1
-        tracer.trace();
+        tracer.trace(m_state);
 #endif
         render();
         update();

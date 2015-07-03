@@ -23,6 +23,8 @@
 
 #include <SFML/System.hpp>
 
+class GameState;
+
 class Tracer
 {
 private:
@@ -33,7 +35,7 @@ private:
 public:
     Tracer(const std::string& outputFile);
 
-    void trace();
+    void trace(const GameState& gstate);
 };
 
 #endif
