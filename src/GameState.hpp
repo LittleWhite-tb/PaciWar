@@ -29,6 +29,9 @@
 #include "Score.hpp"
 
 #include "Input/Input.hpp"
+#if TRACE_MODE == 1
+    class Replayer;
+#endif
 
 class GameState
 {
@@ -42,6 +45,9 @@ private:
     Spawner m_spawner;
     Score m_score;
 
+#if TRACE_MODE == 1
+    Replayer* m_pReplayer;
+#endif
     Input m_input;
 
     float m_rainbowGradient;

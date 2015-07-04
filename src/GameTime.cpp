@@ -47,3 +47,11 @@ int64_t GameTime::getElapsedTime()const
 {
     return m_elapsedTime.asMilliseconds();
 }
+
+void GameTime::setElapsedTime(int64_t newDeltaTime)
+{
+    if ( newDeltaTime != 0)
+    {
+        m_elapsedTime = sf::milliseconds(newDeltaTime);
+    }
+}

@@ -27,6 +27,7 @@ private:
 
 public:
     InputLogger(const std::string& outputFile, const unsigned int seed);
+    ~InputLogger();
 
     void log(const GameState& gstate);
 };

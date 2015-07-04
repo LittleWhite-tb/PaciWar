@@ -42,5 +42,7 @@ public:
     void update();
     sf::Vector2f getMovement()const;
 
+    int64_t getDeltaTime()const;
+
     void start();
 };

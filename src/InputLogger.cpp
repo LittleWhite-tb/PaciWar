@@ -26,6 +26,12 @@ InputLogger::InputLogger(const std::string& outputFile, const unsigned int seed)
     m_output << seed << std::endl;
 }
 
+InputLogger::~InputLogger()
+{
+    m_output.flush();
+    m_output.close();
+}
+
 void InputLogger::log(const GameState& gstate)
 {
     m_output << gstate.getTime().getElapsedTime() << " "

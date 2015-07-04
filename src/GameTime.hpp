@@ -45,7 +45,7 @@ public:
 
     void update();
     int64_t getElapsedTime()const;
-
+    void setElapsedTime(int64_t newDeltaTime);
 
     bool shouldSpawnEnemy()const { return m_shouldSpawnEnemy; }
     bool shouldSpawnBarrier()const { return m_shouldSpawnBarrier; }

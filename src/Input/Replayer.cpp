@@ -73,6 +73,11 @@ sf::Vector2f Replayer::getMovement()const
     return m_lastRead.second;
 }
 
+int64_t Replayer::getDeltaTime()const
+{
+    return m_lastRead.first;
+}
+
 void Replayer::start()
 {
     m_clock.restart();

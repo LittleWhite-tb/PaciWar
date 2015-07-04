@@ -23,7 +23,6 @@
 #include "InputDevice.hpp"
 #include "Joystick.hpp"
 #include "Keyboard.hpp"
-#include "Replayer.hpp"
 
 #include "Math/Vector2.hpp"
 
@@ -31,12 +30,18 @@
 
 Input::Input()
 {
-#if TRACE_MODE == 1
-    m_devices.push_back(std::unique_ptr<InputDevice>(new Replayer(Settings::inputFile)));
-#endif
     // Order is important since only first usable will be counted
     m_devices.push_back(std::unique_ptr<InputDevice>(new Joystick()));
     m_devices.push_back(std::unique_ptr<InputDevice>(new Keyboard()));
+}
+
+void Input::add(InputDevice* pNewDevice)
+{
+    assert(pNewDevice);
+    if (pNewDevice)
+    {
+        m_devices.push_front(std::unique_ptr<InputDevice>(pNewDevice));
+    }
 }
 
 void Input::update()

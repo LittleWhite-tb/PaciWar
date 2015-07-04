@@ -36,7 +36,18 @@ private:
     Input(const Input&)=delete;
 
 public:
+    /**
+     * @brief Input
+     * Adds by default the Keyboard and Joystick devices in the manager
+     */
     Input();
+
+    /**
+     * @brief adds a new InputDevice to the manager
+     * We push the new device in front, making it priority
+     * @param pNewDevice the new device to take into account
+     */
+    void add(InputDevice* pNewDevice);
 
     void update();
     sf::Vector2f getMovement()const;
