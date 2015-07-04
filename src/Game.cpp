@@ -22,6 +22,7 @@
 
 #include "Collisions/Collider.hpp"
 
+#include "Utils/RandomGenerator.hpp"
 #if TRACE_MODE == 1
     #include "Tracer.hpp"
 #endif
@@ -34,6 +35,9 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
 #endif
     ),
      m_state(settings)
+#if TRACE_MODE == 1
+     ,m_inputLogger(Settings::inputFile,RandomGenerator::getSeed())
+#endif
 {
 }
 
@@ -55,6 +59,10 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
+#if TRACE_MODE == 1
+    m_inputLogger.log(m_state);
+#endif
+
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 
     m_userInterface.update(m_state);

@@ -40,6 +40,7 @@ struct Settings
 
 #if TRACE_MODE == 1
     static const std::string traceFile;
+    static const std::string inputFile;
 #endif
 
     Settings():

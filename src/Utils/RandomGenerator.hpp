@@ -28,6 +28,7 @@
 class RandomGenerator
 {
 private:
+    static unsigned int m_seed;
     static std::mt19937 m_generator;
 
 public:
@@ -51,6 +52,9 @@ public:
      * @return the random colour
      */
     static sf::Color getColor(unsigned char min, unsigned char max);
+
+    static unsigned int getSeed();
+    static void setSeed(unsigned int newSeed);
 };
 
 #endif

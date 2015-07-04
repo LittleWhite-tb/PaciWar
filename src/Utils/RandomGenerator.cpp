@@ -20,7 +20,8 @@
 
 #include "Math/Vector2.hpp"
 
-std::mt19937 RandomGenerator::m_generator = std::mt19937(std::random_device()());
+unsigned int RandomGenerator::m_seed = std::random_device()();
+std::mt19937 RandomGenerator::m_generator = std::mt19937(m_seed);
 
 float RandomGenerator::getFloat(float min, float max)
 {
@@ -60,4 +61,15 @@ sf::Color RandomGenerator::getColor(unsigned char min, unsigned char max)
 {
     std::uniform_int_distribution<> dist(min,max);
     return sf::Color(dist(m_generator),dist(m_generator),dist(m_generator));
+}
+
+unsigned int RandomGenerator::getSeed()
+{
+    return RandomGenerator::m_seed;
+}
+
+void RandomGenerator::setSeed(unsigned int newSeed)
+{
+    RandomGenerator::m_seed = newSeed;
+    m_generator.seed(newSeed);
 }
