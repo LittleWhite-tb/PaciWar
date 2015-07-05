@@ -16,24 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "InputLogger.hpp"
+#include <fstream>
 
-#include "GameState.hpp"
+class GameState;
 
-InputLogger::InputLogger(const std::string& outputFile, const unsigned int seed)
-    :m_output(outputFile)
+class InputRecorder
 {
-    m_output << seed << std::endl;
-}
+private:
+    std::ofstream m_output;
 
-InputLogger::~InputLogger()
-{
-    m_output.flush();
-    m_output.close();
-}
+public:
+    InputRecorder(const std::string& outputFile, const unsigned int seed);
+    ~InputRecorder();
 
-void InputLogger::log(const GameState& gstate)
-{
-    m_output << gstate.getTime().getElapsedTime() << " "
-             << gstate.getInputMovement().x << " " << gstate.getInputMovement().y << std::endl;
-}
+    void log(const GameState& gstate);
+};

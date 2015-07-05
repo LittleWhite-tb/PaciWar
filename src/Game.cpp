@@ -36,7 +36,7 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
     ),
      m_state(settings)
 #if RECORD_MODE == 1
-     ,m_inputLogger(Settings::recordFile,RandomGenerator::getSeed())
+     ,m_inputRecorder(Settings::recordFile,RandomGenerator::getSeed())
 #endif
 {
 }
@@ -60,7 +60,7 @@ void Game::update()
 {
     m_state.update();
 #if RECORD_MODE == 1
-    m_inputLogger.log(m_state);
+    m_inputRecorder.log(m_state);
 #endif
 
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);

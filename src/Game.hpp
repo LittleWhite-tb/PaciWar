@@ -27,7 +27,7 @@
 #include "UI.hpp"
 #include "GameState.hpp"
 #if RECORD_MODE == 1
-    #include "InputLogger.hpp"
+    #include "InputRecorder.hpp"
 #endif
 
 class Settings;
@@ -44,7 +44,7 @@ private:
 
     GameState m_state;
 #if RECORD_MODE == 1
-    InputLogger m_inputLogger;
+    InputRecorder m_inputRecorder;
 #endif
 
     void render();
