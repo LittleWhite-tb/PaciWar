@@ -29,7 +29,7 @@
 #include "Score.hpp"
 
 #include "Input/Input.hpp"
-#if TRACE_MODE == 1
+#if REPLAY_MODE == 1
     class Replayer;
 #endif
 
@@ -45,7 +45,7 @@ private:
     Spawner m_spawner;
     Score m_score;
 
-#if TRACE_MODE == 1
+#if REPLAY_MODE == 1
     Replayer* m_pReplayer;
 #endif
     Input m_input;

@@ -22,7 +22,9 @@
 #include <string>
 
 #define DEBUG_INFO 1
-#define TRACE_MODE 1
+#define TRACE_MODE 0
+#define RECORD_MODE 0
+#define REPLAY_MODE 0
 #define GOD_MODE 1
 
 #define MAX_ENEMY_NUMBER 1000
@@ -40,7 +42,12 @@ struct Settings
 
 #if TRACE_MODE == 1
     static const std::string traceFile;
-    static const std::string inputFile;
+#endif
+#if RECORD_MODE == 1
+    static const std::string recordFile;
+#endif
+#if REPLAY_MODE == 1
+    static const std::string replayFile;
 #endif
 
     Settings():

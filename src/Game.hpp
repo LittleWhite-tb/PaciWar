@@ -26,7 +26,7 @@
 
 #include "UI.hpp"
 #include "GameState.hpp"
-#if TRACE_MODE == 1
+#if RECORD_MODE == 1
     #include "InputLogger.hpp"
 #endif
 
@@ -43,7 +43,7 @@ private:
     UI m_userInterface;
 
     GameState m_state;
-#if TRACE_MODE == 1
+#if RECORD_MODE == 1
     InputLogger m_inputLogger;
 #endif
 

@@ -35,8 +35,8 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
 #endif
     ),
      m_state(settings)
-#if TRACE_MODE == 1
-     ,m_inputLogger(Settings::inputFile,RandomGenerator::getSeed())
+#if RECORD_MODE == 1
+     ,m_inputLogger(Settings::recordFile,RandomGenerator::getSeed())
 #endif
 {
 }
@@ -59,7 +59,7 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
-#if TRACE_MODE == 1
+#if RECORD_MODE == 1
     m_inputLogger.log(m_state);
 #endif
 
