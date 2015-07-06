@@ -36,7 +36,7 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
     ),
      m_state(settings)
 #if RECORD_MODE == 1
-     ,m_inputRecorder(Settings::recordFile,RandomGenerator::getSeed())
+     ,m_inputRecorder(Settings::recordFile,RndGenerators::det_gen.getSeed())
 #endif
 {
 }

@@ -28,9 +28,9 @@ const sf::Color EnemyDeath::baseColor = sf::Color(220,220,220);
 
 EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
     :center(center),rotation(rotation),
-     moveDirectionBias(RandomGenerator::getNormalizedDirection()),
-     moveSpeed(RandomGenerator::getFloat(0.25,0.45f)),
-     rotationSpeed(RandomGenerator::getFloat(0.8,1.2f))
+     moveDirectionBias(RndGenerators::basic_gen.getNormalizedDirection()),
+     moveSpeed(RndGenerators::basic_gen.getFloat(0.25,0.45f)),
+     rotationSpeed(RndGenerators::basic_gen.getFloat(0.8,1.2f))
 {
     Math::normalise(moveDirectionBias);
 }

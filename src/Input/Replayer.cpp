@@ -27,7 +27,7 @@ Replayer::Replayer(const std::string& inputFile)
 {
     unsigned int seed;
     m_input >> seed;
-    RandomGenerator::setSeed(seed);
+    RndGenerators::det_gen.setSeed(seed);
 }
 
 Replayer::DataLine Replayer::readLine()
@@ -52,13 +52,13 @@ void Replayer::update()
     int64_t deltaTime  = m_clock.getElapsedTime().asMilliseconds() - m_lastUpdate;
     m_accum += deltaTime;
 
-    std::cout << "DeltaTime : " << deltaTime << std::endl;
+    //std::cout << "DeltaTime : " << deltaTime << std::endl;
 
     while (m_accum > m_lastRead.first && m_input)
     {
         m_lastRead = this->readLine();
         m_accum -= m_lastRead.first;
-        std::cout << "Read : " << m_lastRead.first << " against dt : " << deltaTime << " file is " << (bool)m_input << std::endl;
+        //std::cout << "Read : " << m_lastRead.first << " against dt : " << deltaTime << " file is " << (bool)m_input << std::endl;
     }
 
     m_lastUpdate = m_clock.getElapsedTime().asMilliseconds();

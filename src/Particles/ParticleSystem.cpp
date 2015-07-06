@@ -29,10 +29,10 @@ ParticleSystem::ParticleSystem(const sf::Vector2f& position, std::size_t nbMaxPa
 void ParticleSystem::generateParticle()
 {
     m_particles.add(m_spawnPoint,
-                    RandomGenerator::getNormalizedDirection(),
-                    RandomGenerator::getColor(100,255),
+                    RndGenerators::basic_gen.getNormalizedDirection(),
+                    RndGenerators::basic_gen.getColor(100,255),
                     1000,
-                    RandomGenerator::getFloat(0.0,2.0));
+                    RndGenerators::basic_gen.getFloat(0.0,2.0));
 }
 
 void ParticleSystem::draw(sf::RenderWindow& window) const

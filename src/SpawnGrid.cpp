@@ -40,15 +40,15 @@ void SpawnGrid::spawnEnemies(GameState& gstate, unsigned int number)
     unsigned int selectedPoint=0;
     do
     {
-        selectedPoint = RandomGenerator::getInt(0,m_spawnPoints.size()-1);
+        selectedPoint = RndGenerators::det_gen.getInt(0,m_spawnPoints.size()-1);
     }while(Math::distance(m_spawnPoints[selectedPoint],gstate.getObjects().getPlayer().getPosition()) < ENEMY_SPAWN_DISTANCE * ENEMY_SPAWN_DISTANCE);
 
     sf::Vector2f enemyPosition = m_spawnPoints[selectedPoint];
 
     for (unsigned int i = 0 ; i < number ; i++)
     {
-        gstate.getObjects().createEnemy(sf::Vector2f(enemyPosition.x + RandomGenerator::getInt(-25,25),
-                                                     enemyPosition.y + RandomGenerator::getInt(-25,25)));
+        gstate.getObjects().createEnemy(sf::Vector2f(enemyPosition.x + RndGenerators::det_gen.getInt(-25,25),
+                                                     enemyPosition.y + RndGenerators::det_gen.getInt(-25,25)));
     }
 
     m_lastPointUsed=selectedPoint;

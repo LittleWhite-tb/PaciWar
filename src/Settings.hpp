@@ -23,8 +23,8 @@
 
 #define DEBUG_INFO 1
 #define TRACE_MODE 0
-#define RECORD_MODE 1
-#define REPLAY_MODE 0
+#define RECORD_MODE 0
+#define REPLAY_MODE 1
 #define GOD_MODE 1
 
 #define MAX_ENEMY_NUMBER 1000
