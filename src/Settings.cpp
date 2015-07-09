@@ -32,11 +32,11 @@ const std::string Settings::fontPath = "./data/DejaVuSansMono.ttf";
 #endif
 
 #if TRACE_MODE == 1
-    const std::string Settings::traceFile = "./paciwar.trace";
+    std::string Settings::traceFile = "./paciwar.trace";
 #endif
 #if RECORD_MODE == 1
-    const std::string Settings::recordFile = "./paciwar.input";
+    std::string Settings::recordFile = "./paciwar.input";
 #endif
 #if REPLAY_MODE == 1
-    const std::string Settings::replayFile = "./paciwar.input";
+    std::string Settings::replayFile = "./paciwar.input";
 #endif

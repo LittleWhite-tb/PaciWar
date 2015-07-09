@@ -31,6 +31,15 @@ public:
         oss << number;
         return oss.str();
     }
+
+    template <typename T>
+    inline static T fromString(const std::string& str)
+    {
+        std::istringstream iss(str);
+        T data;
+        iss >> data;
+        return data;
+    }
 };
 
 #endif
