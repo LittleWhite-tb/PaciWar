@@ -29,12 +29,9 @@
 #include "Score.hpp"
 
 #include "Input/Input.hpp"
-#if RECORD_MODE == 1
-    #include "InputRecorder.hpp"
-#endif
-#if REPLAY_MODE == 1
-    class Replayer;
-#endif
+#include "InputRecorder.hpp"
+
+class Replayer;
 
 class GameState
 {
@@ -48,12 +45,8 @@ private:
     Spawner m_spawner;
     Score m_score;
 
-#if RECORD_MODE == 1
-    InputRecorder m_inputRecorder;
-#endif
-#if REPLAY_MODE == 1
+    std::unique_ptr<InputRecorder> m_inputRecorder;
     Replayer* m_pReplayer;
-#endif
     Input m_input;
 
     float m_rainbowGradient;
@@ -69,6 +62,7 @@ public:
 
     void update();
 
+    const Settings& getSettings()const { return m_settings; }
     const GameTime& getTime()const { return m_gameTime; }
     ObjectBank& getObjects() { return m_objects; }
     const ObjectBank& getObjects() const { return m_objects; }

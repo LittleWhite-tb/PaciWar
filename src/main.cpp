@@ -18,12 +18,18 @@
 
 #include "Game.hpp"
 
+#include "CommandParser.hpp"
 #include "Settings.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
     Settings settings;
-    sf::RenderWindow window(sf::VideoMode(settings.windowWidth,settings.windowHeight), Settings::windowName);
+    if (!CommandParser::parse(argc,argv,settings))
+    {
+        return -1;
+    }
+
+    sf::RenderWindow window(sf::VideoMode(settings.getWindowWidth(),settings.getWindowHeight()), settings.getWindowName());
 	window.setVerticalSyncEnabled(true);
 
     Game game(settings,window);

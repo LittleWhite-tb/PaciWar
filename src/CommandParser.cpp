@@ -18,11 +18,93 @@
 
 #include "CommandParser.hpp"
 
-#include "Settings.hpp"
-
+#include <string>
+#include <iostream>
 #include <cassert>
 
-bool CommandParser::parse(int argc, char** argv, Settings& result)
+#include "Settings.hpp"
+#include "Utils/Utils.hpp"
+
+bool CommandParser::parse(int argc, char** argv, Settings& settings)
 {
 	assert(argv);
+
+    int i = 1; // We pass the program name
+    while (i < argc)
+    {
+        std::string argument = std::string(argv[i]);
+
+        if (argument == "-w" || argument == "--width")
+        {
+            if ( i+1 < argc)
+            {
+                settings.setWindowWidth(Utils::fromString<unsigned int>(std::string(argv[i+1])));
+            }
+            else
+            {
+                std::cout << argument << " option needs an argument" << std::endl;
+                return false;
+            }
+            i+=2;
+        }
+        else if (argument == "-h" || argument == "--height")
+        {
+            if ( i+1 < argc)
+            {
+                settings.setWindowHeight(Utils::fromString<unsigned int>(std::string(argv[i+1])));
+            }
+            else
+            {
+                std::cout << argument << " option needs an argument" << std::endl;
+                return false;
+            }
+            i+=2;
+        }
+        else if (argument == "--trace")
+        {
+            if ( i+1 < argc)
+            {
+                settings.setTraceFile(std::string(argv[i+1]));
+            }
+            else
+            {
+                std::cout << "--trace option needs an argument" << std::endl;
+                return false;
+            }
+            i+=2;
+        }
+        else if (argument == "--record")
+        {
+            if ( i+1 < argc)
+            {
+                settings.setRecordFile(std::string(argv[i+1]));
+            }
+            else
+            {
+                std::cout << "--record option needs an argument" << std::endl;
+                return false;
+            }
+            i+=2;
+        }
+        else if (argument == "--replay")
+        {
+            if ( i+1 < argc)
+            {
+                settings.setReplayFile(std::string(argv[i+1]));
+            }
+            else
+            {
+                std::cout << "--replay option needs an argument" << std::endl;
+                return false;
+            }
+            i+=2;
+        }
+        else
+        {
+            std::cout << argument << " is an unexpected option" << std::endl;
+            return false;
+        }
+    }
+
+    return true;
 }
