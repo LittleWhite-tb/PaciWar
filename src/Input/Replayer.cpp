@@ -39,6 +39,7 @@ Replayer::DataLine Replayer::readLine()
     return data;
 }
 
+#if 0
 void Replayer::update()
 {
     if ( m_isFirstLine )
@@ -66,6 +67,12 @@ void Replayer::update()
     {
         m_isEnabled=false;
     }
+}
+#endif
+
+void Replayer::update()
+{
+    m_lastRead = this->readLine();
 }
 
 sf::Vector2f Replayer::getMovement()const

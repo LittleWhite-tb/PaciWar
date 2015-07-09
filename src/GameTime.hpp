@@ -24,14 +24,15 @@
 class GameTime
 {
 private:
+    // All time should be in ms
     sf::Clock m_gameClock;
-    sf::Time m_elapsedTime;
-    sf::Time m_previousUpdateTime;
+    int64_t m_elapsedTime;
+    int64_t m_previousUpdateTime;
 
-    sf::Time m_enemySpawnTime;
+    int64_t m_enemySpawnTime;
     bool m_shouldSpawnEnemy;
 
-    sf::Time m_barrierSpawnTime;
+    int64_t m_barrierSpawnTime;
     bool m_shouldSpawnBarrier;
 
     /**
@@ -43,9 +44,8 @@ private:
 public:
     GameTime();
 
-    void update();
+    void update(int64_t forcedDeltaTime = 0);
     int64_t getElapsedTime()const;
-    void setElapsedTime(int64_t newDeltaTime);
 
     bool shouldSpawnEnemy()const { return m_shouldSpawnEnemy; }
     bool shouldSpawnBarrier()const { return m_shouldSpawnBarrier; }

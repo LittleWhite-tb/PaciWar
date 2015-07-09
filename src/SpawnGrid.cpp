@@ -24,6 +24,8 @@
 #include "Utils/RandomGenerator.hpp"
 #include "Math/Vector2.hpp"
 
+#include <iostream>
+
 SpawnGrid::SpawnGrid(const sf::IntRect& limits)
     :m_lastPointUsed(-1)
 {
@@ -41,6 +43,7 @@ void SpawnGrid::spawnEnemies(GameState& gstate, unsigned int number)
     do
     {
         selectedPoint = RndGenerators::det_gen.getInt(0,m_spawnPoints.size()-1);
+        std::cout << "Try spawn enemy point" << std::endl;
     }while(Math::distance(m_spawnPoints[selectedPoint],gstate.getObjects().getPlayer().getPosition()) < ENEMY_SPAWN_DISTANCE * ENEMY_SPAWN_DISTANCE);
 
     sf::Vector2f enemyPosition = m_spawnPoints[selectedPoint];
@@ -49,6 +52,7 @@ void SpawnGrid::spawnEnemies(GameState& gstate, unsigned int number)
     {
         gstate.getObjects().createEnemy(sf::Vector2f(enemyPosition.x + RndGenerators::det_gen.getInt(-25,25),
                                                      enemyPosition.y + RndGenerators::det_gen.getInt(-25,25)));
+        std::cout << "Spawn enemy pos" << std::endl;
     }
 
     m_lastPointUsed=selectedPoint;

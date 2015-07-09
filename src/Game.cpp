@@ -35,9 +35,6 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
 #endif
     ),
      m_state(settings)
-#if RECORD_MODE == 1
-     ,m_inputRecorder(Settings::recordFile,RndGenerators::det_gen.getSeed())
-#endif
 {
 }
 
@@ -59,9 +56,6 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
-#if RECORD_MODE == 1
-    m_inputRecorder.log(m_state);
-#endif
 
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 

@@ -26,6 +26,8 @@
 #include "Collisions/Collider.hpp"
 #include "Math/Vector2.hpp"
 
+#include <iostream>
+
 constexpr float Enemy::DEFAULT_SPEED;
 constexpr float Enemy::MIN_SPEED;
 constexpr float Enemy::BROOD_SPEED_REDUCTION;
@@ -84,7 +86,7 @@ void Enemy::update(GameState& gstate)
 {
     sf::Vector2f oldPosition = m_position;
     Tracker::update(m_position,m_rotation,gstate.getObjects().getPlayer(),m_speed,0.3f,gstate.getTime().getElapsedTime());
-
+/*
     // Enemies brood behaviour
     // When an enemy is too close, we will check if we need to slow move speed.
     // The slowdown is applied only if the enemy is moving toward another one. It means that
@@ -105,7 +107,7 @@ void Enemy::update(GameState& gstate)
                     m_speed = std::max(m_speed,MIN_SPEED);
                     sf::Vector2f direction = m_position - oldPosition;
                     Math::normalise(direction);
-                    m_position = oldPosition + direction * m_speed;
+                    m_position = oldPosition + direction * m_speed * static_cast<float>(gstate.getTime().getElapsedTime());
                 }
             }
             else
@@ -116,4 +118,6 @@ void Enemy::update(GameState& gstate)
             }
         }
     }
+    */
+    std::cout << "pos :" << m_position.x << ";" << m_position.y << " - " << " speed : " << m_speed << " target :" << gstate.getObjects().getPlayer().getPosition().x << ";" << gstate.getObjects().getPlayer().getPosition().y << std::endl;
 }

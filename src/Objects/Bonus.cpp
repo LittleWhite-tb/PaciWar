@@ -27,8 +27,17 @@
 
 #include <Collisions/Collider.hpp>
 
+#include <iostream>
+
 const sf::Color Bonus::normalColor = sf::Color(120,230,50);
 const sf::Color Bonus::lightColor = sf::Color(250,250,170);
+
+Bonus::Bonus(const sf::Vector2f& position)
+    :Entity(position),m_color(normalColor),m_life(LIFETIME),
+     m_momentum(0.02f,0.2f)
+{
+    std::cout << "Bonus()" << std::endl;
+}
 
 void Bonus::draw(sf::RenderWindow& window) const
 {

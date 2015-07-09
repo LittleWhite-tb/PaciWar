@@ -48,7 +48,7 @@ int RandomGenerator::getInt(int min, int max)
 
 sf::Vector2i RandomGenerator::getIntVector(int minx, int maxx, int miny, int maxy)
 {
-    m_counter++;
+    m_counter+=2;
     std::uniform_int_distribution<> distx(minx,maxx);
     std::uniform_int_distribution<> disty(miny,maxy);
     return sf::Vector2i(distx(m_generator),disty(m_generator));
@@ -56,7 +56,7 @@ sf::Vector2i RandomGenerator::getIntVector(int minx, int maxx, int miny, int max
 
 sf::Vector2f RandomGenerator::getFloatVector(float minx, float maxx, float miny, float maxy)
 {
-    m_counter++;
+    m_counter+=2;
     std::uniform_real_distribution<> distx(minx,maxx);
     std::uniform_real_distribution<> disty(miny,maxy);
     return sf::Vector2f(distx(m_generator),disty(m_generator));
@@ -64,7 +64,7 @@ sf::Vector2f RandomGenerator::getFloatVector(float minx, float maxx, float miny,
 
 sf::Vector2f RandomGenerator::getNormalizedDirection()
 {
-    m_counter++;
+    m_counter+=2;
     std::uniform_real_distribution<> dist(-1.0f,1.0f);
     sf::Vector2f direction(dist(m_generator),dist(m_generator));
     Math::normalise(direction);
@@ -73,7 +73,7 @@ sf::Vector2f RandomGenerator::getNormalizedDirection()
 
 sf::Color RandomGenerator::getColor(unsigned char min, unsigned char max)
 {
-    m_counter++;
+    m_counter+=3;
     std::uniform_int_distribution<> dist(min,max);
     return sf::Color(dist(m_generator),dist(m_generator),dist(m_generator));
 }

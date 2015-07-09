@@ -21,6 +21,7 @@
 #if REPLAY_MODE == 1
     #include "Input/Replayer.hpp"
 #endif
+#include "Utils/RandomGenerator.hpp"
 #include "Settings.hpp"
 
 GameState::GameState(const Settings& settings)
@@ -28,6 +29,9 @@ GameState::GameState(const Settings& settings)
      m_enemyGrid(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
      m_borders(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
      m_spawner(m_borders.getRestrictedLimits()),
+#if RECORD_MODE == 1
+     m_inputRecorder(Settings::recordFile,RndGenerators::det_gen.getSeed()),
+#endif
 #if REPLAY_MODE == 1
      m_pReplayer(new Replayer(Settings::replayFile)),
 #endif
@@ -54,10 +58,14 @@ void GameState::trySpawn()
 
 void GameState::update()
 {
-    m_gameTime.update();
     m_input.update();
 #if REPLAY_MODE == 1
-    m_gameTime.setElapsedTime(m_pReplayer->getDeltaTime());
+    m_gameTime.update(m_pReplayer->getDeltaTime());
+#else
+    m_gameTime.update();
+#endif
+#if RECORD_MODE == 1
+    m_inputRecorder.log(*this);
 #endif
     m_borders.update(m_gameTime.getElapsedTime());
 

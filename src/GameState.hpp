@@ -29,6 +29,9 @@
 #include "Score.hpp"
 
 #include "Input/Input.hpp"
+#if RECORD_MODE == 1
+    #include "InputRecorder.hpp"
+#endif
 #if REPLAY_MODE == 1
     class Replayer;
 #endif
@@ -45,6 +48,9 @@ private:
     Spawner m_spawner;
     Score m_score;
 
+#if RECORD_MODE == 1
+    InputRecorder m_inputRecorder;
+#endif
 #if REPLAY_MODE == 1
     Replayer* m_pReplayer;
 #endif

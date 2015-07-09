@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef REPLAYER_HPP
+#define REPLAYER_HPP
+
 #include <fstream>
 
 #include "InputDevice.hpp"
@@ -46,3 +49,5 @@ public:
 
     void start();
 };
+
+#endif
