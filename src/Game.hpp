@@ -26,11 +26,8 @@
 
 #include "UI.hpp"
 #include "GameState.hpp"
-#if RECORD_MODE == 1
-    #include "InputRecorder.hpp"
-#endif
-
-class Settings;
+#include "InputRecorder.hpp"
+#include "Settings.hpp"
 
 class Game
 {
@@ -43,9 +40,7 @@ private:
     UI m_userInterface;
 
     GameState m_state;
-#if RECORD_MODE == 1
     InputRecorder m_inputRecorder;
-#endif
 
     void render();
     void update();

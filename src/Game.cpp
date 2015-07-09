@@ -19,25 +19,22 @@
 #include "Game.hpp"
 
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 #include "Collisions/Collider.hpp"
 
 #include "Utils/RandomGenerator.hpp"
-#if TRACE_MODE == 1
-    #include "Tracer.hpp"
-#endif
+#include "Tracer.hpp"
 #include "Settings.hpp"
 
 Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
-    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.windowWidth/2,settings.windowHeight/2),sf::Vector2f(settings.windowWidth,settings.windowHeight)),m_userInterface(settings.fontPath
+    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.getWindowWidth()/2,settings.getWindowHeight()/2),sf::Vector2f(settings.getWindowWidth(),settings.getWindowHeight())),m_userInterface(settings.getFontPath()
 #if DEBUG_INFO == 1
-    ,settings.debugFontPath
+    ,settings.getDebugFontPath()
 #endif
     ),
-     m_state(settings)
-#if RECORD_MODE == 1
-     ,m_inputRecorder(Settings::recordFile,RandomGenerator::getSeed())
-#endif
+     m_state(settings),
+     m_inputRecorder(settings.getRecordFile(),RandomGenerator::getSeed())
 {
 }
 
@@ -59,9 +56,7 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
-#if RECORD_MODE == 1
     m_inputRecorder.log(m_state);
-#endif
 
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 
@@ -95,14 +90,19 @@ void Game::checkClosure()
 
 bool Game::run()
 {
-#if TRACE_MODE == 1
-    Tracer tracer(Settings::traceFile);
-#endif
+    std::unique_ptr<Tracer> tracer;
+    if ( m_state.getSettings().isTracing() )
+    {
+        tracer.reset(new Tracer(m_state.getSettings().getTraceFile()));
+    }
+
     while (m_targetWindow.isOpen())
     {
-#if TRACE_MODE == 1
-        tracer.trace(m_state);
-#endif
+        if (tracer)
+        {
+            tracer->trace(m_state);
+        }
+
         render();
         update();
 

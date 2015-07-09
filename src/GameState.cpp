@@ -18,25 +18,24 @@
 
 #include "GameState.hpp"
 
-#if REPLAY_MODE == 1
-    #include "Input/Replayer.hpp"
-#endif
+#include "Input/Replayer.hpp"
 #include "Settings.hpp"
 
 GameState::GameState(const Settings& settings)
     :m_settings(settings),
-     m_enemyGrid(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
-     m_borders(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
+     m_enemyGrid(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
+     m_borders(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
      m_spawner(m_borders.getRestrictedLimits()),
-#if REPLAY_MODE == 1
-     m_pReplayer(new Replayer(Settings::replayFile)),
-#endif
+     m_pReplayer(nullptr),
      m_rainbowGradient(0)
 {
     reset();
-#if REPLAY_MODE == 1
-    m_input.add(m_pReplayer);
-#endif
+
+    if ( settings.isReplaying())
+    {
+        m_pReplayer = new Replayer(settings.getReplayFile()),
+        m_input.add(std::move(m_pReplayer)); // This take complete ownership
+    }
 }
 
 void GameState::trySpawn()
@@ -56,9 +55,11 @@ void GameState::update()
 {
     m_gameTime.update();
     m_input.update();
-#if REPLAY_MODE == 1
-    m_gameTime.setElapsedTime(m_pReplayer->getDeltaTime());
-#endif
+
+    if ( m_settings.isReplaying() )
+    {
+        m_gameTime.setElapsedTime(m_pReplayer->getDeltaTime());
+    }
     m_borders.update(m_gameTime.getElapsedTime());
 
     m_objects.update(*this);

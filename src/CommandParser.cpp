@@ -38,7 +38,7 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
         {
             if ( i+1 < argc)
             {
-                settings.windowWidth = Utils::fromString<unsigned int>(std::string(argv[i+1]));
+                settings.setWindowWidth(Utils::fromString<unsigned int>(std::string(argv[i+1])));
             }
             else
             {
@@ -51,7 +51,7 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
         {
             if ( i+1 < argc)
             {
-                settings.windowHeight = Utils::fromString<unsigned int>(std::string(argv[i+1]));
+                settings.setWindowHeight(Utils::fromString<unsigned int>(std::string(argv[i+1])));
             }
             else
             {
@@ -60,12 +60,11 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-#if TRACE_MODE == 1
         else if (argument == "--trace")
         {
             if ( i+1 < argc)
             {
-                settings.traceFile = std::string(argv[i+1]);
+                settings.setTraceFile(std::string(argv[i+1]));
             }
             else
             {
@@ -74,14 +73,11 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-#endif
-
-#if RECORD_MODE == 1
         else if (argument == "--record")
         {
             if ( i+1 < argc)
             {
-                settings.recordFile = std::string(argv[i+1]);
+                settings.setRecordFile(std::string(argv[i+1]));
             }
             else
             {
@@ -90,15 +86,11 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-#endif
-
-#if REPLAY_MODE == 1
-        // TODO: Mutual exclusion of these commands
         else if (argument == "--replay")
         {
             if ( i+1 < argc)
             {
-                settings.replayFile = std::string(argv[i+1]);
+                settings.setReplayFile(std::string(argv[i+1]));
             }
             else
             {
@@ -107,7 +99,6 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-#endif
         else
         {
             std::cout << argument << " is an unexpected option" << std::endl;
