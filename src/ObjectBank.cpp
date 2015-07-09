@@ -159,7 +159,10 @@ void ObjectBank::applyCollision(GameState& gstate)
 			enemiesKilled +=1;
 		}
 	}
-    std::cout << "Enemies killed : " << enemiesKilled << std::endl;
+    if ( enemiesKilled != 0 )
+    {
+        std::cout << "Enemies killed : " << enemiesKilled << std::endl;
+    }
 
     auto enemies = gstate.getEnemyGrid().getNeighbours(m_player.getPosition());
 	for (Enemy* enemy : enemies)

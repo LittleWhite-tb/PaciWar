@@ -27,6 +27,8 @@
 #include "Math/Vector2.hpp"
 #include "Math/Interpolation.hpp"
 
+#include <iostream>
+
 Player::Player()
     :Entity(sf::Vector2f())
 {
@@ -74,6 +76,7 @@ void Player::debugDraw(sf::RenderWindow& window) const
 void Player::update(GameState& gstate)
 {
     sf::Vector2f movement = gstate.getInputMovement();
+    std::cout << "Root movement : " << movement.x << ";" << movement.y << std::endl;
     // Movement here, should be betweend 0 and 1.
     if (movement.x != 0 ||
         movement.y != 0)
@@ -82,16 +85,20 @@ void Player::update(GameState& gstate)
 
         // Extra rotation, since the initial ship is drawn up
         m_rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(m_rotation,targetRotation,0.32f);
-
+        std::cout << "TargetRot : " << targetRotation << " rot : " << m_rotation << std::endl;
         sf::Vector2f realDirection = Math::getVectorFromAngle(targetRotation);
 
         // TODO : Find better way to do it, since we are doing two times the same operations
         sf::Vector2f oldPosition = m_position;
         m_position += realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
+        std::cout << "RealDir : " << realDirection.x << ";" << realDirection.y << " Delta : " << static_cast<float>(gstate.getTime().getElapsedTime()) << std::endl;
 
         gstate.getBorders().clamp(m_position,realDirection,Player::RADIUS);
         m_position = oldPosition + realDirection * SPEED * static_cast<float>(gstate.getTime().getElapsedTime());
     }
+    std::cout << "Movement : " << movement.x << ";" << movement.y << std::endl;
+    std::cout << "Position : " << m_position.x << ";" << m_position.y << " Rotation : " << m_rotation << std::endl;
+    std::cout << "---" << std::endl;
 
     m_engineParticles.update(m_position,-movement,gstate.getTime().getElapsedTime());
 }

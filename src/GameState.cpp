@@ -19,7 +19,6 @@
 #include "GameState.hpp"
 
 #include "Utils/RandomGenerator.hpp"
-#include "InputRecorder.hpp"
 #include "Input/Replayer.hpp"
 #include "Settings.hpp"
 
