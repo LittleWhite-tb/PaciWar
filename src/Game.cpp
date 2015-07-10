@@ -20,6 +20,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <iostream>
 
 #include "Collisions/Collider.hpp"
 
@@ -106,5 +107,7 @@ bool Game::run()
 
         checkClosure();
     }
+
+    std::cout << "Score : " << m_state.getScore().getScore() << std::endl;
     return true;
 }
