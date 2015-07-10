@@ -20,8 +20,6 @@
 
 #include "GameState.hpp"
 
-#include <iostream>
-
 constexpr int Barrier::barrierSize;
 constexpr float Barrier::heightSize;
 constexpr float Barrier::midSize;
@@ -34,7 +32,6 @@ const sf::Vector2f Barrier::oj_rightEdgePosition = sf::Vector2f(midSize-Barrier:
 Barrier::Barrier(const sf::Vector2f& position)
     :Entity(position)
 {
-    std::cout << "Barrier()" << std::endl;
     updateEdgePosition();
 }
 

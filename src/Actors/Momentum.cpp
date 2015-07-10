@@ -21,14 +21,11 @@
 #include "Math/Vector2.hpp"
 #include "Utils/RandomGenerator.hpp"
 
-#include <iostream>
-
 Momentum::Momentum()
     :m_direction(RndGenerators::det_gen.getNormalizedDirection()),
      m_moveSpeed(RndGenerators::det_gen.getFloat(0,0.1f)),
      m_rotationSpeed(RndGenerators::det_gen.getFloat(0,m_moveSpeed))
 {
-    std::cout << "Momentum 1" << std::endl;
     Math::normalise(m_direction);
 }
 
@@ -37,7 +34,6 @@ Momentum::Momentum(float maxMoveSpeed, float maxRotationSpeed)
      m_moveSpeed(RndGenerators::det_gen.getFloat(0,maxMoveSpeed)),
      m_rotationSpeed(RndGenerators::det_gen.getFloat(0,maxRotationSpeed))
 {
-    std::cout << "Momentum 2" << std::endl;
     Math::normalise(m_direction);
 }
 

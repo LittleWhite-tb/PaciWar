@@ -21,7 +21,6 @@
 #include <SFML/Window.hpp>
 
 #include <vector>
-#include <iostream>
 
 #include "Math/Interpolation.hpp"
 #include "Math/Vector2.hpp"

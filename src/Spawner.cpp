@@ -27,8 +27,6 @@
 #include "Utils/RandomGenerator.hpp"
 #include "Math/Vector2.hpp"
 
-#include <iostream>
-
 Spawner::Spawner(const sf::IntRect& limits)
     :m_spawnGrid(limits),m_numberBarrierBySpawn(1),m_numberEnemiesBySpawn(1)
 {
@@ -51,7 +49,6 @@ void Spawner::spawnBarriers(GameState& gstate)
         do
         {
             pos = RndGenerators::det_gen.getFloatVector(limits.left,limits.left+limits.width,limits.top,limits.top+limits.height);
-            std::cout << "SPawn barrier Gen : " << pos.x << ";" << pos.y << " Counter : " << RndGenerators::det_gen.m_counter << std::endl;
         }while(Math::distance(pos,gstate.getObjects().getPlayer().getPosition()) < BARRIER_SPAWN_DISTANCE*BARRIER_SPAWN_DISTANCE);
         gstate.getObjects().createBarrier(pos);
     }

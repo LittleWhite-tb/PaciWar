@@ -26,8 +26,6 @@
 #include "Collisions/Collider.hpp"
 #include "Math/Vector2.hpp"
 
-#include <iostream>
-
 constexpr float Enemy::DEFAULT_SPEED;
 constexpr float Enemy::MIN_SPEED;
 constexpr float Enemy::BROOD_SPEED_REDUCTION;
@@ -110,7 +108,6 @@ void Enemy::update(GameState& gstate)
                     sf::Vector2f direction = m_position - oldPosition;
                     Math::normalise(direction);
                     m_position = oldPosition + direction * m_speed * static_cast<float>(gstate.getTime().getElapsedTime());
-                    std::cout << "Speed : " << m_speed << " Dir : " << direction.x << ";" << direction.y << " OldPos : " << oldPosition.x << ";" << oldPosition.y << std::endl;
                     break;
                 }
             }
@@ -123,6 +120,4 @@ void Enemy::update(GameState& gstate)
         m_speed = m_speed / BROOD_SPEED_REDUCTION;
         m_speed = std::min(m_speed,DEFAULT_SPEED);
     }
-
-    std::cout << "pos :" << m_position.x << ";" << m_position.y << " - " << " speed : " << m_speed << " target :" << gstate.getObjects().getPlayer().getPosition().x << ";" << gstate.getObjects().getPlayer().getPosition().y << std::endl;
 }

@@ -18,8 +18,6 @@
 
 #include "GameTime.hpp"
 
-#include <iostream>
-
 GameTime::GameTime()
     :m_elapsedTime(0),m_previousUpdateTime(0),m_enemySpawnTime(0),m_barrierSpawnTime(0)
 {
@@ -43,7 +41,6 @@ void GameTime::update(int64_t forcedDeltaTime)
     m_shouldSpawnEnemy = false;
     if (m_previousUpdateTime - m_enemySpawnTime > ENEMY_SPAWN_TIME )
     {
-        std::cout << "Enemy Spawn time : " << m_enemySpawnTime << std::endl;
         m_enemySpawnTime = m_previousUpdateTime;
         m_shouldSpawnEnemy = true;
     }
@@ -51,7 +48,6 @@ void GameTime::update(int64_t forcedDeltaTime)
     m_shouldSpawnBarrier = false;
     if (m_previousUpdateTime - m_barrierSpawnTime > BARRIER_SPAWN_TIME )
     {
-        std::cout << "Barrier Spawn time : " << m_enemySpawnTime << std::endl;
         m_barrierSpawnTime = m_previousUpdateTime;
         m_shouldSpawnBarrier = true;
     }

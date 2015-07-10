@@ -20,8 +20,6 @@
 
 #include "GameState.hpp"
 
-#include <iostream>
-
 InputRecorder::InputRecorder(const std::string& outputFile, const unsigned int seed)
     :m_output(outputFile)
 {
