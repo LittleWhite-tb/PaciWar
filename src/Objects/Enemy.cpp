@@ -91,6 +91,7 @@ void Enemy::update(GameState& gstate)
     // When an enemy is too close, we will check if we need to slow move speed.
     // The slowdown is applied only if the enemy is moving toward another one. It means that
     // if the current one is in the borders of the brood, no slowdown is applied.
+    bool canSpeedUp = true;
     auto localEnemies = gstate.getEnemyGrid().getNeighbours(*this);
     for (auto pE : localEnemies)
     {
@@ -102,22 +103,26 @@ void Enemy::update(GameState& gstate)
                 // We are going toward the enemy
                 if ( Math::distance(oldPosition,pE->getPosition()) > newDistance )
                 {
+                    canSpeedUp = false;
                     // Slow down
                     m_speed = m_speed * BROOD_SPEED_REDUCTION;
                     m_speed = std::max(m_speed,MIN_SPEED);
                     sf::Vector2f direction = m_position - oldPosition;
                     Math::normalise(direction);
                     m_position = oldPosition + direction * m_speed * static_cast<float>(gstate.getTime().getElapsedTime());
+                    std::cout << "Speed : " << m_speed << " Dir : " << direction.x << ";" << direction.y << " OldPos : " << oldPosition.x << ";" << oldPosition.y << std::endl;
+                    break;
                 }
-            }
-            else
-            {
-                // Speed up
-                m_speed = m_speed / BROOD_SPEED_REDUCTION;
-                m_speed = std::min(m_speed,DEFAULT_SPEED);
             }
         }
     }
 
-    //std::cout << "pos :" << m_position.x << ";" << m_position.y << " - " << " speed : " << m_speed << " target :" << gstate.getObjects().getPlayer().getPosition().x << ";" << gstate.getObjects().getPlayer().getPosition().y << std::endl;
+    if (canSpeedUp)
+    {
+        // Speed up
+        m_speed = m_speed / BROOD_SPEED_REDUCTION;
+        m_speed = std::min(m_speed,DEFAULT_SPEED);
+    }
+
+    std::cout << "pos :" << m_position.x << ";" << m_position.y << " - " << " speed : " << m_speed << " target :" << gstate.getObjects().getPlayer().getPosition().x << ";" << gstate.getObjects().getPlayer().getPosition().y << std::endl;
 }
