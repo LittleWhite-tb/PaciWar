@@ -31,13 +31,13 @@ namespace Math
 
         void wrap()
         {
-            while ( this->value > 360 )
+            while ( this->value > 360.f )
             {
-                this->value -= 360;
+                this->value -= 360.f;
             }
-            while ( this->value < -360 )
+            while ( this->value < -360.f )
             {
-                this->value += 360;
+                this->value += 360.f;
             }
         }
     };

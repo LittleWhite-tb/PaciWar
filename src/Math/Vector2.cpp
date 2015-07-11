@@ -22,12 +22,12 @@
 
 float Math::length(const sf::Vector2f& v)
 {
-    return sqrt(v.x * v.x + v.y * v.y);
+    return sqrtf(v.x * v.x + v.y * v.y);
 }
 
 void Math::normalise(sf::Vector2f& v)
 {
-    if (v.x == 0 && v.y == 0)
+    if (v.x == 0.f && v.y == 0.f)
     {
         return;
     }
@@ -46,17 +46,17 @@ float Math::distance(const sf::Vector2f& v1, const sf::Vector2f& v2)
 
 float Math::getAngle(const sf::Vector2f& v)
 {
-    float angle = atan(v.y/v.x) * 180.f/M_PI;
-    if ( v.x >= 0 ) // First quadrant, is ok
+    float angle = atanf(v.y/v.x) * 180.f/static_cast<float>(M_PI);
+    if ( v.x >= 0.f ) // First quadrant, is ok
     {
-        if ( v.y < 0 ) // Forth quadran
+        if ( v.y < 0.f ) // Forth quadran
         {
-            angle += 360;
+            angle += 360.f;
         }
     }
-    if ( (v.x < 0) ) // Second and third
+    if ( (v.x < 0.f) ) // Second and third
     {
-        angle += 180;
+        angle += 180.f;
     }
 
     return angle;
@@ -64,6 +64,6 @@ float Math::getAngle(const sf::Vector2f& v)
 
 sf::Vector2f Math::getVectorFromAngle(float angle)
 {
-    return std::move(sf::Vector2f(std::cos(angle*M_PI/180.f),std::sin(angle*M_PI/180.f)));
-
+    return std::move(sf::Vector2f(std::cos(angle*static_cast<float>(M_PI)/180.f),
+                                  std::sin(angle*static_cast<float>(M_PI)/180.f)));
 }

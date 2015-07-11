@@ -32,7 +32,7 @@ void Tracker::update(sf::Vector2f& position, float& rotation, const Entity &targ
     rotation = Math::EaseInEaseOut<Math::Angle<float> >::get(rotation,targetRotation,rotationSpeed);
 
     sf::Vector2f dir;
-    if ( Math::length(targetDir) > 5 )
+    if ( Math::length(targetDir) > 5.f )
     {
          dir = Math::getVectorFromAngle(rotation);
          position = position + dir * (moveSpeed * deltaTime);
@@ -41,5 +41,4 @@ void Tracker::update(sf::Vector2f& position, float& rotation, const Entity &targ
     {
         position = target.getPosition();
     }
-
 }

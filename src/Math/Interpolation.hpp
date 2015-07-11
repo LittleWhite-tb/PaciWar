@@ -64,7 +64,7 @@ namespace Math
         {
             // http://math.stackexchange.com/questions/121720/ease-in-out-function
             float interp2 = interp*interp;
-            return (interp2 / (interp2 + (1 - interp)*(1 - interp))) * (end-begin)+begin;
+            return (interp2 / (interp2 + (1.f - interp)*(1.f - interp))) * (end-begin)+begin;
         }
     };
 
@@ -78,13 +78,13 @@ namespace Math
             T diff = end.value-begin.value;
             T fixedBegin = begin.value;
             T fixedEnd = end.value;
-            if ( diff > 180 ) // Here, normal interpolation will take the longest path
+            if ( diff > 180.f ) // Here, normal interpolation will take the longest path
             {
-                fixedBegin += 360;
+                fixedBegin += 360.f;
             }
-            else if ( diff < -180 )
+            else if ( diff < -180.f )
             {
-                fixedEnd += 360;
+                fixedEnd += 360.f;
             }
             Angle<T> result = EaseInEaseOutInterpolation<float>::get(fixedBegin,fixedEnd,interp);
             result.wrap();
