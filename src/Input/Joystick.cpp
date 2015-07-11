@@ -59,8 +59,10 @@ sf::Vector2f Joystick::getMovement()const
     {
         if ( sf::Joystick::hasAxis(0,sf::Joystick::Axis::X) && sf::Joystick::hasAxis(0,sf::Joystick::Axis::Y) )
         {
-            return sf::Vector2f(sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::X)/100.f,
-                                sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::Y)/100.f);
+            sf::Vector2f movement = sf::Vector2f(sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::X)/100.f,
+                                                 sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::Y)/100.f);
+            Math::normalise(movement);
+            return movement;
         }
     }
     else

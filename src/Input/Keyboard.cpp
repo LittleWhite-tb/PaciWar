@@ -89,5 +89,6 @@ sf::Vector2f Keyboard::getMovement()const
     movement.y -= getMovementByKey(Keyboard::UP);
     movement.y += getMovementByKey(Keyboard::DOWN);
 
+    Math::normalise(movement);
     return movement;
 }
