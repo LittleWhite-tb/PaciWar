@@ -28,7 +28,8 @@ void Grid::add(Enemy* enemy)
 	
 	sf::Vector2f coords = getFromPos(enemy->getPosition());
 	
-	if ( coords.x < GRID_WIDTH && coords.y < GRID_HEIGHT )
+    if ( coords.x > 0 && coords.x < GRID_WIDTH &&
+         coords.x > 0 && coords.y < GRID_HEIGHT )
 	{
 		m_grid[coords.x][coords.y].emplace_back(enemy);
 	}
