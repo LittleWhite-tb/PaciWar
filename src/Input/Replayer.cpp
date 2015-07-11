@@ -40,6 +40,11 @@ Replayer::DataLine Replayer::readLine()
 void Replayer::update()
 {
     m_lastRead = this->readLine();
+    if (!m_input)
+    {
+        m_isEnabled = false;
+        m_lastRead.first = 0;
+    }
 }
 
 sf::Vector2f Replayer::getMovement()const
@@ -55,4 +60,9 @@ int64_t Replayer::getDeltaTime()const
 void Replayer::start()
 {
     m_clock.restart();
+}
+
+void Replayer::restart()
+{
+    m_input.seekg(std::ios_base::beg);
 }

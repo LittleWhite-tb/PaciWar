@@ -41,10 +41,13 @@ private:
     static constexpr unsigned int ENEMY_SPAWN_TIME = 1000;
     static constexpr unsigned int BARRIER_SPAWN_TIME = 5000;
 
+    void updateSpawnStates();
+
 public:
     GameTime();
 
-    void update(int64_t forcedDeltaTime = 0);
+    void update();
+    void update(int64_t forcedDeltaTime);
     int64_t getElapsedTime()const;
 
     bool shouldSpawnEnemy()const { return m_shouldSpawnEnemy; }

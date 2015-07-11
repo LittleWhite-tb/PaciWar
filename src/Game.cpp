@@ -95,7 +95,7 @@ bool Game::run()
         tracer.reset(new Tracer(m_state.getSettings().getTraceFile()));
     }
 
-    while (m_targetWindow.isOpen())
+    while (m_targetWindow.isOpen() && !m_state.isGameOver())
     {
         if (tracer)
         {

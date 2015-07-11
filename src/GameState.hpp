@@ -51,6 +51,8 @@ private:
 
     float m_rainbowGradient;
 
+    bool m_isGameOver;
+
     GameState(GameState&)=delete;
     
     void trySpawn();
@@ -74,6 +76,9 @@ public:
     sf::Vector2f getInputMovement()const { return m_input.getMovement(); }
 
     float getRainbowGradient()const { return m_rainbowGradient; }
+
+    void gameOver() { m_isGameOver = true; }
+    bool isGameOver()const { return m_isGameOver; }
 };
 
 #endif
