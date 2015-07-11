@@ -55,6 +55,11 @@ const std::vector<Enemy*> Grid::getNeighbours(const Enemy& enemy)
     std::vector<Enemy*> enemies;
     enemies.reserve(9*10);
 	sf::Vector2f coords = getFromPos(enemy.getPosition());
+    if ( coords.x < 0 || coords.x > GRID_WIDTH || // The enemy is outside the grid (happens when game is slowing down)
+         coords.y < 0 || coords.y > GRID_HEIGHT )
+    {
+        return enemies;
+    }
 
     if ( coords.x - 1 > 0)
     {
