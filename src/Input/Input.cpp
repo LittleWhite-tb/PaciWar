@@ -46,7 +46,6 @@ sf::Vector2f Input::readDevices()
             // the devices in case that the user uses another device actively
             if (Math::length(movement) >= DEADZONE_LIMIT)
             {
-                Math::normalise(movement);
                 return movement;
             }
         }
