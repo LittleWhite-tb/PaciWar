@@ -20,6 +20,8 @@
 
 #include "Math/Vector2.hpp"
 
+#include <iostream>
+
 RandomGenerator RndGenerators::basic_gen = RandomGenerator();
 RandomGenerator RndGenerators::det_gen = RandomGenerator();
 
@@ -27,6 +29,7 @@ RandomGenerator RndGenerators::det_gen = RandomGenerator();
 RandomGenerator::RandomGenerator()
     :m_seed(std::random_device()()),m_generator(std::mt19937(m_seed)),m_counter(0)
 {
+    std::cout << "Gen with seed : " << m_seed << std::endl;
 }
 
 float RandomGenerator::getFloat(float min, float max)
@@ -84,4 +87,5 @@ void RandomGenerator::setSeed(unsigned int newSeed)
 {
     m_seed = newSeed;
     m_generator = std::mt19937(newSeed);
+    std::cout << "Set seed to : " << newSeed << " after " << m_counter << " gen " << std::endl;
 }
