@@ -91,4 +91,8 @@ void GameState::reset()
     m_objects.reset();
     m_spawner.reset();
 #endif
+    if ( m_settings.isReplaying())
+    {
+        m_pReplayer->restart();
+    }
 }

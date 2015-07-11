@@ -48,6 +48,8 @@ public:
     int64_t getDeltaTime()const;
 
     void start();
+
+    void restart();
 };
 
 #endif

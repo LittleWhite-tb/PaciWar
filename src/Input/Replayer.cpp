@@ -61,3 +61,8 @@ void Replayer::start()
 {
     m_clock.restart();
 }
+
+void Replayer::restart()
+{
+    m_input.seekg(std::ios_base::beg);
+}
