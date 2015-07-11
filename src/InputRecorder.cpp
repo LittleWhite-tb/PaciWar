@@ -21,10 +21,12 @@
 #include "GameState.hpp"
 
 #include <iostream>
+#include <iomanip>
 
 InputRecorder::InputRecorder(const std::string& outputFile, const unsigned int seed)
     :m_output(outputFile)
 {
+    m_output << std::setprecision(8);
     m_output << seed << std::endl;
 }
 
