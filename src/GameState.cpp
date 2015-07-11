@@ -28,10 +28,8 @@ GameState::GameState(const Settings& settings)
      m_borders(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
      m_spawner(m_borders.getRestrictedLimits()),
      m_inputRecorder(nullptr),m_pReplayer(nullptr),
-     m_rainbowGradient(0)
+     m_rainbowGradient(0),m_isGameOver(false)
 {
-    reset();
-
     if (settings.isRecording())
     {
         m_inputRecorder.reset(new InputRecorder(settings.getRecordFile(),RndGenerators::det_gen.getSeed()));
@@ -63,6 +61,10 @@ void GameState::update()
     if ( m_settings.isReplaying() )
     {
         m_gameTime.update(m_pReplayer->getDeltaTime());
+        if ( !m_pReplayer->enabled() )
+        {
+            m_isGameOver = true;
+        }
     }
     else
     {
@@ -90,9 +92,11 @@ void GameState::reset()
     m_score.reset();
     m_objects.reset();
     m_spawner.reset();
-#endif
+
     if ( m_settings.isReplaying())
     {
         m_pReplayer->restart();
     }
+#endif
+    m_isGameOver = false;
 }

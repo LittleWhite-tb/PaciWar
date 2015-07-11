@@ -192,7 +192,8 @@ void ObjectBank::applyCollision(GameState& gstate)
     
     if (playerKilled)
     {
-		gstate.reset();
+        gstate.gameOver();
+        gstate.reset();
 	}
 }
 
