@@ -19,15 +19,19 @@
 #include "Game.hpp"
 
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include <iostream>
 
 #include "Collisions/Collider.hpp"
 
+#include "Utils/RandomGenerator.hpp"
+#include "Tracer.hpp"
 #include "Settings.hpp"
 
 Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
-    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.windowWidth/2,settings.windowHeight/2),sf::Vector2f(settings.windowWidth,settings.windowHeight)),m_userInterface(settings.fontPath
+    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.getWindowWidth()/2,settings.getWindowHeight()/2),sf::Vector2f(settings.getWindowWidth(),settings.getWindowHeight())),m_userInterface(settings.getFontPath()
 #if DEBUG_INFO == 1
-    ,settings.debugFontPath
+    ,settings.getDebugFontPath()
 #endif
     ),
      m_state(settings)
@@ -52,6 +56,7 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
+
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 
     m_userInterface.update(m_state);
@@ -84,12 +89,25 @@ void Game::checkClosure()
 
 bool Game::run()
 {
-    while (m_targetWindow.isOpen())
+    std::unique_ptr<Tracer> tracer;
+    if ( m_state.getSettings().isTracing() )
     {
+        tracer.reset(new Tracer(m_state.getSettings().getTraceFile()));
+    }
+
+    while (m_targetWindow.isOpen() && !m_state.isGameOver())
+    {
+        if (tracer)
+        {
+            tracer->trace(m_state);
+        }
+
         render();
         update();
 
         checkClosure();
     }
+
+    std::cout << "Score : " << m_state.getScore().getScore() << std::endl;
     return true;
 }

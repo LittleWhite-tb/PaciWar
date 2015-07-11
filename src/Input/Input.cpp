@@ -26,6 +26,8 @@
 
 #include "Math/Vector2.hpp"
 
+#include "Settings.hpp"
+
 Input::Input()
 {
     // Order is important since only first usable will be counted
@@ -33,15 +35,7 @@ Input::Input()
     m_devices.push_back(std::unique_ptr<InputDevice>(new Keyboard()));
 }
 
-void Input::update()
-{
-    for(auto& device : m_devices)
-    {
-        device->update();
-    }
-}
-
-sf::Vector2f Input::getMovement()const
+sf::Vector2f Input::readDevices()
 {
     for(const auto& device : m_devices)
     {
@@ -52,10 +46,32 @@ sf::Vector2f Input::getMovement()const
             // the devices in case that the user uses another device actively
             if (Math::length(movement) >= DEADZONE_LIMIT)
             {
-                Math::normalise(movement);
                 return movement;
             }
         }
     }
     return sf::Vector2f(0,0);
+}
+
+void Input::add(InputDevice* pNewDevice)
+{
+    assert(pNewDevice);
+    if (pNewDevice)
+    {
+        m_devices.push_front(std::unique_ptr<InputDevice>(pNewDevice));
+    }
+}
+
+void Input::update()
+{
+    for(auto& device : m_devices)
+    {
+        device->update();
+    }
+    m_lastInput = readDevices();
+}
+
+const sf::Vector2f& Input::getMovement()const
+{
+    return m_lastInput;
 }

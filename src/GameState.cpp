@@ -18,16 +18,28 @@
 
 #include "GameState.hpp"
 
+#include "Utils/RandomGenerator.hpp"
+#include "Input/Replayer.hpp"
 #include "Settings.hpp"
 
 GameState::GameState(const Settings& settings)
     :m_settings(settings),
-     m_enemyGrid(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
-     m_borders(sf::IntRect(-settings.windowWidth/2,-settings.windowHeight/2, settings.windowWidth, settings.windowHeight)),
+     m_enemyGrid(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
+     m_borders(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
      m_spawner(m_borders.getRestrictedLimits()),
-     m_rainbowGradient(0)
+     m_inputRecorder(nullptr),m_pReplayer(nullptr),
+     m_rainbowGradient(0),m_isGameOver(false)
 {
-    reset();
+    if (settings.isRecording())
+    {
+        m_inputRecorder.reset(new InputRecorder(settings.getRecordFile(),RndGenerators::det_gen.getSeed()));
+    }
+
+    if ( settings.isReplaying())
+    {
+        m_pReplayer = new Replayer(settings.getReplayFile()),
+        m_input.add(std::move(m_pReplayer)); // This take complete ownership
+    }
 }
 
 void GameState::trySpawn()
@@ -45,8 +57,25 @@ void GameState::trySpawn()
 
 void GameState::update()
 {
-    m_gameTime.update();
     m_input.update();
+    if ( m_settings.isReplaying() )
+    {
+        m_gameTime.update(m_pReplayer->getDeltaTime());
+        if ( !m_pReplayer->enabled() )
+        {
+            m_isGameOver = true;
+        }
+    }
+    else
+    {
+        m_gameTime.update();
+    }
+
+    if (m_inputRecorder)
+    {
+        m_inputRecorder->log(*this);
+    }
+
     m_borders.update(m_gameTime.getElapsedTime());
 
     m_objects.update(*this);
@@ -63,5 +92,11 @@ void GameState::reset()
     m_score.reset();
     m_objects.reset();
     m_spawner.reset();
+
+    if ( m_settings.isReplaying())
+    {
+        m_pReplayer->restart();
+    }
 #endif
+    m_isGameOver = false;
 }

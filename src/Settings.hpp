@@ -22,23 +22,61 @@
 #include <string>
 
 #define DEBUG_INFO 1
+#define TRACE_MODE 1
 #define GOD_MODE 1
 
 #define MAX_ENEMY_NUMBER 1000
 
+class CommandParser;
+
 struct Settings
 {
-    int windowWidth;
-    int windowHeight;
-    static const std::string windowName;
+private:
+    int m_windowWidth;
+    int m_windowHeight;
+    const std::string m_windowName;
 
-    static const std::string fontPath;
+    const std::string m_fontPath;
 #if DEBUG_INFO == 1
-    static const std::string debugFontPath;
+    const std::string m_debugFontPath;
 #endif
 
-    Settings():
-        windowWidth(800),windowHeight(600) {}
+    std::string m_traceFile;
+    std::string m_recordFile;
+    std::string m_replayFile;
+
+public:
+    Settings();
+
+    void setWindowWidth(int newWidth) { m_windowWidth = newWidth; }
+    void setWindowHeight(int newHeight) { m_windowHeight = newHeight; }
+
+    int getWindowWidth()const { return m_windowWidth; }
+    int getWindowHeight()const { return m_windowHeight; }
+    const std::string& getWindowName()const { return m_windowName; }
+    const std::string& getFontPath()const { return m_fontPath; }
+#if DEBUG_INFO == 1
+    const std::string& getDebugFontPath()const { return m_debugFontPath; }
+#endif
+
+    void setTraceFile(const std::string& newTraceFile);
+    void setRecordFile(const std::string& newRecordFile);
+    void setReplayFile(const std::string& newReplayFile);
+
+    bool isTracing()const
+    {
+#if TRACE_MODE == 1
+        return !m_traceFile.empty();
+#else
+        return false;
+#endif
+    }
+    bool isRecording()const { return !m_recordFile.empty(); }
+    bool isReplaying()const { return !m_replayFile.empty(); }
+
+    const std::string& getTraceFile()const { return m_traceFile; }
+    const std::string& getRecordFile()const { return m_recordFile; }
+    const std::string& getReplayFile()const { return m_replayFile; }
 };
 
 #endif

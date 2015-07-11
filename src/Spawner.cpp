@@ -48,7 +48,7 @@ void Spawner::spawnBarriers(GameState& gstate)
         sf::Vector2f pos;
         do
         {
-            pos = RandomGenerator::getFloatVector(limits.left,limits.left+limits.width,limits.top,limits.top+limits.height);
+            pos = RndGenerators::det_gen.getFloatVector(limits.left,limits.left+limits.width,limits.top,limits.top+limits.height);
         }while(Math::distance(pos,gstate.getObjects().getPlayer().getPosition()) < BARRIER_SPAWN_DISTANCE*BARRIER_SPAWN_DISTANCE);
         gstate.getObjects().createBarrier(pos);
     }

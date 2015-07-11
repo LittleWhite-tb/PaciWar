@@ -19,31 +19,46 @@
 #include "GameTime.hpp"
 
 GameTime::GameTime()
-    :m_elapsedTime(sf::Time::Zero)
+    :m_elapsedTime(0),m_previousUpdateTime(0),m_enemySpawnTime(0),m_barrierSpawnTime(0)
 {
 }
 
-void GameTime::update()
+void GameTime::updateSpawnStates()
 {
-    m_elapsedTime = m_gameClock.getElapsedTime() - m_previousUpdateTime;
-    m_previousUpdateTime = m_gameClock.getElapsedTime();
-
+    // From here 'm_previousUpdateTime' correspond to the actual time
     m_shouldSpawnEnemy = false;
-    if ((m_previousUpdateTime - m_enemySpawnTime).asMilliseconds() > ENEMY_SPAWN_TIME )
+    if (m_previousUpdateTime - m_enemySpawnTime > ENEMY_SPAWN_TIME )
     {
-        m_enemySpawnTime = m_gameClock.getElapsedTime();
+        m_enemySpawnTime = m_previousUpdateTime;
         m_shouldSpawnEnemy = true;
     }
 
     m_shouldSpawnBarrier = false;
-    if ((m_gameClock.getElapsedTime() - m_barrierSpawnTime).asMilliseconds() > BARRIER_SPAWN_TIME )
+    if (m_previousUpdateTime - m_barrierSpawnTime > BARRIER_SPAWN_TIME )
     {
-        m_barrierSpawnTime = m_gameClock.getElapsedTime();
+        m_barrierSpawnTime = m_previousUpdateTime;
         m_shouldSpawnBarrier = true;
     }
 }
 
+void GameTime::update()
+{
+    int64_t clockTime = m_gameClock.getElapsedTime().asMilliseconds();
+    m_elapsedTime =  clockTime - m_previousUpdateTime;
+    m_previousUpdateTime = clockTime;
+
+    this->updateSpawnStates();
+}
+
+void GameTime::update(int64_t forcedDeltaTime)
+{
+    m_elapsedTime = forcedDeltaTime;
+    m_previousUpdateTime = m_previousUpdateTime + m_elapsedTime;
+
+    this->updateSpawnStates();
+}
+
 int64_t GameTime::getElapsedTime()const
 {
-    return m_elapsedTime.asMilliseconds();
+    return m_elapsedTime;
 }

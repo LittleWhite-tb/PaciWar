@@ -21,7 +21,6 @@
 #include <SFML/Window.hpp>
 
 #include <vector>
-#include <iostream>
 
 #include "Math/Interpolation.hpp"
 #include "Math/Vector2.hpp"
@@ -89,5 +88,6 @@ sf::Vector2f Keyboard::getMovement()const
     movement.y -= getMovementByKey(Keyboard::UP);
     movement.y += getMovementByKey(Keyboard::DOWN);
 
+    Math::normalise(movement);
     return movement;
 }

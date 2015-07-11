@@ -16,17 +16,50 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
+
 #include "Settings.hpp"
 
 #include "version.hpp"
 
-#if DEBUG_INFO == 1
-    const std::string Settings::windowName = "PaciWar v" VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH " - " VERSION_SHA;
-#else
-    const std::string Settings::windowName = "PaciWar v" VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH;
-#endif
 
-const std::string Settings::fontPath = "./data/DejaVuSansMono.ttf";
+Settings::Settings()
+    :m_windowWidth(800),m_windowHeight(600),
 #if DEBUG_INFO == 1
-    const std::string Settings::debugFontPath = "./data/DejaVuSansMono.ttf";
+    m_windowName("PaciWar v" VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH " - " VERSION_SHA),
+#else
+    m_windowName("PaciWar v" VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH),
 #endif
+    m_fontPath("./data/DejaVuSansMono.ttf")
+#if DEBUG_INFO == 1
+    ,m_debugFontPath("./data/DejaVuSansMono.ttf")
+#endif
+{
+
+}
+
+void Settings::setTraceFile(const std::string& newTraceFile)
+{
+    m_traceFile = newTraceFile;
+}
+
+void Settings::setRecordFile(const std::string& newRecordFile)
+{
+    if (isReplaying())
+    {
+        std::cout << "You can't record and replay at the same time (ignoring record)" << std::endl;
+        return;
+    }
+    m_recordFile = newRecordFile;
+}
+
+void Settings::setReplayFile(const std::string& newReplayFile)
+{
+    if (isRecording())
+    {
+        std::cout << "You can't replay and record at the same time (ignoring replay)" << std::endl;
+        return;
+    }
+    m_replayFile = newReplayFile;
+}
+

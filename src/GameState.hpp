@@ -29,6 +29,9 @@
 #include "Score.hpp"
 
 #include "Input/Input.hpp"
+#include "InputRecorder.hpp"
+
+class Replayer;
 
 class GameState
 {
@@ -37,14 +40,18 @@ private:
 
     GameTime m_gameTime;
     ObjectBank m_objects;
-	Grid m_enemyGrid;
+    Grid m_enemyGrid;
     Borders m_borders;
     Spawner m_spawner;
     Score m_score;
 
+    std::unique_ptr<InputRecorder> m_inputRecorder;
+    Replayer* m_pReplayer;
     Input m_input;
 
     float m_rainbowGradient;
+
+    bool m_isGameOver;
 
     GameState(GameState&)=delete;
     
@@ -57,8 +64,10 @@ public:
 
     void update();
 
+    const Settings& getSettings()const { return m_settings; }
     const GameTime& getTime()const { return m_gameTime; }
     ObjectBank& getObjects() { return m_objects; }
+    const ObjectBank& getObjects() const { return m_objects; }
     Grid& getEnemyGrid() { return m_enemyGrid; }
     Borders& getBorders() { return m_borders; }
     const Score& getScore()const { return m_score; }
@@ -67,6 +76,9 @@ public:
     sf::Vector2f getInputMovement()const { return m_input.getMovement(); }
 
     float getRainbowGradient()const { return m_rainbowGradient; }
+
+    void gameOver() { m_isGameOver = true; }
+    bool isGameOver()const { return m_isGameOver; }
 };
 
 #endif

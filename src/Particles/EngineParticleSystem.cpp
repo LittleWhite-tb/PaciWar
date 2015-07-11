@@ -37,7 +37,7 @@ void EngineParticleSystem::generateParticle()
     {
         // Relies on the fact that the pool will never extend
         m_particles.add(m_spawnPoint,
-                        RandomGenerator::getFloatVector(startDirectionRange.x,endDirectionRange.x,startDirectionRange.y,endDirectionRange.y),
+                        RndGenerators::basic_gen.getFloatVector(startDirectionRange.x,endDirectionRange.x,startDirectionRange.y,endDirectionRange.y),
                         particleColor,
                         1000, // Max Life
                         0.1f,0.002f);
