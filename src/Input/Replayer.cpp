@@ -40,6 +40,11 @@ Replayer::DataLine Replayer::readLine()
 void Replayer::update()
 {
     m_lastRead = this->readLine();
+    if (!m_input)
+    {
+        m_isEnabled = false;
+        m_lastRead.first = 0;
+    }
 }
 
 sf::Vector2f Replayer::getMovement()const
