@@ -29,6 +29,8 @@
 #include "Score.hpp"
 
 #include "Input/Input.hpp"
+#include "InputRecorder.hpp"
+
 class Replayer;
 
 class GameState
@@ -43,6 +45,7 @@ private:
     Spawner m_spawner;
     Score m_score;
 
+    std::unique_ptr<InputRecorder> m_inputRecorder;
     Replayer* m_pReplayer;
     Input m_input;
 

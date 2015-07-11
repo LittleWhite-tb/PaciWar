@@ -29,11 +29,15 @@
 class Input
 {
     static constexpr float DEADZONE_LIMIT = 0.15f;
+    sf::Vector2f m_lastInput; // I cache the value, since a need a non changing value for the whole frame
+                              // By not caching, the InputRecorder will have slightly different value and make it wrong
 
 private:
     std::list<std::unique_ptr<InputDevice> > m_devices;
 
     Input(const Input&)=delete;
+
+    sf::Vector2f readDevices();
 
 public:
     /**
@@ -50,7 +54,7 @@ public:
     void add(InputDevice* pNewDevice);
 
     void update();
-    sf::Vector2f getMovement()const;
+    const sf::Vector2f& getMovement()const;
 };
 
 #endif

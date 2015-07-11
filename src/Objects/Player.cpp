@@ -74,6 +74,7 @@ void Player::debugDraw(sf::RenderWindow& window) const
 void Player::update(GameState& gstate)
 {
     sf::Vector2f movement = gstate.getInputMovement();
+
     // Movement here, should be betweend 0 and 1.
     if (movement.x != 0 ||
         movement.y != 0)

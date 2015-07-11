@@ -35,24 +35,7 @@ Input::Input()
     m_devices.push_back(std::unique_ptr<InputDevice>(new Keyboard()));
 }
 
-void Input::add(InputDevice* pNewDevice)
-{
-    assert(pNewDevice);
-    if (pNewDevice)
-    {
-        m_devices.push_front(std::unique_ptr<InputDevice>(pNewDevice));
-    }
-}
-
-void Input::update()
-{
-    for(auto& device : m_devices)
-    {
-        device->update();
-    }
-}
-
-sf::Vector2f Input::getMovement()const
+sf::Vector2f Input::readDevices()
 {
     for(const auto& device : m_devices)
     {
@@ -69,4 +52,27 @@ sf::Vector2f Input::getMovement()const
         }
     }
     return sf::Vector2f(0,0);
+}
+
+void Input::add(InputDevice* pNewDevice)
+{
+    assert(pNewDevice);
+    if (pNewDevice)
+    {
+        m_devices.push_front(std::unique_ptr<InputDevice>(pNewDevice));
+    }
+}
+
+void Input::update()
+{
+    for(auto& device : m_devices)
+    {
+        device->update();
+    }
+    m_lastInput = readDevices();
+}
+
+const sf::Vector2f& Input::getMovement()const
+{
+    return m_lastInput;
 }

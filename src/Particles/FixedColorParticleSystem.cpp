@@ -32,9 +32,9 @@ FixedColorParticleSystem::FixedColorParticleSystem(const sf::Vector2f& position,
 void FixedColorParticleSystem::generateParticle()
 {
     m_particles.add(m_spawnPoint,
-                    RandomGenerator::getNormalizedDirection(),
+                    RndGenerators::basic_gen.getNormalizedDirection(),
                     m_color,
                     750, // Max Life
-                    RandomGenerator::getFloat(0.0,1.5),
+                    RndGenerators::basic_gen.getFloat(0.0,1.5),
                     0.006f);
 }

@@ -22,17 +22,17 @@
 #include "Utils/RandomGenerator.hpp"
 
 Momentum::Momentum()
-    :m_direction(RandomGenerator::getNormalizedDirection()),
-     m_moveSpeed(RandomGenerator::getFloat(0,0.1f)),
-     m_rotationSpeed(RandomGenerator::getFloat(0,m_moveSpeed))
+    :m_direction(RndGenerators::det_gen.getNormalizedDirection()),
+     m_moveSpeed(RndGenerators::det_gen.getFloat(0,0.1f)),
+     m_rotationSpeed(RndGenerators::det_gen.getFloat(0,m_moveSpeed))
 {
     Math::normalise(m_direction);
 }
 
 Momentum::Momentum(float maxMoveSpeed, float maxRotationSpeed)
-    :m_direction(RandomGenerator::getNormalizedDirection()),
-     m_moveSpeed(RandomGenerator::getFloat(0,maxMoveSpeed)),
-     m_rotationSpeed(RandomGenerator::getFloat(0,maxRotationSpeed))
+    :m_direction(RndGenerators::det_gen.getNormalizedDirection()),
+     m_moveSpeed(RndGenerators::det_gen.getFloat(0,maxMoveSpeed)),
+     m_rotationSpeed(RndGenerators::det_gen.getFloat(0,maxRotationSpeed))
 {
     Math::normalise(m_direction);
 }

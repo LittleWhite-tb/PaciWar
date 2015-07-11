@@ -26,8 +26,8 @@
 
 #include "UI.hpp"
 #include "GameState.hpp"
-#include "InputRecorder.hpp"
-#include "Settings.hpp"
+
+class Settings;
 
 class Game
 {
@@ -40,7 +40,6 @@ private:
     UI m_userInterface;
 
     GameState m_state;
-    InputRecorder m_inputRecorder;
 
     void render();
     void update();

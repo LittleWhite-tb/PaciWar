@@ -20,6 +20,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <iostream>
 
 #include "Collisions/Collider.hpp"
 
@@ -33,8 +34,7 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
     ,settings.getDebugFontPath()
 #endif
     ),
-     m_state(settings),
-     m_inputRecorder(settings.getRecordFile(),RandomGenerator::getSeed())
+     m_state(settings)
 {
 }
 
@@ -56,7 +56,6 @@ void Game::render()
 void Game::update()
 {
     m_state.update();
-    m_inputRecorder.log(m_state);
 
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 
@@ -108,5 +107,7 @@ bool Game::run()
 
         checkClosure();
     }
+
+    std::cout << "Score : " << m_state.getScore().getScore() << std::endl;
     return true;
 }

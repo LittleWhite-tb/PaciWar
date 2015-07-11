@@ -18,6 +18,7 @@
 
 #include "GameState.hpp"
 
+#include "Utils/RandomGenerator.hpp"
 #include "Input/Replayer.hpp"
 #include "Settings.hpp"
 
@@ -26,10 +27,15 @@ GameState::GameState(const Settings& settings)
      m_enemyGrid(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
      m_borders(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
      m_spawner(m_borders.getRestrictedLimits()),
-     m_pReplayer(nullptr),
+     m_inputRecorder(nullptr),m_pReplayer(nullptr),
      m_rainbowGradient(0)
 {
     reset();
+
+    if (settings.isRecording())
+    {
+        m_inputRecorder.reset(new InputRecorder(settings.getRecordFile(),RndGenerators::det_gen.getSeed()));
+    }
 
     if ( settings.isReplaying())
     {
@@ -53,13 +59,21 @@ void GameState::trySpawn()
 
 void GameState::update()
 {
-    m_gameTime.update();
     m_input.update();
-
     if ( m_settings.isReplaying() )
     {
-        m_gameTime.setElapsedTime(m_pReplayer->getDeltaTime());
+        m_gameTime.update(m_pReplayer->getDeltaTime());
     }
+    else
+    {
+        m_gameTime.update();
+    }
+
+    if (m_inputRecorder)
+    {
+        m_inputRecorder->log(*this);
+    }
+
     m_borders.update(m_gameTime.getElapsedTime());
 
     m_objects.update(*this);

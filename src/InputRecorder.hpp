@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef INPUTRECORDER_HPP
+#define INPUTRECORDER_HPP
+
 #include <fstream>
 
 class GameState;
@@ -31,3 +34,5 @@ public:
 
     void log(const GameState& gstate);
 };
+
+#endif
