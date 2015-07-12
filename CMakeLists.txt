@@ -1,26 +1,31 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
+cmake_policy(SET CMP0015 NEW)
 
 # Set new cmake module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules")
 
 # Projet name
-project("PaciWar")
-
-cmake_policy(SET CMP0015 NEW)
-
-# Additional compiler setting
-SET(CMAKE_CXX_WARNING_LEVEL 4)
-if (DEFINED MSYS)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-else ()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif ()
+project(PaciWar LANGUAGES CXX)
 
 file(
         GLOB_RECURSE
         source_files
         src/*
 )
+
+add_executable(
+        PaciWar
+        ${source_files}
+)
+
+# Additional compiler setting
+SET(CMAKE_CXX_WARNING_LEVEL 4)
+if (DEFINED MSYS)
+        target_compile_options(PaciWar PUBLIC /W4)
+else ()
+        target_compile_options(PaciWar PUBLIC -std=c++11) # TODO : should use target_compile_features()
+endif ()
+
 
 # Version configuration
 set (PaciWar_VERSION_MAJOR "0")
@@ -112,11 +117,6 @@ if (NOT SFML_FOUND) # Let's try to find it ourselves
         set(SFML_LIBRARIES sfml-system sfml-graphics sfml-window sfml-audio)
     endif()
 endif()
-
-add_executable(
-        "PaciWar"
-        ${source_files}
-)
 
 target_link_libraries(PaciWar ${SFML_LIBRARIES})
 include_directories(${SFML_INCLUDE_DIR}
