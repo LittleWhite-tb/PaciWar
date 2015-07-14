@@ -30,6 +30,7 @@ Settings::Settings()
 #else
     m_windowName("PaciWar v" VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH),
 #endif
+    m_gameAreaWidth(1024),m_gameAreaHeight(1024),
     m_fontPath("./data/DejaVuSansMono.ttf")
 #if DEBUG_INFO == 1
     ,m_debugFontPath("./data/DejaVuSansMono.ttf")

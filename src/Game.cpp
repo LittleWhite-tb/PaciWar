@@ -29,7 +29,7 @@
 #include "Settings.hpp"
 
 Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
-    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.getWindowWidth()/2,settings.getWindowHeight()/2),sf::Vector2f(settings.getWindowWidth(),settings.getWindowHeight())),m_userInterface(settings.getFontPath()
+    :m_targetWindow(targetWindow),m_view(sf::Vector2f(settings.getGameAreaWidth()/2,settings.getGameAreaHeight()/2),sf::Vector2f(settings.getGameAreaWidth(),settings.getGameAreaHeight())),m_userInterface(settings.getFontPath()
 #if DEBUG_INFO == 1
     ,settings.getDebugFontPath()
 #endif

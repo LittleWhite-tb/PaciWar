@@ -36,6 +36,9 @@ private:
     int m_windowHeight;
     const std::string m_windowName;
 
+    const int m_gameAreaWidth;
+    const int m_gameAreaHeight;
+
     const std::string m_fontPath;
 #if DEBUG_INFO == 1
     const std::string m_debugFontPath;
@@ -54,6 +57,10 @@ public:
     int getWindowWidth()const { return m_windowWidth; }
     int getWindowHeight()const { return m_windowHeight; }
     const std::string& getWindowName()const { return m_windowName; }
+
+    int getGameAreaWidth()const { return m_gameAreaWidth; }
+    int getGameAreaHeight()const { return m_gameAreaHeight; }
+
     const std::string& getFontPath()const { return m_fontPath; }
 #if DEBUG_INFO == 1
     const std::string& getDebugFontPath()const { return m_debugFontPath; }

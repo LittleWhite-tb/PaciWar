@@ -24,8 +24,8 @@
 
 GameState::GameState(const Settings& settings)
     :m_settings(settings),
-     m_enemyGrid(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
-     m_borders(sf::IntRect(-settings.getWindowWidth()/2,-settings.getWindowHeight()/2, settings.getWindowWidth(), settings.getWindowHeight())),
+     m_enemyGrid(sf::IntRect(-settings.getGameAreaWidth()/2,-settings.getGameAreaHeight()/2, settings.getGameAreaWidth(), settings.getGameAreaHeight())),
+     m_borders(sf::IntRect(-settings.getGameAreaWidth()/2,-settings.getGameAreaHeight()/2, settings.getGameAreaWidth(), settings.getGameAreaHeight())),
      m_spawner(m_borders.getRestrictedLimits()),
      m_inputRecorder(nullptr),m_pReplayer(nullptr),
      m_rainbowGradient(0),m_isGameOver(false)
