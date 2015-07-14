@@ -60,6 +60,11 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
+        else if (argument == "--fullscreen")
+        {
+            settings.setFullScreenMode(true);
+            i+=1;
+        }
         else if (argument == "--trace")
         {
             if ( i+1 < argc)

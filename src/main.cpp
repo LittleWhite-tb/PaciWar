@@ -29,7 +29,12 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    sf::RenderWindow window(sf::VideoMode(settings.getWindowWidth(),settings.getWindowHeight()), settings.getWindowName());
+    int windowOptions = sf::Style::Default;
+    if ( settings.isFullScreenWindow() )
+    {
+        windowOptions = sf::Style::Fullscreen;
+    }
+    sf::RenderWindow window(sf::VideoMode(settings.getWindowWidth(),settings.getWindowHeight()), settings.getWindowName(), windowOptions);
 	window.setVerticalSyncEnabled(true);
 
     Game game(settings,window);

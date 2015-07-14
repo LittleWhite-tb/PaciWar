@@ -24,7 +24,7 @@
 
 
 Settings::Settings()
-    :m_windowWidth(800),m_windowHeight(600),
+    :m_windowWidth(800),m_windowHeight(600),m_isFullScreen(false),
 #if DEBUG_INFO == 1
     m_windowName("PaciWar v" VERSION_MAJOR "." VERSION_MINOR "." VERSION_PATCH " - " VERSION_SHA),
 #else

@@ -34,6 +34,7 @@ struct Settings
 private:
     int m_windowWidth;
     int m_windowHeight;
+    bool m_isFullScreen;
     const std::string m_windowName;
 
     const int m_gameAreaWidth;
@@ -53,9 +54,11 @@ public:
 
     void setWindowWidth(int newWidth) { m_windowWidth = newWidth; }
     void setWindowHeight(int newHeight) { m_windowHeight = newHeight; }
+    void setFullScreenMode(bool fullscreen) { m_isFullScreen = fullscreen; }
 
     int getWindowWidth()const { return m_windowWidth; }
     int getWindowHeight()const { return m_windowHeight; }
+    bool isFullScreenWindow()const { return m_isFullScreen; }
     const std::string& getWindowName()const { return m_windowName; }
 
     int getGameAreaWidth()const { return m_gameAreaWidth; }
