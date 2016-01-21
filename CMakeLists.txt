@@ -34,6 +34,11 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in
                ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp)
 
 
+option(GODMODE "Enable/Disable god mode" FALSE)
+if(GODMODE)
+	add_definitions(-DGOD_MODE)
+endif()
+
 find_package(SFML QUIET COMPONENTS system window graphics audio)
 if (NOT SFML_FOUND) # Let's try to find it ourselves
     set(TMP_NEED_COMPILE_SFML FALSE)
