@@ -1,3 +1,21 @@
+/*
+ * PaciWar : Remake of the "pacifism" mode from Geometry Wars 2
+ * Copyright (C) 2014-2015 LittleWhite (lw.demoscene@gmail.com)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "Enemy.hpp"
 
 #include <cmath>
@@ -71,32 +89,35 @@ void Enemy::update(GameState& gstate)
     // When an enemy is too close, we will check if we need to slow move speed.
     // The slowdown is applied only if the enemy is moving toward another one. It means that
     // if the current one is in the borders of the brood, no slowdown is applied.
-    Pool<Enemy>::const_iterator itEnemy = gstate.getObjects().getEnemies().cbegin();
-    Pool<Enemy>::const_iterator itEnd = gstate.getObjects().getEnemies().cend();
-    for ( ; itEnemy != itEnd ; ++itEnemy)
+    bool canSpeedUp = true;
+    auto localEnemies = gstate.getEnemyGrid().getNeighbours(*this);
+    for (auto pE : localEnemies)
     {
-        if (&(*itEnemy) != &(*this)) // Avoid colliding with myself
+        if (pE != this) // Avoid colliding with myself
         {
-            float newDistance = Math::distance(m_position,itEnemy->getPosition());
+            float newDistance = Math::distance(m_position,pE->getPosition());
             if ( newDistance < SIZE * SIZE * 15 )
             {
                 // We are going toward the enemy
-                if ( Math::distance(oldPosition,itEnemy->getPosition()) > newDistance )
+                if ( Math::distance(oldPosition,pE->getPosition()) > newDistance )
                 {
+                    canSpeedUp = false;
                     // Slow down
                     m_speed = m_speed * BROOD_SPEED_REDUCTION;
                     m_speed = std::max(m_speed,MIN_SPEED);
                     sf::Vector2f direction = m_position - oldPosition;
                     Math::normalise(direction);
-                    m_position = oldPosition + direction * m_speed;
+                    m_position = oldPosition + direction * m_speed * static_cast<float>(gstate.getTime().getElapsedTime());
+                    break;
                 }
             }
-            else
-            {
-                // Speed up
-                m_speed = m_speed / BROOD_SPEED_REDUCTION;
-                m_speed = std::min(m_speed,DEFAULT_SPEED);
-            }
         }
+    }
+
+    if (canSpeedUp)
+    {
+        // Speed up
+        m_speed = m_speed / BROOD_SPEED_REDUCTION;
+        m_speed = std::min(m_speed,DEFAULT_SPEED);
     }
 }

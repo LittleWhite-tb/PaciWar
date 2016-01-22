@@ -1,15 +1,32 @@
+/*
+ * PaciWar : Remake of the "pacifism" mode from Geometry Wars 2
+ * Copyright (C) 2014-2015 LittleWhite (lw.demoscene@gmail.com)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "ObjectBank.hpp"
 
 #include "Collisions/Collider.hpp"
 #include "Utils/Palette.hpp"
 
 #include "GameState.hpp"
-
-#include <iostream>
+#include "Settings.hpp"
 
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
-     m_enemiesPool(1000),m_enemiesDeathPool(1000),m_bonusPool(1000),
+     m_enemiesPool(MAX_ENEMY_NUMBER),m_enemiesDeathPool(1000),m_bonusPool(1000),
      m_particleSystemPool(100),
      m_explosionsPool(25)
 {
@@ -126,33 +143,29 @@ void ObjectBank::applyCollision(GameState& gstate)
         }
     }
 
+	Pool<RadialExplosion>::const_iterator itExplosion = m_explosionsPool.begin();
+	for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
+	{
+		auto enemies = gstate.getEnemyGrid().getNeighbours(Sphere(itExplosion->getCenter(),itExplosion->getRadius()));
+		for (Enemy* enemy : enemies)
+		{
+			enemy->kill();
+			createEnemyDeath(enemy->getPosition());
+			createBonus(enemy->getPosition());
+			createParticleSystem(enemy->getPosition(),rainbowColor);
+			enemiesKilled +=1;
+		}
+	}
 
-    Pool<Enemy>::iterator itEnemies = m_enemiesPool.begin();
-    for ( ; itEnemies != m_enemiesPool.end() ; ++itEnemies )
-    {
-        Pool<RadialExplosion>::const_iterator itExplosion = m_explosionsPool.begin();
-        for ( ; itExplosion != m_explosionsPool.end() ; ++itExplosion )
-        {
-            CollisionResult cr = Collider::collides(*itEnemies, *itExplosion);
-            if ( cr.collided )
-            {
-                itEnemies->kill();
-                createEnemyDeath(itEnemies->getPosition());
-                createBonus(itEnemies->getPosition());
-                createParticleSystem(itEnemies->getPosition(),rainbowColor);
-                enemiesKilled +=1;
-            }
-        }
-
-        if ( ! itEnemies->isDead() )
-        {
-            CollisionResult cr = Collider::collides(m_player,*itEnemies);
-            if ( cr.collided )
-            {
-                playerKilled = true;
-            }
-        }
-    }
+    auto enemies = gstate.getEnemyGrid().getNeighbours(m_player.getPosition());
+	for (Enemy* enemy : enemies)
+	{
+		CollisionResult cr = Collider::collides(m_player,*enemy);
+		if ( cr.collided )
+		{
+			playerKilled = true;
+		}
+	}
 
     Pool<Bonus>::iterator itBonusses = m_bonusPool.begin();
     for ( ; itBonusses != m_bonusPool.end() ; ++itBonusses )
@@ -179,7 +192,8 @@ void ObjectBank::applyCollision(GameState& gstate)
     
     if (playerKilled)
     {
-		gstate.reset();
+        gstate.gameOver();
+        gstate.reset();
 	}
 }
 

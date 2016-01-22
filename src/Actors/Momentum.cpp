@@ -1,20 +1,38 @@
+/*
+ * PaciWar : Remake of the "pacifism" mode from Geometry Wars 2
+ * Copyright (C) 2014-2015 LittleWhite (lw.demoscene@gmail.com)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "Momentum.hpp"
 
 #include "Math/Vector2.hpp"
 #include "Utils/RandomGenerator.hpp"
 
 Momentum::Momentum()
-    :m_direction(RandomGenerator::getNormalizedDirection()),
-     m_moveSpeed(RandomGenerator::getFloat(0,0.1f)),
-     m_rotationSpeed(RandomGenerator::getFloat(0,m_moveSpeed))
+    :m_direction(RndGenerators::det_gen.getNormalizedDirection()),
+     m_moveSpeed(RndGenerators::det_gen.getFloat(0,0.1f)),
+     m_rotationSpeed(RndGenerators::det_gen.getFloat(0,m_moveSpeed))
 {
     Math::normalise(m_direction);
 }
 
 Momentum::Momentum(float maxMoveSpeed, float maxRotationSpeed)
-    :m_direction(RandomGenerator::getNormalizedDirection()),
-     m_moveSpeed(RandomGenerator::getFloat(0,maxMoveSpeed)),
-     m_rotationSpeed(RandomGenerator::getFloat(0,maxRotationSpeed))
+    :m_direction(RndGenerators::det_gen.getNormalizedDirection()),
+     m_moveSpeed(RndGenerators::det_gen.getFloat(0,maxMoveSpeed)),
+     m_rotationSpeed(RndGenerators::det_gen.getFloat(0,maxRotationSpeed))
 {
     Math::normalise(m_direction);
 }

@@ -1,3 +1,21 @@
+/*
+ * PaciWar : Remake of the "pacifism" mode from Geometry Wars 2
+ * Copyright (C) 2014-2015 LittleWhite (lw.demoscene@gmail.com)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "EnemyDeath.hpp"
 
 #include "GameState.hpp"
@@ -10,9 +28,9 @@ const sf::Color EnemyDeath::baseColor = sf::Color(220,220,220);
 
 EnemyDeath::Line::Line(const sf::Vector2f &center, float rotation)
     :center(center),rotation(rotation),
-     moveDirectionBias(RandomGenerator::getNormalizedDirection()),
-     moveSpeed(RandomGenerator::getFloat(0.25,0.45f)),
-     rotationSpeed(RandomGenerator::getFloat(0.8,1.2f))
+     moveDirectionBias(RndGenerators::basic_gen.getNormalizedDirection()),
+     moveSpeed(RndGenerators::basic_gen.getFloat(0.25,0.45f)),
+     rotationSpeed(RndGenerators::basic_gen.getFloat(0.8,1.2f))
 {
     Math::normalise(moveDirectionBias);
 }
