@@ -19,6 +19,7 @@
 #include "Grid.hpp"
 
 #include <cassert>
+#include <cmath>
 
 #include "Math/Vector2.hpp"
 
@@ -131,8 +132,8 @@ void Grid::addInZone(const Sphere& sphere, unsigned int x, unsigned int y, std::
 
 const std::vector<Enemy*> Grid::getNeighbours(const Sphere& sphere)
 {
-    int xwindow = ceil((sphere.radius / m_ratio.x)/2);
-    int ywindow = ceil((sphere.radius / m_ratio.y)/2);
+    int xwindow = std::ceil((sphere.radius / m_ratio.x)/2);
+    int ywindow = std::ceil((sphere.radius / m_ratio.y)/2);
     std::vector<Enemy*> enemies;
     enemies.reserve(xwindow*ywindow*10);
 	

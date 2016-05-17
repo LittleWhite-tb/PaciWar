@@ -19,6 +19,7 @@
 #include "Palette.hpp"
 
 #include <cassert>
+#include <cmath>
 
 sf::Color Palette::fromHSV(float hue, float saturation, float value)
 {
@@ -27,7 +28,7 @@ sf::Color Palette::fromHSV(float hue, float saturation, float value)
     // http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
     float chroma = value * saturation;
     float huePrime = fmod(hue/60.f, 6);
-    float x = chroma * (1 - fabs(fmod(huePrime,2) - 1));
+    float x = chroma * (1 - std::abs(fmod(huePrime,2) - 1));
     float m = value - chroma;
 
     float r=0;
