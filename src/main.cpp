@@ -26,6 +26,7 @@ int main(int argc, char** argv)
     Settings settings;
     if (!CommandParser::parse(argc,argv,settings))
     {
+        CommandParser::usage();
         return -1;
     }
 

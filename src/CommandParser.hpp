@@ -24,6 +24,7 @@ class Settings;
 class CommandParser
 {
 public:
+    static void usage();
     static bool parse(int argc, char** argv, Settings& settings);
 };
 
