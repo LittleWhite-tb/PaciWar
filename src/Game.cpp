@@ -22,6 +22,8 @@
 #include <memory>
 #include <iostream>
 
+#include "Chrono.hpp"
+
 #include "Collisions/Collider.hpp"
 
 #include "Utils/RandomGenerator.hpp"
@@ -40,6 +42,8 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
 
 void Game::render()
 {
+    Chrono drawTiming;
+
     m_targetWindow.clear(sf::Color::Black);
     m_targetWindow.setView(m_view);
 
@@ -51,15 +55,19 @@ void Game::render()
     m_userInterface.draw(m_targetWindow);
 
     m_targetWindow.display();
+    m_userInterface.setDrawTime(drawTiming.get());
 }
 
 void Game::update()
 {
+    Chrono updateTiming;
+
     m_state.update();
 
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 
     m_userInterface.update(m_state);
+    m_userInterface.setUpdateTime(updateTiming.get());
 }
 
 void Game::checkClosure()

@@ -99,6 +99,7 @@ void UI::update(const GameState& state)
     m_scoreText.setString("Score\n" + formatTextNumber(state.getScore().getScore()));
 
 #if DEBUG_INFO == 1
-	m_debugText.setString("DeltaTime : " + Utils::toString(state.getTime().getElapsedTime()));
+    m_debugText.setString("Draw Time: " + std::to_string(m_drawTime) + "\n" +
+                          "Update Time: " + std::to_string(m_updateTime));
 #endif
 }

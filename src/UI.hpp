@@ -42,6 +42,9 @@ private:
 
     sf::Text m_scoreText;
     sf::Text m_bonusText;
+
+    unsigned int m_drawTime;
+    unsigned int m_updateTime;
 #if DEBUG_INFO == 1
     sf::Text m_debugText;
 #endif
@@ -58,6 +61,9 @@ public:
 
     void draw(sf::RenderWindow& window);
     void update(const GameState& state);
+
+    void setDrawTime(unsigned int drawTime) { m_drawTime = drawTime; }
+    void setUpdateTime(unsigned int updateTime) { m_updateTime = updateTime; }
 };
 
 #endif
