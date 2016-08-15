@@ -19,7 +19,9 @@
 #include "GameTime.hpp"
 
 GameTime::GameTime()
-    :m_elapsedTime(0),m_previousUpdateTime(0),m_enemySpawnTime(0),m_barrierSpawnTime(0)
+    :m_elapsedTime(0),m_previousUpdateTime(0),
+     m_enemySpawnTime(0),m_barrierSpawnTime(0),
+     m_enemyUpdateTime(0),m_shouldUpdateEnemy(false)
 {
 }
 
@@ -38,6 +40,13 @@ void GameTime::updateSpawnStates()
     {
         m_barrierSpawnTime = m_previousUpdateTime;
         m_shouldSpawnBarrier = true;
+    }
+
+    m_shouldUpdateEnemy = false;
+    if (m_previousUpdateTime - m_enemyUpdateTime > ENEMY_UPDATE_TIME)
+    {
+        m_enemyUpdateTime = m_previousUpdateTime;
+        m_shouldUpdateEnemy = true;
     }
 }
 

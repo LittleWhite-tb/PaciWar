@@ -24,6 +24,8 @@
 #include "GameState.hpp"
 #include "Settings.hpp"
 
+#include <iostream>
+
 ObjectBank::ObjectBank()
 	:m_barriersPool(250),
      m_enemiesPool(MAX_ENEMY_NUMBER),m_enemiesDeathPool(1000),m_bonusPool(1000),
@@ -89,7 +91,12 @@ void ObjectBank::update(GameState& gstate)
     m_player.update(gstate);
 
     std::for_each(m_barriersPool.begin(),m_barriersPool.end(), [&gstate](Barrier& b){ b.update(gstate); });
-    std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate); });
+    if (gstate.getTime().shouldUpdateEnemy())
+    {
+        std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate); });
+    }
+    // Position update
+    std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate.getTime().getLastEnemyUpdateTimeRatio()); });
     std::for_each(m_bonusPool.begin(),m_bonusPool.end(), [&gstate](Bonus& b){ b.update(gstate); });
 
     std::for_each(m_enemiesDeathPool.begin(),m_enemiesDeathPool.end(), [&gstate](EnemyDeath& ed){ ed.update(gstate); });

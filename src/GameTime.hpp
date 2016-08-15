@@ -35,10 +35,14 @@ private:
     int64_t m_barrierSpawnTime;
     bool m_shouldSpawnBarrier;
 
+    int64_t m_enemyUpdateTime;
+    bool m_shouldUpdateEnemy;
+
     /**
      * Times are in ms
      */
     static constexpr unsigned int ENEMY_SPAWN_TIME = 1000;
+    static constexpr unsigned int ENEMY_UPDATE_TIME = 100;
     static constexpr unsigned int BARRIER_SPAWN_TIME = 5000;
 
     void updateSpawnStates();
@@ -49,8 +53,10 @@ public:
     void update();
     void update(int64_t forcedDeltaTime);
     int64_t getElapsedTime()const;
+    float getLastEnemyUpdateTimeRatio()const { return (m_previousUpdateTime - m_enemyUpdateTime)/static_cast<float>(ENEMY_UPDATE_TIME); }
 
     bool shouldSpawnEnemy()const { return m_shouldSpawnEnemy; }
+    bool shouldUpdateEnemy()const { return m_shouldUpdateEnemy; }
     bool shouldSpawnBarrier()const { return m_shouldSpawnBarrier; }
 };
 
