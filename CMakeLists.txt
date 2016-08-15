@@ -128,6 +128,9 @@ include_directories(${SFML_INCLUDE_DIR}
                     ./include/
                     ./src/)
 
+find_package (Threads)
+target_link_libraries (PaciWar ${CMAKE_THREAD_LIBS_INIT})
+
 # Installation
 install(TARGETS PaciWar 
         RUNTIME DESTINATION .)

@@ -23,7 +23,7 @@
 #include "Settings.hpp"
 
 GameState::GameState(const Settings& settings)
-    :m_settings(settings),
+    :m_settings(settings),m_objects(*this),
      m_enemyGrid(sf::IntRect(-settings.getGameAreaWidth()/2,-settings.getGameAreaHeight()/2, settings.getGameAreaWidth(), settings.getGameAreaHeight())),
      m_borders(sf::IntRect(-settings.getGameAreaWidth()/2,-settings.getGameAreaHeight()/2, settings.getGameAreaWidth(), settings.getGameAreaHeight())),
      m_spawner(m_borders.getRestrictedLimits()),

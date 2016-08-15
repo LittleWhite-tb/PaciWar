@@ -30,6 +30,8 @@
 #include "Particles/FixedColorParticleSystem.hpp"
 #include "Objects/RadialExplosion.hpp"
 
+#include <thread>
+
 class GameState;
 
 class ObjectBank
@@ -43,6 +45,9 @@ private:
 
     Pool<FixedColorParticleSystem> m_particleSystemPool;
     Pool<RadialExplosion> m_explosionsPool;
+
+    std::thread m_updateThread;
+    bool m_threadStop;
 	
     void applyCollision(GameState& gstate);
 
@@ -51,8 +56,11 @@ private:
     void createParticleSystem(const sf::Vector2f& position, const sf::Color &color);
     void createExplosion(const sf::Vector2f& position);
 
+    void updateEnemies(GameState& gstate);
+
 public:
-	ObjectBank();
+    ObjectBank(GameState &gstate);
+    ~ObjectBank();
 
     void createBarrier(const sf::Vector2f& position);
 	void createEnemy(const sf::Vector2f& position);
