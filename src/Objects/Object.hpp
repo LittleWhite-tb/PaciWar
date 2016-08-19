@@ -15,10 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef OBJECT_HPP
+#define OBJECT_HPP
+
+#include <string>
 
 class Object
 {
-private:
 protected:
     std::string m_id;
     std::string m_classId;
@@ -28,3 +31,5 @@ public:
         :m_id(id),m_classId(classId) {}
 
 };
+
+#endif
