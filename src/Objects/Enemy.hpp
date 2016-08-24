@@ -35,7 +35,7 @@ private:
 
 public:
     Enemy(const sf::Vector2f& position)
-        :Entity(position),m_speed(DEFAULT_SPEED) {}
+        :Entity("Enemy",position),m_speed(DEFAULT_SPEED) {}
 	
     void draw(sf::RenderWindow& window)const;
     void update(float ratio);

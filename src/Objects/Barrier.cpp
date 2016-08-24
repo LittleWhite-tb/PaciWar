@@ -30,7 +30,7 @@ const sf::Vector2f Barrier::oj_leftEdgePosition = sf::Vector2f(-midSize+Barrier:
 const sf::Vector2f Barrier::oj_rightEdgePosition = sf::Vector2f(midSize-Barrier::edgeSize/2.0f,0);
 
 Barrier::Barrier(const sf::Vector2f& position)
-    :Entity(position)
+    :Entity("Barrier",position)
 {
     updateEdgePosition();
 }

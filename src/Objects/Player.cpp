@@ -28,7 +28,7 @@
 #include "Math/Interpolation.hpp"
 
 Player::Player()
-    :Entity(sf::Vector2f())
+    :Entity("Player",sf::Vector2f())
 {
 }
 	

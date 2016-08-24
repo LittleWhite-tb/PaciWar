@@ -21,11 +21,12 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Object.hpp"
 #include "Collisions/Sphere.hpp"
 
 class GameState;
 
-class Entity{
+class Entity : public Object {
 private:
 
 protected:
@@ -37,8 +38,8 @@ protected:
     bool m_dead;
 
 public:
-    Entity(const sf::Vector2f& position)
-        :m_origin(position),m_destination(position),m_position(position),
+    Entity(const std::string& classId, const sf::Vector2f& position)
+        :Object(classId),m_origin(position),m_destination(position),m_position(position),
          m_rotation(0),m_dead(false) {}
 
     virtual ~Entity() {}

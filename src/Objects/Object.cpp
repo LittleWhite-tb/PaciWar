@@ -15,36 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef OBJECT_HPP
-#define OBJECT_HPP
 
-#include <map>
-#include <string>
+#include "Object.hpp"
 
-class Object
-{
-    static std::map<std::string, unsigned int> m_classCounters;
-
-protected:
-    std::string m_id;
-    std::string m_classId;
-
-public:
-    Object(const std::string& classId)
-        :m_classId(classId) {
-        auto item = m_classCounters.find(classId);
-        if (item != std::end(m_classCounters)) {
-            item->second++;
-        }
-        else {
-            m_classCounters[classId] = 1;
-        }
-        m_id = std::to_string(m_classCounters[classId]);
-    }
-
-    Object(const std::string& id, const std::string& classId)
-        :m_id(id),m_classId(classId) {}
-
-};
-
-#endif
+std::map<std::string, unsigned int> Object::m_classCounters = std::map<std::string, unsigned int>();

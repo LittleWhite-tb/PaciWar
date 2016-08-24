@@ -52,7 +52,7 @@ void EnemyDeath::Line::draw(sf::RenderWindow &window, const sf::Color& color) co
 
 
 EnemyDeath::EnemyDeath(const sf::Vector2f &position)
-    :Entity(position),
+    :Entity("EnemyDeath",position),
      m_lines{{
          Line(sf::Vector2f(position.x-2,
                            position.y+2),90),
