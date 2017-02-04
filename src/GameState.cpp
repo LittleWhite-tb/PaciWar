@@ -79,9 +79,9 @@ void GameState::update()
     m_borders.update(m_gameTime.getElapsedTime());
 
     m_objects.update(*this);
-    //this->trySpawn();
+    this->trySpawn();
     
-    //m_enemyGrid.update(m_objects.getEnemies());
+    m_enemyGrid.update(m_objects.getEnemies());
 
     m_rainbowGradient += m_gameTime.getElapsedTime()*0.03;
 }

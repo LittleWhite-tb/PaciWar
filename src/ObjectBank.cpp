@@ -41,7 +41,7 @@ void ObjectBank::updateEnemies(GameState& gstate)
             updateTime = steady_clock::now();
             std::for_each(enemies.begin(),enemies.end(), [&gstate](Enemy* e){ e->update(gstate); });
         }
-        //std::this_thread::sleep_for(std::chrono::milliseconds(15));
+        std::this_thread::sleep_for(std::chrono::milliseconds(15));
     }
 }
 
@@ -61,13 +61,13 @@ std::vector<T*> ObjectBank::findObjects()const {
         if (it->getClassId() == T::getName())
             items.push_back(reinterpret_cast<T*>(it.get()));
 
-    std::move(items);
+    return std::move(items);
 }
 
 ObjectBank::ObjectBank(GameState& gstate)
     :m_particleSystemPool(100),
-     m_explosionsPool(25)
-     //m_updateThread(&ObjectBank::updateEnemies, this, std::ref(gstate)),m_threadStop(false)
+     m_explosionsPool(25),
+     m_updateThread(&ObjectBank::updateEnemies, this, std::ref(gstate)),m_threadStop(false)
 
 {
     m_entitiesPool.reserve(10000);
