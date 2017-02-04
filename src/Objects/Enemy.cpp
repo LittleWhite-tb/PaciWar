@@ -31,6 +31,8 @@ constexpr float Enemy::DEFAULT_SPEED;
 constexpr float Enemy::MIN_SPEED;
 constexpr float Enemy::BROOD_SPEED_REDUCTION;
 
+const std::string Enemy::m_name = "Enemy";
+
 
 void Enemy::draw(sf::RenderWindow& window)const
 {
@@ -60,12 +62,12 @@ void Enemy::update(float ratio)
 }
 
 void Enemy::update(GameState& gstate)
-{
+{/*
     m_origin = m_position;
-    auto dir = gstate.getObjects().getPlayer().getPosition() - m_origin;
+    auto dir = gstate.getObjects().getPlayer()->getPosition() - m_origin;
     Math::normalise(dir);
-    m_destination = dir * DEFAULT_SPEED + m_origin;
-    //Tracker::update(m_destination,m_rotation,gstate.getObjects().getPlayer(),m_speed,0.3f,100);
+    m_destination = dir * DEFAULT_SPEED + m_origin;*/
+    Tracker::update(m_destination,m_rotation,*gstate.getObjects().getPlayer(),m_speed,0.3f,100);
 /*
     // Enemies brood behaviour
     // When an enemy is too close, we will check if we need to slow move speed.

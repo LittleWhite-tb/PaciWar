@@ -36,7 +36,7 @@ void Grid::add(Enemy* enemy)
 	}
 }
 
-void Grid::update(Pool<Enemy>& pool)
+void Grid::update(std::vector<Enemy*> pool)
 {
 	for(auto& yArrays : m_grid)
 	{
@@ -46,9 +46,9 @@ void Grid::update(Pool<Enemy>& pool)
 		}
 	}
 	
-	for(Pool<Enemy>::iterator it = pool.begin() ; it != pool.end() ; ++it)
+    for(Enemy* e : pool)
 	{
-		add(&(*it));
+        add(e);
 	} 
 }
 

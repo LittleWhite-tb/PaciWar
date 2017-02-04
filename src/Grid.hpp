@@ -63,7 +63,7 @@ public:
 		 m_ratio(gameArea.width/GRID_WIDTH, gameArea.height/GRID_HEIGHT) {}
 	
 	void add(Enemy* enemy);
-	void update(Pool<Enemy>& pool);
+    void update(std::vector<Enemy *> pool);
     const std::vector<Enemy *> getNeighbours(const Enemy& enemy);
 	const std::vector<Enemy*> getNeighbours(const Sphere& sphere);
 };

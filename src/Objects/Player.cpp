@@ -27,6 +27,8 @@
 #include "Math/Vector2.hpp"
 #include "Math/Interpolation.hpp"
 
+const std::string Player::m_name = std::string("Player");
+
 Player::Player()
     :Entity("Player",sf::Vector2f())
 {

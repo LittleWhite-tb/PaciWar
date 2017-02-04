@@ -24,6 +24,7 @@
 #include "GameState.hpp"
 #include "Settings.hpp"
 
+#include <cassert>
 #include <iostream>
 
 void ObjectBank::updateEnemies(GameState& gstate)
@@ -32,26 +33,45 @@ void ObjectBank::updateEnemies(GameState& gstate)
     steady_clock::time_point updateTime;
     while(!m_threadStop)
     {
+        std::vector<Enemy*> enemies = getEnemies();
         auto diff = duration_cast<duration<double>>(steady_clock::now() - updateTime);
-        std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&diff](Enemy& e){ e.update(diff.count() / 0.1); });
+        std::for_each(enemies.begin(),enemies.end(), [&diff](Enemy* e){ e->update(diff.count() / 0.1); });
         if (diff.count() > 0.1)
         {
             updateTime = steady_clock::now();
-            std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate); });
+            std::for_each(enemies.begin(),enemies.end(), [&gstate](Enemy* e){ e->update(gstate); });
         }
         //std::this_thread::sleep_for(std::chrono::milliseconds(15));
     }
 }
 
+template <typename T>
+T* ObjectBank::findObject()const {
+    for (auto it : m_entitiesPool)
+        if (it->getClassId() == T::getName())
+            return reinterpret_cast<T*>(it.get());
+
+    return nullptr;
+}
+
+template <typename T>
+std::vector<T*> ObjectBank::findObjects()const {
+    std::vector<T*> items;
+    for (auto it : m_entitiesPool)
+        if (it->getClassId() == T::getName())
+            items.push_back(reinterpret_cast<T*>(it.get()));
+
+    std::move(items);
+}
+
 ObjectBank::ObjectBank(GameState& gstate)
-	:m_barriersPool(250),
-     m_enemiesPool(MAX_ENEMY_NUMBER),m_enemiesDeathPool(1000),m_bonusPool(1000),
-     m_particleSystemPool(100),
-     m_explosionsPool(25),
-     m_updateThread(&ObjectBank::updateEnemies, this, std::ref(gstate)),m_threadStop(false)
+    :m_particleSystemPool(100),
+     m_explosionsPool(25)
+     //m_updateThread(&ObjectBank::updateEnemies, this, std::ref(gstate)),m_threadStop(false)
 
 {
-
+    m_entitiesPool.reserve(10000);
+    m_entitiesPool.emplace_back(std::make_shared<Player>());
 }
 
 ObjectBank::~ObjectBank()
@@ -62,12 +82,12 @@ ObjectBank::~ObjectBank()
 
 void ObjectBank::createEnemyDeath(const sf::Vector2f& position)
 {
-    m_enemiesDeathPool.add(position);
+    m_entitiesPool.emplace_back(std::make_shared<EnemyDeath>(position));
 }
 
 void ObjectBank::createBonus(const sf::Vector2f& position)
 {
-    m_bonusPool.add(position);
+    m_entitiesPool.emplace_back(std::make_shared<Bonus>(position));
 }
 
 void ObjectBank::createParticleSystem(const sf::Vector2f& position, const sf::Color& color)
@@ -82,45 +102,47 @@ void ObjectBank::createExplosion(const sf::Vector2f& position)
 
 void ObjectBank::createBarrier(const sf::Vector2f& position)
 {
-	m_barriersPool.add(position);
+    m_entitiesPool.emplace_back(std::make_shared<Barrier>(position));
 }
 
 void ObjectBank::createEnemy(const sf::Vector2f& position)
 {
-	m_enemiesPool.add(position);
+    m_entitiesPool.emplace_back(std::make_shared<Enemy>(position));
 }
 
 void ObjectBank::draw(sf::RenderWindow& targetWindow)
 {
-    std::for_each(m_barriersPool.cbegin(),m_barriersPool.cend(), [&targetWindow](const Barrier& b){ b.draw(targetWindow); });
-    std::for_each(m_enemiesPool.cbegin(),m_enemiesPool.cend(), [&targetWindow](const Enemy& e){ e.draw(targetWindow); });
-    std::for_each(m_enemiesDeathPool.cbegin(),m_enemiesDeathPool.cend(), [&targetWindow](const EnemyDeath& ed){ ed.draw(targetWindow); });
-    std::for_each(m_bonusPool.cbegin(),m_bonusPool.cend(), [&targetWindow](const Bonus& b){ b.draw(targetWindow); });
+    std::for_each(m_entitiesPool.cbegin(),m_entitiesPool.cend(), [&targetWindow](std::shared_ptr<Entity> e){ e->draw(targetWindow); });
 
     std::for_each(m_particleSystemPool.cbegin(),m_particleSystemPool.cend(), [&targetWindow](const FixedColorParticleSystem& ps){ ps.draw(targetWindow); });
     std::for_each(m_explosionsPool.cbegin(),m_explosionsPool.cend(), [&targetWindow](const RadialExplosion& re){ re.draw(targetWindow); });
 
 #ifndef NDEBUG
-    std::for_each(m_barriersPool.cbegin(),m_barriersPool.cend(), [&targetWindow](const Barrier& b){ b.debugDraw(targetWindow); });
-    std::for_each(m_enemiesPool.cbegin(),m_enemiesPool.cend(), [&targetWindow](const Enemy& e){ e.debugDraw(targetWindow); });
-    std::for_each(m_bonusPool.cbegin(),m_bonusPool.cend(), [&targetWindow](const Bonus& b){ b.debugDraw(targetWindow); });
-
-    m_player.debugDraw(targetWindow);
+    std::for_each(m_entitiesPool.cbegin(),m_entitiesPool.cend(), [&targetWindow](std::shared_ptr<Entity> e){ e->debugDraw(targetWindow); });
 #endif
-
-	m_player.draw(targetWindow);
 }
 
 void ObjectBank::update(GameState& gstate)
 {
+    //std::for_each(m_entitiesPool.begin(),m_entitiesPool.end(), (Enemy* e){ e->update(diff.count() / 0.1); });
+    /*
+    std::
     m_player.update(gstate);
 
     std::for_each(m_barriersPool.begin(),m_barriersPool.end(), [&gstate](Barrier& b){ b.update(gstate); });
     std::for_each(m_bonusPool.begin(),m_bonusPool.end(), [&gstate](Bonus& b){ b.update(gstate); });
 
     std::for_each(m_enemiesDeathPool.begin(),m_enemiesDeathPool.end(), [&gstate](EnemyDeath& ed){ ed.update(gstate); });
+
     m_enemiesDeathPool.purge(std::bind(&EnemyDeath::isDead,
                                         std::placeholders::_1));
+*/
+    //if (gstate.getTime().shouldUpdateEnemy())
+    {
+        std::for_each(m_entitiesPool.begin(),m_entitiesPool.end(), [&gstate](std::shared_ptr<Entity> e){ e->update(gstate); });
+    }
+    // Position update
+    //std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate.getTime().getLastEnemyUpdateTimeRatio()); });
 
     int64_t deltaTime = gstate.getTime().getElapsedTime();
     std::for_each(m_particleSystemPool.begin(),m_particleSystemPool.end(), [deltaTime](FixedColorParticleSystem& ps){ ps.update(deltaTime); });
@@ -131,7 +153,7 @@ void ObjectBank::update(GameState& gstate)
     m_explosionsPool.purge(std::bind(&RadialExplosion::isValid,
                                      std::placeholders::_1));
 
-    applyCollision(gstate);
+    //applyCollision(gstate);
 }
 
 void ObjectBank::applyCollision(GameState& gstate)
@@ -143,19 +165,20 @@ void ObjectBank::applyCollision(GameState& gstate)
 
     sf::Color rainbowColor = Palette::fromHSV(gstate.getRainbowGradient(),1,1);
 
-    Pool<Barrier>::iterator itBarrier = m_barriersPool.begin();
-    for ( ; itBarrier != m_barriersPool.end() ; ++itBarrier)
+    std::vector<Barrier*> barriers = findObjects<Barrier>();
+    std::vector<Barrier*>::iterator itBarrier = barriers.begin();
+    for ( ; itBarrier != barriers.end() ; ++itBarrier)
     {
-        BarrierCollisionResult bcr = Collider::collides(m_player,*itBarrier);
+        BarrierCollisionResult bcr = Collider::collides(*getPlayer(),*(*itBarrier));
         if ( bcr.collided )
         {
             switch (bcr.getLoser())
             {
                 case BarrierCollisionResult::BARRIER:
-                    createBonus(itBarrier->getLeftEdgePosition());
-                    createBonus(itBarrier->getRightEdgePosition());
-                    createExplosion(itBarrier->getPosition());
-                    itBarrier->kill();
+                    createBonus((*itBarrier)->getLeftEdgePosition());
+                    createBonus((*itBarrier)->getRightEdgePosition());
+                    createExplosion((*itBarrier)->getPosition());
+                    (*itBarrier)->kill();
                     barriersKilled+=2;
 
                     gstate.getBorders().impulse(rainbowColor);
@@ -183,35 +206,35 @@ void ObjectBank::applyCollision(GameState& gstate)
 		}
 	}
 
-    auto enemies = gstate.getEnemyGrid().getNeighbours(m_player.getPosition());
+    auto enemies = gstate.getEnemyGrid().getNeighbours(getPlayer()->getPosition());
 	for (Enemy* enemy : enemies)
 	{
-		CollisionResult cr = Collider::collides(m_player,*enemy);
+        CollisionResult cr = Collider::collides(*getPlayer(),*enemy);
 		if ( cr.collided )
 		{
 			playerKilled = true;
 		}
 	}
 
-    Pool<Bonus>::iterator itBonusses = m_bonusPool.begin();
-    for ( ; itBonusses != m_bonusPool.end() ; ++itBonusses )
+    std::vector<Bonus*> bonuses = findObjects<Bonus>();
+    std::vector<Bonus*>::iterator itBonusses = bonuses.begin();
+    for ( ; itBonusses != bonuses.end() ; ++itBonusses )
     {
-        CollisionResult cr = Collider::collides(m_player,*itBonusses);
+        CollisionResult cr = Collider::collides(*getPlayer(),*(*itBonusses));
         if ( cr.collided )
         {
-            itBonusses->kill();
+            (*itBonusses)->kill();
             collectedBonusCounter++;
         }
     }
 
 
-    // Purge all collided elements
-    m_barriersPool.purge(std::bind(&Entity::isDead,
-                                   std::placeholders::_1));
-    m_enemiesPool.purge(std::bind(&Entity::isDead,
-                                  std::placeholders::_1));
-    m_bonusPool.purge(std::bind(&Bonus::isDead,
-                                std::placeholders::_1));
+
+    m_entitiesPool.erase(
+                std::remove_if(std::begin(m_entitiesPool),
+                               std::end(m_entitiesPool),
+                               [](std::shared_ptr<Entity> e){return e->isDead();}),
+            std::end(m_entitiesPool));
 
     gstate.getScore().addMultiplier(collectedBonusCounter);
     gstate.getScore().addKill(enemiesKilled,barriersKilled);
@@ -225,11 +248,19 @@ void ObjectBank::applyCollision(GameState& gstate)
 
 void ObjectBank::reset()
 {
-	m_barriersPool.purge();
-	m_enemiesPool.purge();
-	m_enemiesDeathPool.purge();
-	m_bonusPool.purge();
+    m_entitiesPool.clear();
+
 	m_particleSystemPool.purge();
 	m_explosionsPool.purge();
-	m_player = Player();
+    m_entitiesPool.emplace_back(std::make_shared<Player>());
+}
+
+Player* ObjectBank::getPlayer() const {
+    Player* pPlayer = findObject<Player>();
+    assert(pPlayer);
+    return pPlayer;
+}
+
+std::vector<Enemy*> ObjectBank::getEnemies() const {
+    return findObjects<Enemy>();
 }

@@ -38,7 +38,7 @@ public:
     Pool(std::size_t poolSize=1000)
     {
         m_pool.reserve(poolSize);
-    };
+    }
 
     T& create()
     {

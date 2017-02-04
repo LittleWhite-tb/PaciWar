@@ -64,7 +64,7 @@ void Game::update()
 
     m_state.update();
 
-    m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
+    m_view.setCenter((m_state.getObjects().getPlayer()->getPosition())/VIEW_DELAY_FACTOR);
 
     m_userInterface.update(m_state);
     m_userInterface.setUpdateTime(updateTiming.get());

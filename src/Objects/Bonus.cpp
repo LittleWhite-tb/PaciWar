@@ -30,6 +30,8 @@
 const sf::Color Bonus::normalColor = sf::Color(120,230,50);
 const sf::Color Bonus::lightColor = sf::Color(250,250,170);
 
+const std::string Bonus::m_name = "Bonus";
+
 Bonus::Bonus(const sf::Vector2f& position)
     :Entity("Bonus",position),m_color(normalColor),m_life(LIFETIME),
      m_momentum(0.02f,0.2f)
@@ -82,11 +84,11 @@ void Bonus::update(GameState& gstate)
 {
     m_momentum.update(this->m_position,this->m_rotation,gstate.getTime().getElapsedTime());
 
-    const Player& target = gstate.getObjects().getPlayer();
-    float targetDistance = Math::distance(target.getPosition(),this->getPosition());
+    Player* target = gstate.getObjects().getPlayer();
+    float targetDistance = Math::distance(target->getPosition(),this->getPosition());
     if ( targetDistance < MAGNET_DISTANCE*MAGNET_DISTANCE )
     {
-        Tracker::update(m_position,m_rotation,target,SPEED,0.5f,gstate.getTime().getElapsedTime());
+        Tracker::update(m_position,m_rotation,*target,SPEED,0.5f,gstate.getTime().getElapsedTime());
 
         // Normally, we can't lose bonus/untract player
         m_life = LIFETIME;

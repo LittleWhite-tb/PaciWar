@@ -31,17 +31,14 @@
 #include "Objects/RadialExplosion.hpp"
 
 #include <thread>
+#include <memory>
 
 class GameState;
 
 class ObjectBank
 {
 private:
-	Pool<Barrier> m_barriersPool;
-	Pool<Enemy> m_enemiesPool;
-    Pool<EnemyDeath> m_enemiesDeathPool;
-    Pool<Bonus> m_bonusPool;
-	Player m_player;
+    std::vector<std::shared_ptr<Entity> > m_entitiesPool;
 
     Pool<FixedColorParticleSystem> m_particleSystemPool;
     Pool<RadialExplosion> m_explosionsPool;
@@ -58,6 +55,11 @@ private:
 
     void updateEnemies(GameState& gstate);
 
+    template <typename T>
+    T* findObject()const;
+    template <typename T>
+    std::vector<T*> findObjects()const;
+
 public:
     ObjectBank(GameState &gstate);
     ~ObjectBank();
@@ -70,11 +72,8 @@ public:
     
     void reset();
 	
-	Player& getPlayer() { return m_player; }
-	const Player& getPlayer()const { return m_player; }
-
-    const Pool<Enemy>& getEnemies()const { return m_enemiesPool; }
-    Pool<Enemy>& getEnemies() { return m_enemiesPool; }
+    Player* getPlayer()const;
+    std::vector<Enemy*> getEnemies()const;
 };
 
 #endif

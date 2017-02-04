@@ -21,6 +21,19 @@
 #include <map>
 #include <string>
 
+/**
+ * Offers a template way to give a static name to a class
+ */
+template <class T>
+class Named {
+public:
+    /**
+     * @brief getName returns the name of the class passed as template argument
+     * @return
+     */
+    static const std::string& getName() { return T::m_name; }
+};
+
 class Object
 {
     static std::map<std::string, unsigned int> m_classCounters;
@@ -44,6 +57,9 @@ public:
 
     Object(const std::string& id, const std::string& classId)
         :m_id(id),m_classId(classId) {}
+
+    const std::string& getId() { return m_id; }
+    const std::string& getClassId() { return m_classId; }
 
 };
 

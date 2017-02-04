@@ -29,6 +29,8 @@ constexpr float Barrier::radius;
 const sf::Vector2f Barrier::oj_leftEdgePosition = sf::Vector2f(-midSize+Barrier::edgeSize/2.0f,0);
 const sf::Vector2f Barrier::oj_rightEdgePosition = sf::Vector2f(midSize-Barrier::edgeSize/2.0f,0);
 
+const std::string Barrier::m_name = "Barrier";
+
 Barrier::Barrier(const sf::Vector2f& position)
     :Entity("Barrier",position)
 {

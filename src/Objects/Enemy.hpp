@@ -24,7 +24,7 @@
 #include "ObjectPool.hpp"
 #include "Entity.hpp"
 
-class Enemy : public Entity
+class Enemy : public Entity, public Named<Enemy>
 {
 private:
     static constexpr float DEFAULT_SPEED = 25.f;
@@ -32,6 +32,9 @@ private:
     static constexpr float BROOD_SPEED_REDUCTION = 0.65f;
 
     float m_speed;
+
+public:
+    static const std::string m_name;
 
 public:
     Enemy(const sf::Vector2f& position)

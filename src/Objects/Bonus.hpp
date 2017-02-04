@@ -27,7 +27,7 @@
 
 class GameState;
 
-class Bonus : public Entity
+class Bonus : public Entity, public Named<Bonus>
 {
 private:
     static constexpr float SPEED = 0.53f;              // Should be a bit greater than Player::SPEED otherwise
@@ -47,6 +47,9 @@ private:
     int m_life;
 
     Momentum m_momentum;
+
+public:
+    static const std::string m_name;
 
 public:
     Bonus(const sf::Vector2f& position);

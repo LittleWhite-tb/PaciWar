@@ -25,7 +25,8 @@
 
 #include "Particles/EngineParticleSystem.hpp"
 
-class Player : public Entity
+
+class Player : public Entity, public Named<Player>
 {
 private:
     static constexpr float SPEED = 0.5f;
@@ -33,6 +34,9 @@ private:
 
     EngineParticleSystem m_engineParticles;
 	
+public:
+    static const std::string m_name;
+
 public:
     Player();
 	

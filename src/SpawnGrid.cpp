@@ -41,7 +41,7 @@ void SpawnGrid::spawnEnemies(GameState& gstate, unsigned int number)
     do
     {
         selectedPoint = RndGenerators::det_gen.getInt(0,m_spawnPoints.size()-1);
-    }while(Math::distance(m_spawnPoints[selectedPoint],gstate.getObjects().getPlayer().getPosition()) < ENEMY_SPAWN_DISTANCE * ENEMY_SPAWN_DISTANCE);
+    }while(Math::distance(m_spawnPoints[selectedPoint],gstate.getObjects().getPlayer()->getPosition()) < ENEMY_SPAWN_DISTANCE * ENEMY_SPAWN_DISTANCE);
 
     sf::Vector2f enemyPosition = m_spawnPoints[selectedPoint];
 

@@ -34,7 +34,7 @@ void Tracer::trace(const GameState &gstate)
     int64_t time = m_clock.getElapsedTime().asMilliseconds();
     m_traceFile << time << ";"
                 << time-m_lastTrace << ";"
-                << gstate.getObjects().getEnemies().nbAlive()
+                << gstate.getObjects().getEnemies().size()
                 << std::endl;
     m_lastTrace=time;
 }

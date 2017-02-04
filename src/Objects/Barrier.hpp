@@ -25,7 +25,7 @@
 #include "Entity.hpp"
 #include "Actors/Momentum.hpp"
 
-class Barrier : public Entity
+class Barrier : public Entity , public Named<Barrier>
 {
 private:
     static constexpr int barrierSize = 96;
@@ -44,6 +44,9 @@ private:
 
     // static constexpr float ROTATION_SPEED = 0.015f;
     void updateEdgePosition();
+
+public:
+    static const std::string m_name;
 
 public:
     Barrier(const sf::Vector2f& position);
