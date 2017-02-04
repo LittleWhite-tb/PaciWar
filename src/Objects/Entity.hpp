@@ -26,6 +26,11 @@
 
 class GameState;
 
+/**
+ * @brief Entity is an item of the game. Hence it has a position and a rotation and has an alive status.
+ * Also, it can be drawn and updated.
+ * This class should not exists
+ */
 class Entity : public Object {
 private:
 

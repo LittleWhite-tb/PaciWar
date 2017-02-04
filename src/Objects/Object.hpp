@@ -34,13 +34,17 @@ public:
     static const std::string& getName() { return T::m_name; }
 };
 
+/**
+ * @brief Base class for Entity Component System
+ * @todo Replace this class by a class only containing a list of component
+ */
 class Object
 {
     static std::map<std::string, unsigned int> m_classCounters;
 
 protected:
-    std::string m_id;
     std::string m_classId;
+    std::string m_id;
 
 public:
     Object(const std::string& classId)
@@ -55,8 +59,8 @@ public:
         m_id = std::to_string(m_classCounters[classId]);
     }
 
-    Object(const std::string& id, const std::string& classId)
-        :m_id(id),m_classId(classId) {}
+    Object(const std::string& classId, const std::string& id)
+        :m_classId(classId),m_id(id) {}
 
     const std::string& getId() { return m_id; }
     const std::string& getClassId() { return m_classId; }
