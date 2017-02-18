@@ -59,6 +59,8 @@ private:
     T* findObject()const;
     template <typename T>
     std::vector<T*> findObjects()const;
+    template <typename T>
+    std::vector<Entity*> findIsNotObjects()const;
 
 public:
     ObjectBank(GameState &gstate);

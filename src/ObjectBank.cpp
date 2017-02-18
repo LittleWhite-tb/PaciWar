@@ -64,6 +64,18 @@ std::vector<T*> ObjectBank::findObjects()const {
     return std::move(items);
 }
 
+template <typename T>
+std::vector<Entity*> ObjectBank::findIsNotObjects()const {
+    std::vector<Entity*> items;
+    for (auto it : m_entitiesPool)
+        if (it->getClassId() != T::getName())
+            items.push_back(it.get());
+
+    return std::move(items);
+}
+
+
+
 ObjectBank::ObjectBank(GameState& gstate)
     :m_particleSystemPool(100),
      m_explosionsPool(25),
@@ -124,25 +136,9 @@ void ObjectBank::draw(sf::RenderWindow& targetWindow)
 
 void ObjectBank::update(GameState& gstate)
 {
-    //std::for_each(m_entitiesPool.begin(),m_entitiesPool.end(), (Enemy* e){ e->update(diff.count() / 0.1); });
-    /*
-    std::
-    m_player.update(gstate);
-
-    std::for_each(m_barriersPool.begin(),m_barriersPool.end(), [&gstate](Barrier& b){ b.update(gstate); });
-    std::for_each(m_bonusPool.begin(),m_bonusPool.end(), [&gstate](Bonus& b){ b.update(gstate); });
-
-    std::for_each(m_enemiesDeathPool.begin(),m_enemiesDeathPool.end(), [&gstate](EnemyDeath& ed){ ed.update(gstate); });
-
-    m_enemiesDeathPool.purge(std::bind(&EnemyDeath::isDead,
-                                        std::placeholders::_1));
-*/
-    //if (gstate.getTime().shouldUpdateEnemy())
-    {
-        std::for_each(m_entitiesPool.begin(),m_entitiesPool.end(), [&gstate](std::shared_ptr<Entity> e){ e->update(gstate); });
-    }
-    // Position update
-    //std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate.getTime().getLastEnemyUpdateTimeRatio()); });
+    // Enemies are updated in thread
+    auto itemsNotEnemies = findIsNotObjects<Enemy>();
+    std::for_each(itemsNotEnemies.begin(),itemsNotEnemies.end(), [&gstate](Entity* e){ e->update(gstate); });
 
     int64_t deltaTime = gstate.getTime().getElapsedTime();
     std::for_each(m_particleSystemPool.begin(),m_particleSystemPool.end(), [deltaTime](FixedColorParticleSystem& ps){ ps.update(deltaTime); });
@@ -153,7 +149,7 @@ void ObjectBank::update(GameState& gstate)
     m_explosionsPool.purge(std::bind(&RadialExplosion::isValid,
                                      std::placeholders::_1));
 
-    //applyCollision(gstate);
+    applyCollision(gstate);
 }
 
 void ObjectBank::applyCollision(GameState& gstate)
