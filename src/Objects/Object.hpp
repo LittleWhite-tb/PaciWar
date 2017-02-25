@@ -36,15 +36,18 @@ public:
 
 /**
  * @brief Base class for Entity Component System
+ * Inherit this class in all object of the game.
+ * The ID is auto increment ID to record count of this kind of Object.
  * @todo Replace this class by a class only containing a list of component
  */
 class Object
 {
-    static std::map<std::string, unsigned int> m_classCounters;
+    static std::map<std::string, unsigned int> m_classCounters; //! Keeps track of number of instances
+    // std::vector<Component> m_components; //! The list of component
 
 protected:
-    std::string m_classId;
-    std::string m_id;
+    std::string m_classId; //! Name of this object
+    std::string m_id;   //! ID of this kind of object
 
 public:
     Object(const std::string& classId)
@@ -59,11 +62,14 @@ public:
         m_id = std::to_string(m_classCounters[classId]);
     }
 
+    /*
+     * Actually, there is no need to directly pass the ID
     Object(const std::string& classId, const std::string& id)
         :m_classId(classId),m_id(id) {}
+    */
 
-    const std::string& getId() { return m_id; }
-    const std::string& getClassId() { return m_classId; }
+    const std::string& getId()const { return m_id; }
+    const std::string& getClassId()const { return m_classId; }
 
 };
 
