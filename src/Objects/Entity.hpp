@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef ENTITY_HPP
@@ -43,10 +43,7 @@ protected:
     bool m_dead;
 
 public:
-    Entity(const std::string& classId, const sf::Vector2f& position)
-        :Object(classId),m_origin(position),m_destination(position),m_position(position),
-         m_rotation(0),m_dead(false) {}
-
+    Entity(const std::string& classId, const sf::Vector2f& position);
     virtual ~Entity() {}
 
 

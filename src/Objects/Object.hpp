@@ -18,8 +18,15 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
+#include <algorithm>
 #include <map>
+#include <memory>
 #include <string>
+#include <vector>
+
+#include "Components/Component.hpp"
+
+#define STRINGIFY(x) #x
 
 /**
  * Offers a template way to give a static name to a class
@@ -43,7 +50,7 @@ public:
 class Object
 {
     static std::map<std::string, unsigned int> m_classCounters; //! Keeps track of number of instances
-    // std::vector<Component> m_components; //! The list of component
+    std::vector<std::unique_ptr<Component>> m_components; //! The list of component
 
 protected:
     std::string m_classId; //! Name of this object
@@ -71,6 +78,28 @@ public:
     const std::string& getId()const { return m_id; }
     const std::string& getClassId()const { return m_classId; }
 
+    template <typename T, class... Args>
+    const T* addComponent(Args&&... args)
+    {
+        auto comp = getComponent<T>();
+        if(comp!=NULL)
+            return comp;
+
+        auto rawComp = new T(std::forward<Args>(args)...);
+        //auto newComp = std::unique_ptr<Component>(rawComp);
+        m_components.emplace_back(rawComp);
+        return rawComp;
+    }
+
+    template <typename T>
+    const T* getComponent() {
+        auto component = std::find_if(std::begin(m_components),
+                                      std::end(m_components),
+                                      [](const std::unique_ptr<Component>& pComp)->bool {return pComp->getName() == STRINGIFY(T);});
+        if(component == std::end(m_components))
+            return NULL;
+        return dynamic_cast<T*>((*component).get());
+    }
 };
 
 #endif
