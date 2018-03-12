@@ -26,6 +26,7 @@
 
 const sf::Color UI::textColor = sf::Color(120,230,50);
 #if DEBUG_INFO == 1
+    const unsigned int debugTextSize = 8;
 	const sf::Color UI::debugTextColor = sf::Color(240,240,240);
 #endif
 
@@ -56,7 +57,7 @@ void UI::initText(sf::Text& text)
 	{
 		text.setFont(m_debugFont);
 		text.setColor(UI::debugTextColor);
-		text.setCharacterSize(8);
+        text.setCharacterSize(debugTextSize);
 	}
 #endif
 
@@ -88,6 +89,7 @@ void UI::draw(sf::RenderWindow& window)
     window.draw(m_bonusText);
 
 #if DEBUG_INFO == 1
+    m_debugText.setPosition(2, window.getSize().y - 4 * debugTextSize);
 	window.draw(m_debugText);
 #endif
 
