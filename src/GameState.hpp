@@ -79,6 +79,8 @@ public:
 
     void gameOver() { m_isGameOver = true; }
     bool isGameOver()const { return m_isGameOver; }
+
+    std::size_t nbEnemies()const;
 };
 
 #endif

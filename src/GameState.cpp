@@ -100,3 +100,8 @@ void GameState::reset()
 #endif
     m_isGameOver = false;
 }
+
+std::size_t GameState::nbEnemies()const
+{
+    m_objects.getEnemies().nbAlive();
+}

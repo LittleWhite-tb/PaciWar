@@ -100,6 +100,7 @@ void UI::update(const GameState& state)
 
 #if DEBUG_INFO == 1
     m_debugText.setString("Draw Time: " + std::to_string(m_drawTime) + "\n" +
-                          "Update Time: " + std::to_string(m_updateTime));
+                          "Update Time: " + std::to_string(m_updateTime) + "\n" +
+                          "Nb enemies : " + std::to_string(state.nbEnemies()));
 #endif
 }
