@@ -1,2 +1,4 @@
-- AI Entity (Swarm, sterring behavior)
+- AI Entity (boids)
+- - Grid problem for enemies grouping
+- - Perfs ?
 - Rendering (Shading)
