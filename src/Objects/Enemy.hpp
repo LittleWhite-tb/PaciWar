@@ -27,11 +27,12 @@
 class Enemy : public Entity
 {
 private:
-    static constexpr float DEFAULT_SPEED = 25.f;
+    static constexpr float DEFAULT_SPEED = 1.f;
     static constexpr float MIN_SPEED = 0.005f;
     static constexpr float BROOD_SPEED_REDUCTION = 0.65f;
 
     float m_speed;
+    sf::Vector2f m_velocity;
 
 public:
     Enemy(const sf::Vector2f& position)
@@ -40,8 +41,10 @@ public:
     void draw(sf::RenderWindow& window)const;
     void update(float ratio);
     void update(GameState& gstate);
+    void update(GameState& gstate, const sf::Vector2f& centroid, const sf::Vector2f& velocity);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
+    const sf::Vector2f& getVelocity()const { return m_velocity; }
 
     static constexpr float SIZE = 2;
 };

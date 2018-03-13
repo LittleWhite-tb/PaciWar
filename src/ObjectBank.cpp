@@ -23,6 +23,7 @@
 
 #include "GameState.hpp"
 #include "Settings.hpp"
+#include "Objects/Enemy.hpp"
 
 #include <iostream>
 
@@ -30,14 +31,26 @@ void ObjectBank::updateEnemies(GameState& gstate)
 {
     using namespace std::chrono;
     steady_clock::time_point updateTime;
-    while(!m_threadStop)
+    //while(!m_threadStop)
     {
         auto diff = duration_cast<duration<double>>(steady_clock::now() - updateTime);
-        std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&diff](Enemy& e){ e.update(diff.count() / 0.1); });
-        if (diff.count() > 0.1)
+        //std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&diff](Enemy& e){ e.update(diff.count() / 0.1); });
+        //if (diff.count() > 0.1)
         {
             updateTime = steady_clock::now();
-            std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate); });
+
+            // Calculate boids values
+            sf::Vector2f centroid; // centre of mass attraction
+            sf::Vector2f velocity; // velocity matching
+
+            auto localEnemies = gstate.getObjects().getEnemies();
+            for (auto pE : localEnemies)
+            {
+                centroid = centroid + pE.getPosition();
+                velocity = velocity + pE.getVelocity();
+            }
+
+            std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate, &centroid, &velocity](Enemy& e){ e.update(gstate, centroid, velocity); });
         }
         //std::this_thread::sleep_for(std::chrono::milliseconds(15));
     }
@@ -47,17 +60,19 @@ ObjectBank::ObjectBank(GameState& gstate)
 	:m_barriersPool(250),
      m_enemiesPool(MAX_ENEMY_NUMBER),m_enemiesDeathPool(1000),m_bonusPool(1000),
      m_particleSystemPool(100),
-     m_explosionsPool(25),
-     m_updateThread(&ObjectBank::updateEnemies, this, std::ref(gstate)),m_threadStop(false)
+     m_explosionsPool(25)
+   /*
 
+     m_updateThread(&ObjectBank::updateEnemies, this, std::ref(gstate)),m_threadStop(false)
+*/
 {
 
 }
 
 ObjectBank::~ObjectBank()
 {
-    m_threadStop = true;
-    m_updateThread.join();
+    //m_threadStop = true;
+    //m_updateThread.join();
 }
 
 void ObjectBank::createEnemyDeath(const sf::Vector2f& position)
@@ -117,6 +132,7 @@ void ObjectBank::update(GameState& gstate)
 
     std::for_each(m_barriersPool.begin(),m_barriersPool.end(), [&gstate](Barrier& b){ b.update(gstate); });
     std::for_each(m_bonusPool.begin(),m_bonusPool.end(), [&gstate](Bonus& b){ b.update(gstate); });
+    updateEnemies(gstate);
 
     std::for_each(m_enemiesDeathPool.begin(),m_enemiesDeathPool.end(), [&gstate](EnemyDeath& ed){ ed.update(gstate); });
     m_enemiesDeathPool.purge(std::bind(&EnemyDeath::isDead,

@@ -19,6 +19,7 @@
 #include "Enemy.hpp"
 
 #include <cmath>
+#include <iostream>
 
 #include "GameState.hpp"
 #include "Actors/Tracker.hpp"
@@ -59,48 +60,45 @@ void Enemy::update(float ratio)
     m_position = Math::Lerp<sf::Vector2f>::get(m_origin,m_destination,ratio);
 }
 
-void Enemy::update(GameState& gstate)
+void Enemy::update(GameState &gstate)
+{
+
+}
+
+void Enemy::update(GameState &gstate, const sf::Vector2f& centroid, const sf::Vector2f& velocity)
 {
     m_origin = m_position;
     auto dir = gstate.getObjects().getPlayer().getPosition() - m_origin;
     Math::normalise(dir);
-    m_destination = dir * DEFAULT_SPEED + m_origin;
-    //Tracker::update(m_destination,m_rotation,gstate.getObjects().getPlayer(),m_speed,0.3f,100);
-/*
-    // Enemies brood behaviour
-    // When an enemy is too close, we will check if we need to slow move speed.
-    // The slowdown is applied only if the enemy is moving toward another one. It means that
-    // if the current one is in the borders of the brood, no slowdown is applied.
-    bool canSpeedUp = true;
-    auto localEnemies = gstate.getEnemyGrid().getNeighbours(*this);
-    for (auto pE : localEnemies)
+
+    sf::Vector2f v2;
+    auto enemies = gstate.getEnemyGrid().getNeighbours(*this);
+    for (auto pE : enemies)
     {
         if (pE != this) // Avoid colliding with myself
         {
-            float newDistance = Math::distance(m_destination,pE->m_destination);
-            if ( newDistance < SIZE * SIZE * 15 )
-            {
-                // We are going toward the enemy
-                if ( Math::distance(m_origin,pE->m_destination) > newDistance )
-                {
-                    canSpeedUp = false;
-                    // Slow down
-                    m_speed = m_speed * BROOD_SPEED_REDUCTION;
-                    m_speed = std::max(m_speed,MIN_SPEED);
-                    sf::Vector2f direction = m_destination - m_origin;
-                    Math::normalise(direction);
-                    m_destination = m_origin + direction * m_speed * static_cast<float>(100);
-                    break;
-                }
-            }
+            auto dirToOther = pE->getPosition() - this->getPosition();
+            v2 = v2 - dirToOther;
         }
     }
 
-    if (canSpeedUp)
+    sf::Vector2f v1 = (centroid - this->getPosition()) / (float)(gstate.nbEnemies()-1);
+    v1 = v1 - this->getPosition();
+    sf::Vector2f v3 = (velocity - this->getVelocity()) / 2.f;
+    Math::normalise(v1); // or 1%
+    Math::normalise(v2);
+    Math::normalise(v3); // or 12%
+
+    if(gstate.nbEnemies() == 1)
     {
-        // Speed up
-        m_speed = m_speed / BROOD_SPEED_REDUCTION;
-        m_speed = std::min(m_speed,DEFAULT_SPEED);
+        m_velocity = dir;
     }
-    */
+    else
+    {
+        m_velocity = v1 + v2 + v3 + dir;
+    }
+    Math::normalise(m_velocity);
+
+    m_position = m_position + m_velocity * DEFAULT_SPEED;
 }
+
