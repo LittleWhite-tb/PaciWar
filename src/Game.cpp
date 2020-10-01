@@ -21,8 +21,8 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <iostream>
+#include <chrono>
 
-#include "Chrono.hpp"
 
 #include "Collisions/Collider.hpp"
 
@@ -42,7 +42,9 @@ Game::Game(const Settings& settings, sf::RenderWindow& targetWindow)
 
 void Game::render()
 {
-    Chrono drawTiming;
+    auto now = std::chrono::system_clock::now();
+    auto drawTiming = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+
 
     m_targetWindow.clear(sf::Color::Black);
     m_targetWindow.setView(m_view);
@@ -55,19 +57,21 @@ void Game::render()
     m_userInterface.draw(m_targetWindow);
 
     m_targetWindow.display();
-    m_userInterface.setDrawTime(drawTiming.get());
+    m_userInterface.setDrawTime(drawTiming.time_since_epoch().count());
+    m_userInterface.setDrawTime(0);
 }
 
 void Game::update()
 {
-    Chrono updateTiming;
+    auto now = std::chrono::system_clock::now();
+    auto updateTiming = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
 
     m_state.update();
 
     m_view.setCenter((m_state.getObjects().getPlayer().getPosition())/VIEW_DELAY_FACTOR);
 
     m_userInterface.update(m_state);
-    m_userInterface.setUpdateTime(updateTiming.get());
+    m_userInterface.setUpdateTime(updateTiming.time_since_epoch().count());
 }
 
 void Game::checkClosure()

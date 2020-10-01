@@ -150,6 +150,12 @@ if(SFML_COMPILER_GCC)
     set_source_files_properties(${SRCROOT}/ImageLoader.cpp PROPERTIES COMPILE_FLAGS -fno-strict-aliasing)
 endif()
 
+
+if(SFML_COMPILER_GCC AND BUILD_SHARED_LIBS)
+    set_source_files_properties(${SRCROOT}/ImageLoader.cpp PROPERTIES COMPILE_FLAGS -fno-strict-aliasing)
+    list(APPEND GRAPHICS_EXT_LIBS "-lgcc_s -lgcc")
+endif()
+
 # define the sfml-graphics target
 sfml_add_library(sfml-graphics
                  SOURCES ${SRC} ${DRAWABLES_SRC} ${RENDER_TEXTURE_SRC} ${STB_SRC}
