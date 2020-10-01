@@ -89,7 +89,7 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-        else if (argument == commands[ARGS::HEIGHT].first || argument == commands[ARGS::HEIGHT].first)
+        else if (argument == commands[ARGS::HEIGHT].first || argument == commands[ARGS::HEIGHT].second)
         {
             if ( i+1 < argc)
             {
@@ -102,12 +102,12 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-        else if (argument == commands[ARGS::FULLSCREEN].first || argument == commands[ARGS::FULLSCREEN].first)
+        else if (argument == commands[ARGS::FULLSCREEN].first || argument == commands[ARGS::FULLSCREEN].second)
         {
             settings.setFullScreenMode(true);
             i+=1;
         }
-        else if (argument == commands[ARGS::TRACE].first || argument == commands[ARGS::TRACE].first)
+        else if (argument == commands[ARGS::TRACE].first || argument == commands[ARGS::TRACE].second)
         {
             if ( i+1 < argc)
             {
@@ -120,7 +120,7 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-        else if (argument == commands[ARGS::RECORD].first || argument == commands[ARGS::RECORD].first)
+        else if (argument == commands[ARGS::RECORD].first || argument == commands[ARGS::RECORD].second)
         {
             if ( i+1 < argc)
             {
@@ -133,7 +133,7 @@ bool CommandParser::parse(int argc, char** argv, Settings& settings)
             }
             i+=2;
         }
-        else if (argument == commands[ARGS::REPLAY].first || argument == commands[ARGS::REPLAY].first)
+        else if (argument == commands[ARGS::REPLAY].first || argument == commands[ARGS::REPLAY].second)
         {
             if ( i+1 < argc)
             {
