@@ -103,5 +103,5 @@ void GameState::reset()
 
 std::size_t GameState::nbEnemies()const
 {
-    m_objects.getEnemies().nbAlive();
+    return m_objects.getEnemies().nbAlive();
 }

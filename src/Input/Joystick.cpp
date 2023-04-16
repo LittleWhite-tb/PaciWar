@@ -68,6 +68,6 @@ sf::Vector2f Joystick::getMovement()const
     else
     {
         assert(false);
-        return sf::Vector2f(0,0);
     }
+    return sf::Vector2f(0,0);
 }
