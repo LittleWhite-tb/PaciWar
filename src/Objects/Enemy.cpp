@@ -30,6 +30,7 @@
 constexpr float Enemy::DEFAULT_SPEED;
 constexpr float Enemy::MIN_SPEED;
 constexpr float Enemy::BROOD_SPEED_REDUCTION;
+constexpr float Enemy::DEVIATION_SPEED;
 
 
 void Enemy::draw(sf::RenderWindow& window)const
@@ -63,8 +64,13 @@ void Enemy::update(GameState& gstate)
 {
     m_origin = m_position;
     auto dir = gstate.getObjects().getPlayer().getPosition() - m_origin;
+    auto playerDistance = Math::length(dir);
     Math::normalise(dir);
-    m_destination = dir * DEFAULT_SPEED + m_origin;
+
+    auto perpDir = sf::Vector2f{dir.y, -dir.x};
+    auto deviation = perpDir * static_cast<float>(sin(playerDistance / 50.f));
+
+    m_destination = dir * DEFAULT_SPEED + m_origin + deviation * DEVIATION_SPEED;
     //Tracker::update(m_destination,m_rotation,gstate.getObjects().getPlayer(),m_speed,0.3f,100);
 /*
     // Enemies brood behaviour

@@ -30,6 +30,7 @@ private:
     static constexpr float DEFAULT_SPEED = 25.f;
     static constexpr float MIN_SPEED = 0.005f;
     static constexpr float BROOD_SPEED_REDUCTION = 0.65f;
+    static constexpr float DEVIATION_SPEED = 25.f;
 
     float m_speed;
 
