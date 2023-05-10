@@ -59,6 +59,12 @@ void Enemy::update(float ratio)
     m_position = Math::Lerp<sf::Vector2f>::get(m_origin,m_destination,ratio);
 }
 
+void Enemy::update(sf::Vector2f& destination)
+{
+    m_destination = destination;
+}
+
+#if 0
 void Enemy::update(GameState& gstate)
 {
     m_origin = m_position;
@@ -104,3 +110,4 @@ void Enemy::update(GameState& gstate)
     }
     */
 }
+#endif

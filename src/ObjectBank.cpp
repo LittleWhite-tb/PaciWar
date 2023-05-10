@@ -18,6 +18,8 @@
 
 #include "ObjectBank.hpp"
 
+#include "EnemyGroup.hpp"
+
 #include "Collisions/Collider.hpp"
 #include "Utils/Palette.hpp"
 
@@ -30,6 +32,9 @@ void ObjectBank::updateEnemies(GameState& gstate)
 {
     using namespace std::chrono;
     steady_clock::time_point updateTime;
+
+    EnemyGroups enemyGroups;
+
     while(!m_threadStop)
     {
         auto diff = duration_cast<duration<double>>(steady_clock::now() - updateTime);
@@ -37,7 +42,10 @@ void ObjectBank::updateEnemies(GameState& gstate)
         if (diff.count() > 0.1)
         {
             updateTime = steady_clock::now();
-            std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate); });
+            // std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&gstate](Enemy& e){ e.update(gstate); });
+            enemyGroups.reset();
+            std::for_each(m_enemiesPool.begin(),m_enemiesPool.end(), [&enemyGroups](Enemy& e){ enemyGroups.classify(e); });
+            enemyGroups.update(gstate);
         }
         //std::this_thread::sleep_for(std::chrono::milliseconds(15));
     }
