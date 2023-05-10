@@ -56,11 +56,10 @@ void EnemyGroup::update(GameState& gstate)
     auto origin = m_position;
     auto dir = gstate.getObjects().getPlayer().getPosition() - origin;
     Math::normalise(dir);
-    auto destination = dir * Enemy::DEFAULT_SPEED + origin;
 
-    std::for_each(m_enemies.begin(), m_enemies.end(), [&destination](Enemy* e){
+    std::for_each(m_enemies.begin(), m_enemies.end(), [&dir](Enemy* e){
 
-        e->update(destination);
+        e->update(dir);
     });
 }
 

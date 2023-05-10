@@ -26,10 +26,8 @@
 
 class Enemy : public Entity
 {
-public:
-    static constexpr float DEFAULT_SPEED = 25.f;
-
 private:
+    static constexpr float DEFAULT_SPEED = 25.f;
     static constexpr float MIN_SPEED = 0.005f;
     static constexpr float BROOD_SPEED_REDUCTION = 0.65f;
 
@@ -42,7 +40,7 @@ public:
     void draw(sf::RenderWindow& window)const;
     void update(float ratio);
     void update(GameState&) {};
-    void update(sf::Vector2f& destination);
+    void update(sf::Vector2f& direction);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 

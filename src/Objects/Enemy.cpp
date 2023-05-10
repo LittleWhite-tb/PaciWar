@@ -59,9 +59,9 @@ void Enemy::update(float ratio)
     m_position = Math::Lerp<sf::Vector2f>::get(m_origin,m_destination,ratio);
 }
 
-void Enemy::update(sf::Vector2f& destination)
+void Enemy::update(sf::Vector2f& direction)
 {
-    m_destination = destination;
+    m_destination = direction * DEFAULT_SPEED + m_position;
 }
 
 #if 0
