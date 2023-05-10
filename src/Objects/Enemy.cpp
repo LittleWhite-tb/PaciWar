@@ -61,7 +61,8 @@ void Enemy::update(float ratio)
 
 void Enemy::update(sf::Vector2f& direction)
 {
-    m_destination = direction * DEFAULT_SPEED + m_position;
+    m_origin = m_position;
+    m_destination = direction * DEFAULT_SPEED + m_origin;
 }
 
 #if 0
