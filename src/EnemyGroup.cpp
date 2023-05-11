@@ -24,11 +24,21 @@
 
 #include <cassert>
 
-EnemyGroup::EnemyGroup(Enemy* first)
+std::vector<sf::Color> groupColors = {
+    { 255, 0, 0 },
+    { 255, 255, 0 },
+    { 255, 0, 255 },
+    { 0, 0, 255 },
+    { 0, 255, 255 },
+    };
+
+EnemyGroup::EnemyGroup(Enemy* first, const sf::Color& color)
 {
     assert(first);
     m_enemies.push_back(first);
+    first->setColor(color);
     m_position = first->getPosition();
+    m_color = color;
 }
 
 bool EnemyGroup::integrate(Enemy* candidate)
@@ -46,8 +56,9 @@ bool EnemyGroup::integrate(Enemy* candidate)
     }
 
     m_enemies.push_back(candidate);
-    m_position.x = m_position.x * (m_enemies.size()-1) + candidate->getPosition().x / m_enemies.size();
-    m_position.y = m_position.y * (m_enemies.size()-1) + candidate->getPosition().y / m_enemies.size();
+    m_position.x = (m_position.x * (m_enemies.size()-1) + candidate->getPosition().x) / m_enemies.size();
+    m_position.y = (m_position.y * (m_enemies.size()-1) + candidate->getPosition().y) / m_enemies.size();
+    candidate->setColor(m_color);
     return true;
 }
 
@@ -77,7 +88,7 @@ void EnemyGroups::classify(Enemy& enemy)
 
     if(!accepted)
     {
-        m_groups.emplace_back(&enemy);
+        m_groups.emplace_back(&enemy, groupColors[m_groups.size() % groupColors.size()]);
     }
 }
 

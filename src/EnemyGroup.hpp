@@ -28,10 +28,10 @@ class GameState;
 
 class EnemyGroup
 {
-    static constexpr unsigned int influenceRadius= 20;
+    static constexpr unsigned int influenceRadius= 30;
 
 public:
-    EnemyGroup(Enemy* first);
+    EnemyGroup(Enemy* first, const sf::Color& color);
 
     bool integrate(Enemy* candidate);
     void update(GameState& gstate);
@@ -39,6 +39,7 @@ public:
 private:
     std::vector<Enemy*> m_enemies;
     sf::Vector2f m_position;
+    sf::Color m_color;
 };
 
 class EnemyGroups

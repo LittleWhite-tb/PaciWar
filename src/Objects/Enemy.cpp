@@ -36,11 +36,11 @@ void Enemy::draw(sf::RenderWindow& window)const
 {
 	sf::Vertex lines[] =
 	{
-        sf::Vertex(sf::Vector2f(0, 10)),
-        sf::Vertex(sf::Vector2f(10, 0)),
-        sf::Vertex(sf::Vector2f(0, -10)),
-        sf::Vertex(sf::Vector2f(-10, 0)),
-        sf::Vertex(sf::Vector2f( 0, 10))
+        sf::Vertex(sf::Vector2f(0, 10), m_color),
+        sf::Vertex(sf::Vector2f(10, 0), m_color),
+        sf::Vertex(sf::Vector2f(0, -10), m_color),
+        sf::Vertex(sf::Vector2f(-10, 0), m_color),
+        sf::Vertex(sf::Vector2f( 0, 10), m_color)
 	};
 
     sf::Transform t;
@@ -63,6 +63,11 @@ void Enemy::update(sf::Vector2f& direction)
 {
     m_origin = m_position;
     m_destination = direction * DEFAULT_SPEED + m_origin;
+}
+
+void Enemy::setColor(const sf::Color& color)
+{
+    m_color = color;
 }
 
 #if 0
