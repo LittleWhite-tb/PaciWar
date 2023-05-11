@@ -1,4 +1,6 @@
-- AI Entity (Swarm, sterring behavior)
-- - Attempt with a grid based and naive method
+- Enemy Grouping
+- - No grouping when close to the player
+- - border detection
 - Rendering (Shading)
 - Update SFML
+- Resolution management
