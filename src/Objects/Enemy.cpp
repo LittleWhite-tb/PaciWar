@@ -59,10 +59,24 @@ void Enemy::update(float ratio)
     m_position = Math::Lerp<sf::Vector2f>::get(m_origin,m_destination,ratio);
 }
 
-void Enemy::update(sf::Vector2f& direction)
+void Enemy::update(GameState& gstate, sf::Vector2f& direction)
 {
     m_origin = m_position;
-    m_destination = direction * DEFAULT_SPEED + m_origin;
+    m_destination = direction * DEFAULT_SPEED;
+
+    auto borders = gstate.getBorders();
+    borders.clamp(m_position, m_destination, 10);
+    m_destination += m_origin;
+    this->update(gstate);
+}
+
+void Enemy::update(GameState& gstate)
+{
+    // Borders constraints
+    /*
+    auto borders = gstate.getBorders();
+    borders.clamp(m_position, m_destination, 10);
+*/
 }
 
 void Enemy::setColor(const sf::Color& color)

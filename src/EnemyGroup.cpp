@@ -68,9 +68,9 @@ void EnemyGroup::update(GameState& gstate)
     auto dir = gstate.getObjects().getPlayer().getPosition() - origin;
     Math::normalise(dir);
 
-    std::for_each(m_enemies.begin(), m_enemies.end(), [&dir](Enemy* e){
+    std::for_each(m_enemies.begin(), m_enemies.end(), [&gstate, &dir](Enemy* e){
 
-        e->update(dir);
+        e->update(gstate, dir);
     });
 }
 

@@ -34,14 +34,15 @@ private:
     float m_speed;
     sf::Color m_color;
 
+    void update(GameState& gstate);
+
 public:
     Enemy(const sf::Vector2f& position)
         :Entity(position),m_speed(DEFAULT_SPEED),m_color(sf::Color::White) {}
 	
     void draw(sf::RenderWindow& window)const;
     void update(float ratio);
-    void update(GameState&) {};
-    void update(sf::Vector2f& direction);
+    void update(GameState& gstate, sf::Vector2f& direction);
 
     void getBoundingSpheres(BoundingSpheres& boundingSpheres)const;
 
